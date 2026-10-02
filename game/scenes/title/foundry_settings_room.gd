@@ -36,9 +36,11 @@ static func make(panel: FoundrySettingsPanel) -> FoundrySettingsRoom:
 	var reading_shade := ColorRect.new()
 	var reading_material := ShaderMaterial.new()
 	reading_material.shader = preload("res://scenes/title/library_reading_shade.gdshader")
+	reading_material.set_shader_parameter("feather", 0.025)
+	reading_material.set_shader_parameter("opacity", 0.90)
 	reading_shade.material = reading_material
 	reading_shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	FoundryUi.place(room, reading_shade, Rect2(168, 184, 1480, 800))
+	FoundryUi.place(room, reading_shade, Rect2(144, 170, 1640, 824))
 	var plaque := Ui.vbox(
 		[
 			Ui.tint(Ui.sized(Ui.label(FoundryUi.text("THE CONTROL ROOM", "工房の調整室"), "Heading"), 32), UiTheme.AMBER),
