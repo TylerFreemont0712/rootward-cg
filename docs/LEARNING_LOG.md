@@ -2021,3 +2021,18 @@ group and compute masks for the full map in one pass; recomputing a map scan per
 A gate's facing maps to one of two registered swing arcs. When facing runs parallel to the hinge axis, use the side the
 walker entered from, because that facing has no across-axis direction. Keep diagonal walls out of the cardinal system
 until the movement and collision rules can represent them too.
+
+## 2026-10-20 — A boundary edge is not a tile
+
+The wall's position belongs to the line between cells, so it needs its own coordinate: the first grid vertex plus a
+horizontal or vertical axis and a run length. The map can block a step by checking that edge key. Neither adjacent
+cell becomes occupied, which allows a barrel or a crop to keep its own tile.
+
+Keep the map file's data representation distinct from its built representation. JSONC stores points as two-number
+arrays; `OverworldMap.build` turns them into `Vector2i`. Studio previews can use the built form, but commands written
+to `StudioDoc` must convert them back before schema validation and save. Accepting the field in the loader schema alone
+does not make a placement usable if the editor serializes runtime vectors into a document.
+
+Treat every edge placement as its own command. Computing a new corner mask by scanning and re-arting neighbours makes
+an apparently local edit change unrelated objects; explicit segments preserve what the user drew and keep one undo
+step aligned to that action.

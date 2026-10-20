@@ -1,6 +1,8 @@
 # ADR-0080: Shared grid boundaries and opener-facing gate swings
 
-Accepted 2026-10-20. Extends ADR-0072's connected placement and ADR-0074's occupied gate animation.
+Accepted 2026-10-20. Superseded by [ADR-0081](ADR-0081-boundaries-as-grid-edges.md) on 2026-10-20. This file records
+the earlier shared-cell-socket implementation; its automatic joins and cell footprints are no longer the boundary
+placement model.
 
 ## Context
 
