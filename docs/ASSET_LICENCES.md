@@ -47,6 +47,11 @@ generated images may not be protectable as your own work in some countries. Read
   and `art-source/lanternroot-fantasy-ground-imagegen-2026-10-19.png` supply the brick, stone, timber and woodland
   materials integrated by `pipeline/pixel/terrain.py`. The raw sources and exact prompts are kept in
   `Concept/v0.3/Update/art-source/land-variants-imagegen-2026-10-19.md`; runtime atlas cuts use the shared palette.
+- **v0.5 coordinated terrain material source from built-in ImageGen** (2026-10-20):
+  `Concept/v0.5/terrain-overhaul/art-source/woodland-materials-imagegen.png`, with the exact prompt beside it, supplies
+  the sixteen source swatches used for the refreshed land materials. The source remains intact; the existing local
+  pixel pipeline samples it, derives variants and enforces the world palette. Water retains its previous source.
+  This generated source follows the same release review requirements described above.
 - **Player animation and commander replacement** (2026-10-17): the player explicitly requested ChatGPT image
   generation for the higher-quality characters. Built-in OpenAI imagegen produced the selected directional sources
   for `game/assets/overworld/player/male.png`, `female.png` and the replacement `cast/sergeant.png`, using the

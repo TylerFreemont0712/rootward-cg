@@ -759,3 +759,19 @@ whole-project run (2,138 cases) exposed stale content assumptions fixed in the a
 failures remain in Shardrun's reward layout, upgrades for ten cards, and 24 older uncataloged world pictures; the
 catalog error list was reproduced unchanged using the git HEAD map. Normal town Publish review has zero errors
 and one intentional water-under-watermill warning. See ADR-0078 and the uncommitted WIP session handoff.
+
+
+### v0.5 Guild Hall specification and coordinated terrain — 2026-10-20
+
+- [x] Full Guild Hall gameplay/learning/rewards specification, distinguishing chosen direction from proposed defaults.
+- [x] Contract lifecycle, NPC role/placement reservations, persistent deployments, safe pause/cancel, atomic rewards,
+      sandbox composition, saved-state migration and area lifecycle/performance requirements.
+- [x] A bounded first project with two residents, three jobs and a real integration capstone; phased implementation
+      packets, acceptance scenarios, English and both Japanese reading editions.
+- [x] Coordinated terrain ImageGen source with exact prompt, palette-safe derivation and eight stable variants.
+- [x] Correct lower-neighbour terrain fill, softened natural margins, consistent material priorities and dirt texture.
+- [x] Thirteen pipeline cases and seventeen renderer cases pass; native town/contact/angle screenshots reviewed.
+- [ ] Implement the Guild Hall vertical slice following `Concept/v0.5/03-first-project-and-delivery.md`.
+
+The Guild Hall work in this slice is a specification; its gameplay has not been implemented. Terrain improvements
+are live in the existing world and Studio Land painter. Existing terrain IDs and movement/collision stay compatible.

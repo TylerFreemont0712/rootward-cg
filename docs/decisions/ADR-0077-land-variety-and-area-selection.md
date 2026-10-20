@@ -52,3 +52,27 @@ Pipeline tests cover distinct variants, shared mask edges, palette/alpha, conten
 Scene tests cover all nineteen surfaces, stable variation, all eighteen layers across chunks, water movement rules,
 real brush/swatches, saved legends, Publish, selection over occupied cells, filters, Shift-add, cancellation,
 confirmation, delete/undo/redo and keyboard isolation. Native screenshots review terrain and tree-clearing previews.
+
+
+## Coordinated terrain joins and variations — 2026-10-20
+
+The v0.5 terrain pass keeps the existing nineteen outdoor IDs, movement, step sounds and forty-pixel world scale.
+One coordinated ImageGen material sheet supplies the land textures; grass and meadow share the same turf value,
+with meadow retaining five flowered and three quiet variations. Eight seeded variations remain on every outdoor
+surface, with rotated/mirrored natural details and consistent plank, brick and furrow directions. Water keeps its
+source and animation; its external shadow no longer paints grass onto another shore material.
+
+A dual-grid corner renders only materials present in its four cells. Each present lower layer extends under its
+higher neighbours, so paths expose local meadow, sand or woodland instead of holes in the universal grass base.
+Natural surfaces use a narrow hard-alpha dither at their edges, with no solid painted outline. Natural/earth layers
+precede constructed routes and water remains last. Every material shares its texture in the correct half-cell
+phase across variants and masks. Dirt removes broad source lighting patches before quantization, retaining small
+stones and grain without a square checkerboard on wide roads.
+
+This is an art/renderer correction, not a change to authored map cells or save/collision rules. Chunk invalidation
+and repainting remain equivalent to a full bake. The source, exact prompt, authoring notes and reproduction commands
+are in `Concept/v0.5/terrain-overhaul/`. Native contact and angle fixtures live in `shots/terrain-overhaul/`.
+
+Verification: thirteen pipeline cases pass (palette/alpha, eight distinct variants, all legal adjacent mask pairs for
+all eighteen overlays and water frames, colour-family consistency, order and repeatability). Seventeen GroundLayer
+cases pass, including 153 material pairs across all fourteen mixed masks and byte-identical chunk repaint/reversal.

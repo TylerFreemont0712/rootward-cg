@@ -185,6 +185,73 @@ func test_three_tile_wide_paths_keep_rims_only_at_the_outer_edges() -> void:
 		assert_int(right_edge).override_failure_message("%s has an exposed right edge" % kind).is_equal(5)
 
 
+func _mask_for(layer: GroundLayer, corner: Vector2i, kind: String) -> int:
+	var index := layer._overlays.find(kind)
+	var plane := floori(float(index) / GroundLayer.MASK_LAYERS)
+	return (layer._masks_at(corner, plane) >> ((index % GroundLayer.MASK_LAYERS) * 4)) & 15
+
+
+func test_every_pair_of_materials_fills_lower_ground_under_higher_edges() -> void:
+	var layer := _layer(_map(["aa", "aa"]))
+	var corner := Vector2i.ONE
+	for lower in layer._overlays.size():
+		for higher in range(lower + 1, layer._overlays.size()):
+			for mask in range(1, 15):
+				var cells := PackedStringArray()
+				for bit in 4:
+					cells.append(layer._overlays[higher] if (mask & (1 << bit)) != 0 else layer._overlays[lower])
+				layer.map.ground = cells
+				assert_int(_mask_for(layer, corner, layer._overlays[lower])).override_failure_message(
+					"%s fills under %s at mask %d" % [layer._overlays[lower], layer._overlays[higher], mask]
+				).is_equal(15)
+				assert_int(_mask_for(layer, corner, layer._overlays[higher])).is_equal(mask)
+
+
+func test_triple_junctions_only_include_materials_actually_present() -> void:
+	var layer := _layer(_map(["a,", "~~"]))
+	assert_int(_mask_for(layer, Vector2i.ONE, "meadow")).is_equal(15)
+	assert_int(_mask_for(layer, Vector2i.ONE, "path")).is_equal(14)
+	assert_int(_mask_for(layer, Vector2i.ONE, "water")).is_equal(12)
+	for kind: String in layer._overlays:
+		if kind not in ["meadow", "path", "water"]:
+			assert_int(_mask_for(layer, Vector2i.ONE, kind)).override_failure_message(
+				"an unrelated %s layer never appears in a meadow/path/water junction" % kind
+			).is_equal(0)
+	assert_int(_mask_for(layer, Vector2i.ZERO, "meadow")).is_equal(8)
+	assert_int(_mask_for(layer, Vector2i.ZERO, "path")).is_equal(0)
+
+
+func test_the_visible_road_edge_reveals_continuous_meadow_texture() -> void:
+	var layer := _layer(_map(["a,", "a,"]))
+	var corner := Vector2i.ONE
+	var expected := Image.create_empty(GroundLayer.TILE, GroundLayer.TILE, false, Image.FORMAT_RGBA8)
+	for kind: String in ["meadow", "path"]:
+		var overlay: Dictionary = layer._layout.overlay[kind]
+		var variant := layer._variant(kind, corner, int(overlay.variants))
+		var row := int(overlay.row) + variant * int(overlay.frames)
+		var mask := 15 if kind == "meadow" else 10
+		expected.blend_rect(layer._source, layer._tile(row, mask), Vector2i.ZERO)
+	var actual := layer.baked_picture().get_region(Rect2i(corner * GroundLayer.TILE, Vector2i.ONE * GroundLayer.TILE))
+	assert_bool(actual.get_data() == expected.get_data()).override_failure_message(
+		"transparent road pixels show the uninterrupted meadow beneath them"
+	).is_true()
+
+
+func test_replacing_mixed_material_junctions_across_chunks_matches_a_whole_bake() -> void:
+	var rows: Array = []
+	var painted: Array = []
+	for y in 18:
+		rows.append("a".repeat(8) + "m".repeat(8) + "h".repeat(8))
+		painted.append("a".repeat(8) + "m".repeat(8) + "h".repeat(8))
+	for y in range(6, 12):
+		painted[y] = "a".repeat(6) + ",".repeat(4) + "j".repeat(6) + "~".repeat(4) + "h".repeat(4)
+	# Keep water in both maps so a live stroke can reuse the three existing ripple frames.
+	rows[0] = "~" + String(rows[0]).substr(1)
+	painted[0] = "~" + String(painted[0]).substr(1)
+	_assert_repaint_matches(rows, painted)
+	_assert_repaint_matches(painted, rows)
+
+
 func test_texture_variation_does_not_change_walkability_or_ripple_frames() -> void:
 	var shown := _map([".abcdeghi,=~", ".abcdeghi,=~"])
 	var walk: PackedByteArray = shown.walk

@@ -1965,3 +1965,20 @@ condition before and after a change instead of inferring step identity from the 
 
 The Studio's content writers preserve canonical JSONC layouts. Rewrite quests with that writer, retain headers,
 and derive text-edit test anchors from current content so new story prose does not invalidate byte-preserving edits.
+
+
+## 2026-10-20 — Terrain boundaries need the actual neighbour underneath
+
+Drawing an independent mask for meadow and another for a road can leave pixels covered by neither. Those pixels
+show the fallback grass, producing green wedges even when the two authored textures look fine alone. A cumulative
+priority mask lets a lower local material continue underneath a higher edge. Restrict it to materials present at
+that corner; otherwise unrelated soil or roads can leak out beneath a water edge.
+
+The dual-grid texture boundary runs through the source tile's half-cell phase. Matching the outermost pixels of a
+source image is insufficient. Share a textured collar in the actual shifted phase for every ground, including each
+water frame, and test every compatible pair of corner masks. Narrow deterministic dithering can mix the two actual
+materials with hard alpha, preserving the pixel palette without a universal painted rim.
+
+Independent source swatches can also have different lighting. Grass and meadow need a shared turf value; dirt needs
+its broad lighting removed before tiling, since low-frequency highlights otherwise become a visible checkerboard.
+Variation should change fine details while keeping seam geometry and directional materials consistent.
