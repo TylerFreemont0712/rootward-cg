@@ -31,6 +31,11 @@ licence was not read in full for this page; read it before relying on it.
 
 ## Check before shipping (AI-generated)
 
+- **Placeable village residents** (2026-10-20): seven new character plates and a completed Maribel plate use built-in
+  OpenAI imagegen; original seven concepts retain their earlier sources. Runtime sheets/portraits are imported into
+  `game/assets/overworld/{cast,portraits}/`. Raw art, exact prompts, view policy and importer are documented in
+  `Concept/v0.5/characters/expansion/README.md`.
+
 - **Boundary foundation** (2026-10-20): built-in OpenAI imagegen produced the opaque material source at
   `game/assets/overworld/boundaries/materials-imagegen.png`. `BoundaryPainter` bakes the upright geometry and hinged
   frames into `foundation/`. Exact prompt and regeneration instructions: `pipeline/world/boundary-foundation/README.md`.

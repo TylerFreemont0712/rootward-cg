@@ -42,3 +42,13 @@ painter fallback. Cardinal edges still leave both neighboring cells available; d
 Review and verification commands are in the foundation README. Native closed/open/reversed enclosure and builder
 screenshots are saved under `shots/studio/boundary-foundation-*.png`; focused checks cover material/view coverage,
 fixed frames, crossing direction, diagonal blocking, wall replacement/restoration and undo.
+
+
+## Follow-up: direction follows the drag
+
+A chosen axis is the click preference. A deliberate wall drag recomputes horizontal/vertical/both diagonal directions
+from the press-to-pointer vector using equal angular sectors and a small jitter dead zone. Committing an inferred
+axis does not write it into the next placement template. R can explicitly turn an active gesture. Gates prefer the
+actual picked wall sprite or nearest host ground line and fit one/two-unit spans in that host direction; this makes
+both diagonal hosts and clicks on their raised artwork usable without manual rotation. Ground anchors and mounting
+checks stay shared by preview and commit. Screenshots: `shots/studio/boundary-snapping-{gate,drag}.png`.

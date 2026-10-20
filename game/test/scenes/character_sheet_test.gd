@@ -68,6 +68,21 @@ func test_a_still_figure_settles_for_the_end_of_each_breath() -> void:
 	assert_int(Walker.breath_pose(Walker.BREATH * 2.9)).is_equal(CharacterSheet.IDLE)
 
 
+func test_named_cast_identity_is_independent_of_fallback_parts() -> void:
+	var shared := {"outfit": "outfit/tunic", "hair": "hair/short"}
+	var index := {"sheets": {
+		"nessa": {"file": "nessa.png", "look": shared.merged({"cast": "nessa"})},
+		"bram": {"file": "bram.png", "look": shared.merged({"cast": "bram"})},
+	}}
+	assert_str(OverworldArt.cast_file(index, shared.merged({"cast": "nessa"}))).is_equal("nessa.png")
+	assert_str(OverworldArt.cast_file(index, shared.merged({"cast": "bram"}))).is_equal("bram.png")
+	assert_str(OverworldArt.cast_file(index, shared.merged({"cast": "missing"}))).is_equal("")
+	assert_str(OverworldArt.cast_file(index, shared)).is_equal("")
+	# Authored residents keep their identity if their optional fallback parts are adjusted.
+	assert_str(OverworldArt.cast_file(index, {"cast": "nessa", "outfit": "outfit/dress"})).is_equal("nessa.png")
+	assert_dict(OverworldArt.canonical_look({"cast": "nessa"})).is_not_equal(OverworldArt.canonical_look({"cast": "bram"}))
+
+
 func test_a_walker_stands_its_cast_sheet_on_the_ground_row() -> void:
 	var image := Image.create(64, 192, false, Image.FORMAT_RGBA8)
 	var walker: Walker = auto_free(Walker.new(CharacterSheet.cast(ImageTexture.create_from_image(image), CAST_LAYOUT)))

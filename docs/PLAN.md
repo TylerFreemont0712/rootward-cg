@@ -672,6 +672,13 @@ This follow-up is prioritized before old S10/S11; historical phase completion be
       hinged leaves, host-wall installation/restoration, explicit axes, and diagonal placement/collision. Native
       review and reproducible art instructions: `pipeline/world/boundary-foundation/README.md`. Effective focused
       checks: 100 cases across eleven suites pass; player depth regression and native screenshot reviewed.
+- [x] B02 drag/snapping follow-up (2026-10-20): each wall gesture infers H/V/both diagonals live; gates snap to
+      picked wall art/ground lines and full one/two-unit hosts. Mounted tests cover eight drag signs, direction
+      changes, both diagonal player crossings, post gaps and raised-face clicks. Obsolete three-wide runtime art retired.
+- [x] Placeable v0.5 residents (ADR-0083): eight original concepts plus seven new residents, including completed
+      Maribel art, four facing rows, portraits, greetings/JA and Build → People. Registered authored sheets survive
+      pipeline regeneration. Combined checks 112/112; cast pipeline 14/14; asset checks rerun 3/3 after portrait trim.
+      Native lineup, Build placement and boundary previews inspected; see `Concept/v0.5/characters/expansion/README.md`.
 - [ ] B03–B06: existing building sizing/door contract, room furnishing, remaining map controls and acceptance.
 - [ ] M01–M08: rectangular modular shells, assembled roofs, owned partitioned interiors and full compatibility.
 - [ ] W01–W07: new outdoor areas, reference index, coordinated expansion, paired routes, districts and save migration.

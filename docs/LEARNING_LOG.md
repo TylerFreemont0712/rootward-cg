@@ -2062,3 +2062,17 @@ A gate also needs separate depth anchors. Sorting the whole frame at its lower p
 someone standing below it. Nested y-sort shares both stationary jambs and the moving leaf with the town's walkers.
 The leaf's position follows its ground midpoint; its sprite offset cancels that position so the baked pixels do not
 jump. A native player screenshot checks both hinges and arcs, with the player on and above the gate cell.
+
+
+## 2026-10-20: separate a drag's result from the next gesture
+
+Persisting `boundary_edge` back into the material template made one vertical wall drag lock future drags vertically.
+A placement command needs its inferred axis, while a material selection only needs a click preference. Recompute the
+axis from press-to-pointer direction during the gesture, with a jitter dead zone, and store it only on placed objects.
+Gates need to pick their host's ground line (or the actual raised wall artwork), since a nearest-cardinal-edge query
+can never find a diagonal opening at a cell center. Preview and commit consume the same mounting candidate.
+
+Authored people also need identity beyond fallback parts. Optional `look.cast` chooses an approved sheet and joins its
+cache key; two residents can share simple fallback clothes without showing the same complete character. The importer
+uses one scale for all views and a shared ground row so turning or breathing does not move the feet. Approved sheets
+are marked authored, so even forced cast regeneration preserves them. Source plates and prompts stay reproducible.
