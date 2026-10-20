@@ -31,6 +31,11 @@ licence was not read in full for this page; read it before relying on it.
 
 ## Check before shipping (AI-generated)
 
+- **Boundary foundation** (2026-10-20): built-in OpenAI imagegen produced the opaque material source at
+  `game/assets/overworld/boundaries/materials-imagegen.png`. `BoundaryPainter` bakes the upright geometry and hinged
+  frames into `foundation/`. Exact prompt and regeneration instructions: `pipeline/world/boundary-foundation/README.md`.
+  This replaces the rotated edge-kit atlas; the earlier gate sheets remain legacy source assets.
+
 Everything made with ComfyUI or the music models. The usual position is that a model's licence governs use, and
 generated images may not be protectable as your own work in some countries. Read each licence before going public:
 

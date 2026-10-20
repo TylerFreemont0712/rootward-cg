@@ -2043,3 +2043,22 @@ End-on post pictures do not show a fence running along a vertical edge. Derive v
 rotating the matching horizontal module; then both orientations cover one full edge and share the same material details.
 Center the rotated visual on the vertical grid line, and put the gate ghost and placed sprite on the same bounds so the
 preview cannot imply a different position.
+
+
+## 2026-10-20: keep height separate from ground direction
+
+A horizontal sprite contains both ground span and apparent height. Rotating that finished image rotates the height
+as well, so a vertical wall looks flattened or sideways. The boundary foundation keeps x/y as ground and z as height,
+then bakes each view. A gate rotates only its ground vector around a hinge; posts are separate fixed sprites. Shared
+imagegen material surfaces give all views the same finish. This supersedes the earlier screen-rotation approach.
+
+Diagonal walls cross cell centers, where our walkers stand. Reserving just those bisected cells makes the limitation
+explicit; reserving the entire bounding square would block unrelated ground. The same unit list drives editor
+occupancy and movement. Animation sheets similarly contain many pictures but only one visible frame: picking must
+map through `get_rect()`, frame coordinates and flips before reading alpha, rather than indexing the full sheet.
+
+
+A gate also needs separate depth anchors. Sorting the whole frame at its lower post draws an upward-swung leaf over
+someone standing below it. Nested y-sort shares both stationary jambs and the moving leaf with the town's walkers.
+The leaf's position follows its ground midpoint; its sprite offset cancels that position so the baked pixels do not
+jump. A native player screenshot checks both hinges and arcs, with the player on and above the gate cell.

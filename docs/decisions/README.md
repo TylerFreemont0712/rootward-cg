@@ -1,7 +1,7 @@
 # Decisions
 
 One file per decision a later reader could reasonably question: context, options, decision, consequences.
-The next number is **ADR-0081**.
+The next number is **ADR-0083**.
 
 - [ADR-0048](ADR-0048-paradigm-laws-and-focuses.md): paradigm laws and focuses, fight memory, pure Index reads and
   compatibility with existing drafts and trial lessons (implementation in progress).
@@ -111,3 +111,5 @@ The next number is **ADR-0081**.
 - [ADR-0079](ADR-0079-lanternroot-2-starting-area.md): Retired Lanternroot 2 starting-village experiment; runtime area and creator choice removed at the player’s request, with safe recovery for existing saves.
 - [ADR-0080](ADR-0080-grid-boundaries-and-gate-swing.md) (superseded): shared cardinal sockets and ground anchors for boundary materials, one/two-cell gates and opener-facing swing arcs.
 - [ADR-0081](ADR-0081-boundaries-as-grid-edges.md): fences, walls and gates occupy tile edges; placement does not mutate neighboring pieces, and Build shelves separate Buildings, Walls & doors and Other objects.
+
+- [ADR-0082](ADR-0082-upright-boundaries-and-mounted-gates.md): actual upright views, fixed frames and hinged leaves, wall-mounted gate installation/restoration, and diagonal placement with shared movement collision.

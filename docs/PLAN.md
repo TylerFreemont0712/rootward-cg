@@ -668,6 +668,10 @@ This follow-up is prioritized before old S10/S11; historical phase completion be
       Buildings, Walls & doors and Other objects. F2 opens one zoom step wider than Play; Fit map enters full-map view.
       Native reviews: `shots/studio/build-walls-doors.png`, `shots/studio/edge-boundaries.png`, and the generated
       eight-style art with grid alignment in `shots/studio/edge-boundaries-redesign.png`. See ADR-0081.
+- [x] B02 foundation follow-up (ADR-0082): actual H/V/both-diagonal/post views in eight finishes, fixed gate frames,
+      hinged leaves, host-wall installation/restoration, explicit axes, and diagonal placement/collision. Native
+      review and reproducible art instructions: `pipeline/world/boundary-foundation/README.md`. Effective focused
+      checks: 100 cases across eleven suites pass; player depth regression and native screenshot reviewed.
 - [ ] B03–B06: existing building sizing/door contract, room furnishing, remaining map controls and acceptance.
 - [ ] M01–M08: rectangular modular shells, assembled roofs, owned partitioned interiors and full compatibility.
 - [ ] W01–W07: new outdoor areas, reference index, coordinated expansion, paired routes, districts and save migration.

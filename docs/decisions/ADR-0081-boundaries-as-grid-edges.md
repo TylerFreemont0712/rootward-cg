@@ -2,6 +2,8 @@
 
 Accepted 2026-10-20. Supersedes the connected, cell-footprint model in ADR-0080 and ADR-0072.
 
+Artwork, gate triggers and diagonal restrictions superseded by ADR-0082.
+
 ## Context
 
 The connector atlas made walls and gates occupy full tile cells. That conflicted with other objects in the same cells,
