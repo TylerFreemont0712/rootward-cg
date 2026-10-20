@@ -38,7 +38,10 @@ func _ready() -> void:
 	Game.reset("user://lesson-shot-saves/" + moment)
 	Game.boot()
 	Game.profile.needs_name = false
-	Game.profile.preferred_language = "en"
+	Game.profile.preferred_language = "ja" if OS.get_environment("ROOTWARD_LESSON_LOCALE") == "ja" else "en"
+	var reading := OS.get_environment("ROOTWARD_LESSON_READING")
+	if reading in ["hiragana", "kanji"]:
+		Game.profile.japanese_reading = reading
 	Game.profiles.save_profile(Game.profile)
 	Game.select_profile(String(Game.profile.id), false)
 	var store := OverworldStore.for_profile()
@@ -70,6 +73,10 @@ func _state_for(moment: String) -> Dictionary:
 		flags.append("lamps-written")
 		state.lessons = {"lamps": {"blocks": {"loop": true, "inside": true}, "passed": true}}
 	match moment:
+		"memory-experiment":
+			state.lessons = {"memory": {"blocks": {"bindings": {"x": "y", "y": "y", "map": "map"}}}}
+		"lamps-experiment":
+			state.lessons = {"lamps": {"blocks": {"steps": [{"op": "each"}, {"op": "light", "inside": true}, {"op": "dark", "inside": true}]}}}
 		"memory":
 			state.lessons = {"memory": {"blocks": ["x", "y"]}}
 		"memory-fail":
@@ -104,6 +111,12 @@ func _play(screen: OverworldScreen, moment: String) -> void:
 	var host := screen.get("_lessons") as LessonHost
 	var editor := host.get("_editor") as LessonEditor
 	match moment:
+		"memory-experiment", "lamps-experiment":
+			var id := Lessons.LAMPS if moment.begins_with("lamps") else Lessons.MEMORY
+			host.open_lesson(id, screen.state)
+			await _frames(20)
+			var experiment := editor.get("_experiment") as LessonExperiment
+			await editor.call("_run_experiment", experiment.input())
 		"offer":
 			screen.call("_interact")
 			await _frames(40)

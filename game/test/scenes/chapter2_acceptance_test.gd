@@ -133,12 +133,14 @@ func test_cached_place_caption_rebuilds_when_the_live_reading_changes() -> void:
 		waited += 16
 	assert_str(_parts.place_at("lanternroot", inside)).is_equal("ばんにん")
 	Text.setup("ja", "kanji")
+	var expected := Text.t("The Guardian")
+	assert_str(expected).is_equal("番人")
 	_parts.place_at("lanternroot", inside)
 	waited = 0
-	while _parts.place_at("lanternroot", inside) != "番人（ばんにん）" and waited < WAIT_MS:
+	while _parts.place_at("lanternroot", inside) != expected and waited < WAIT_MS:
 		await get_tree().process_frame
 		waited += 16
-	assert_str(_parts.place_at("lanternroot", inside)).is_equal("番人（ばんにん）")
+	assert_str(_parts.place_at("lanternroot", inside)).is_equal(expected)
 	first.name = original_name
 
 

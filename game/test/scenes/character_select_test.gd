@@ -249,7 +249,7 @@ func test_the_card_is_basic_with_no_count_boxes() -> void:
 	# One line for the language, how they build and the time played; then the rule and what they are doing now.
 	assert_bool(texts.has("Python · Builder · A few minutes")).is_true()
 	assert_bool(texts.has("Now:")).is_true()
-	assert_bool(texts.has(Text.t("Your own two feet"))).is_true()
+	assert_bool(texts.has(Text.t(String(screen.catalog.quests.boots.title)))).is_true()
 	assert_bool(screen._play.visible and screen._progress_button.visible and screen._delete.visible).is_true()
 
 

@@ -100,6 +100,7 @@ func test_a_failed_try_shows_the_next_hint() -> void:
 	assert_str(editor.hint_text()).is_equal(Tasks.hints(_task, 0)[1])
 	(editor.get("_next_hint") as Button).pressed.emit()
 	assert_str(editor.hint_text()).is_equal(Tasks.hints(_task, 0)[2])
+	await _frames(2)
 
 
 func test_closing_hands_back_the_record() -> void:
@@ -127,6 +128,7 @@ func test_blocks_hide_a_later_stage_at_stage_zero() -> void:
 	assert_bool(blocks.is_slot_shown("bag_key")).is_true()
 	assert_bool(blocks.is_toggle_shown("bag")).is_true()
 	assert_int(blocks.lines_shown()).is_greater(at_zero)
+	await _frames(2)
 
 
 func test_a_switch_dims_its_lines() -> void:
@@ -155,3 +157,66 @@ func test_glossary_for_a_task_has_three_sections() -> void:
 		assert_int(sections.size()).is_equal(3)
 		assert_str(String(sections[0].entries[0].term)).is_equal(Tasks.signature(_task, 0, language))
 		assert_bool((sections[2].entries as Array).is_empty()).is_false()
+
+
+func test_experiment_runs_selected_input_without_awarding_progress() -> void:
+	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE, "javascript"))
+	var passes: Array = []
+	editor.passed.connect(func(_stage: int, _record: Dictionary) -> void: passes.append(true))
+	(editor.get("_code") as LessonCode).editor.text = 'function shortcut(key) { return "observed:" + key; }'
+	var picker := editor.get("_case_picker") as OptionButton
+	picker.select(1)
+	picker.item_selected.emit(1)
+	(editor.get("_prediction") as LineEdit).text = "my guess"
+	await editor.practice_case()
+	var said := (editor.get("_practice_output") as Label).text
+	var selected: Dictionary = (editor.get("_practice_cases") as Array)[1]
+	assert_str(said).contains('"observed:%s"' % String(selected.args[0])).contains("my guess")
+	assert_array(passes).is_empty()
+	assert_int(int(editor.record.get("passed", 0))).is_equal(0)
+	assert_bool((editor.get("_try") as Button).disabled).is_false()
+
+
+func test_experiment_cases_belong_only_to_current_stage() -> void:
+	var editor := await _editor(1)
+	var cases: Array = editor.get("_practice_cases")
+	assert_int(cases.size()).is_equal((Tasks.stage(_task, 1).cases as Array).size())
+	for case_data: Dictionary in cases:
+		assert_int(int(case_data.stage)).is_equal(1)
+
+
+func test_editing_during_a_check_does_not_award_the_old_program() -> void:
+	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE, "javascript"))
+	var passes: Array = []
+	editor.passed.connect(func(_stage: int, _record: Dictionary) -> void: passes.append(true))
+	var code := (editor.get("_code") as LessonCode).editor
+	code.text = FileAccess.get_file_as_string("res://test/fixtures/tasks/shortcuts.js")
+	editor.try_it()
+	code.text = "function shortcut(key) { return null; }"
+	while bool(editor.get("_running")):
+		await _frames(1)
+	await _frames(2)
+	assert_array(passes).is_empty()
+	assert_int(int(editor.record.get("passed", 0))).is_equal(0)
+	assert_str((editor.get("_status") as Label).text).contains("changed while it ran")
+
+
+func test_learning_guide_prediction_explains_and_can_be_retried() -> void:
+	var guide := LessonGuide.new()
+	add_child(guide)
+	guide.setup({
+		"idea": "A function gives a value back.",
+		"steps": ["Read the argument."],
+		"example": {"python": "def double(n):\n    return n * 2", "javascript": "function double(n) { return n * 2; }"},
+		"predict": {"question": "double(3)?", "choices": ["3", "6"], "answer": 1, "explanation": "3 * 2 is 6."},
+		"try": ["Try a different number."],
+	}, "javascript")
+	var choices := guide.get("_choices") as VBoxContainer
+	(choices.get_child(0) as Button).pressed.emit()
+	assert_str((guide.get("_feedback") as Label).text).contains("Trace").contains("3 * 2 is 6.")
+	(choices.get_child(1) as Button).pressed.emit()
+	assert_str((guide.get("_feedback") as Label).text).contains("Yes.")
+	assert_str((guide.get("_example") as CodeEdit).text).contains("function double")
+	guide.set_expanded(false)
+	assert_bool((guide.get("_details") as ScrollContainer).visible).is_false()
+	assert_bool((guide.get("_idea") as Label).visible).is_true()

@@ -741,3 +741,21 @@ completely accessible in Japanese. Conducted with Haiku workers for tasks, story
 - [x] Acceptance: `chapter3_acceptance` 9, `chapter3_town` 8; screenshots of the shop, the bag, rain and the props.
 - [ ] Left (`Concept/v0.4/07-handoff.md`): the whole suite rerun, lint and validate, Japanese screenshots, a Haiku
       checkpoint and an Opus final check.
+
+### Lanternroot learning and village rewrite — 2026-10-20 (ADR-0078)
+
+- [x] Shared-supper narrative, practical introductions, and removal of the six-resident greeting prerequisite.
+- [x] Content-authored concept notes for all 21 tasks, 13 stage overrides and the three foundational lessons.
+- [x] Worked examples, retryable predictions and real sandbox experiments in Builder and Scribe.
+- [x] Save-field wiring, ordered lamp blocks with loop placement, and a movement practice map.
+- [x] Developed 92 × 64 outdoor map using registered expansion buildings, furniture and terrain; aligned schedules.
+- [x] Hiragana and standard Japanese translations, including learning-note and starter-comment extraction.
+- [x] Integrated affected regression (275/275), native English/Japanese screenshots, lint and executable content validation; local commit recorded in the session handoff.
+
+Verification: 19 affected suites / 275 cases passed with zero errors, failures or orphans. `scripts/validate.sh` ran
+1,036 worked examples per language with zero errors/warnings; lint passed (formatting remains advisory). Native
+1280 × 720 and 1920 × 1080 reviews cover town, block workspaces, experiments and both Japanese editions. The initial
+whole-project run (2,138 cases) exposed stale content assumptions fixed in the affected reruns. Separate baseline
+failures remain in Shardrun's reward layout, upgrades for ten cards, and 24 older uncataloged world pictures; the
+catalog error list was reproduced unchanged using the git HEAD map. Normal town Publish review has zero errors
+and one intentional water-under-watermill warning. See ADR-0078 and the uncommitted WIP session handoff.

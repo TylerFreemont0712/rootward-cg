@@ -1945,3 +1945,23 @@ filters. Reset, Recent and On this map therefore cannot escape construction. Sep
 browsing state; passive refresh must preserve scroll too, because a hidden refresh can otherwise erase it before the
 panel opens. Tab routing also clears tools the destination does not offer, preventing a hidden tree-area filter from
 capturing Build gestures. An explicitly typed empty history list keeps room removal safe while no session exists.
+
+## 2026-10-20 — A practice run must preserve the real input contract
+
+The boots' Python function receives a Player object with `.x` and `.y`; ordinary task functions receive JSON
+values such as dictionaries. Running boots through the generic task harness makes valid code fail on attribute
+access. A practice tool must reuse the real harness's input type, mutation/return rules and validation. The boots
+harness now supports a single sampled position through the same step function as its whole-map table.
+
+A worker result also belongs to a particular editor opening and source snapshot. Task/stage identity alone is
+insufficient when the same lesson can close and reopen while work is running. Check the opening token and the
+current source before awarding progress. Disabling Reset during a practice step prevents a late result undoing
+an intentional reset. The generated block code is the program; visual prediction questions never judge it.
+
+Moving a block can end the loop it used to belong to. Normalize orphaned indentation after a reorder and disable
+nesting when no loop is active, so the workspace agrees with the generated program. Quest debug logs have a similar
+identity problem: equal completion totals can hide one step finishing while another reopens. Compare each step's
+condition before and after a change instead of inferring step identity from the total.
+
+The Studio's content writers preserve canonical JSONC layouts. Rewrite quests with that writer, retain headers,
+and derive text-edit test anchors from current content so new story prose does not invalidate byte-preserving edits.

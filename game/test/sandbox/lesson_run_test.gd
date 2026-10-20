@@ -138,3 +138,36 @@ func test_prints_come_back_short() -> void:
 	var source := "function save(player) {\n  console.log('saving', player.name);\n  return {x: player.x};\n}\n"
 	var ran := LessonRun.run(Lessons.MEMORY, "javascript", source, Lessons.players("Mio"))
 	assert_str(String(ran.printed)).starts_with("saving Mio")
+
+
+## The new workspace must preserve scope and order in both language runtimes, including empty and mixed lanes.
+func test_workshop_sequence_is_executed_with_order_and_scope() -> void:
+	for language: String in Lessons.ENTRY[Lessons.LAMPS]:
+		var steps: Array = [{"op": "each"}, {"op": "light", "inside": true}]
+		var mixed := Lessons.lane(4)
+		mixed[1].lit = true
+		var given: Array = [[], mixed]
+		var source := Lessons.source(Lessons.LAMPS, {"steps": steps}, language)
+		var ran := LessonRun.run(Lessons.LAMPS, language, source, given)
+		assert_bool(Lessons.check(Lessons.LAMPS, given, ran).ok).is_true()
+		assert_bool(mixed[0].lit).is_false()
+		steps.append({"op": "dark", "inside": true})
+		ran = LessonRun.run(Lessons.LAMPS, language, Lessons.sequence_source(steps, language), [mixed])
+		assert_str(Lessons.advice(Lessons.LAMPS, Lessons.check(Lessons.LAMPS, [mixed], ran))).is_equal("all-dark")
+		steps = [{"op": "light", "inside": false}, {"op": "each"}]
+		ran = LessonRun.run(Lessons.LAMPS, language, Lessons.sequence_source(steps, language), [mixed])
+		assert_bool(ran.results[0].ok).is_false()
+
+
+func test_save_wires_copy_values_and_report_a_swapped_wire() -> void:
+	for language: String in Lessons.ENTRY[Lessons.MEMORY]:
+		var bindings := {"x": "x", "y": "y", "map": "map"}
+		var given := Lessons.players("Mio")
+		var source := Lessons.source(Lessons.MEMORY, {"bindings": bindings}, language)
+		var ran := LessonRun.run(Lessons.MEMORY, language, source, given)
+		assert_bool(Lessons.check(Lessons.MEMORY, given, ran).ok).is_true()
+		bindings.x = "y"
+		ran = LessonRun.run(Lessons.MEMORY, language, Lessons.bindings_source(bindings, language), given)
+		var checked := Lessons.check(Lessons.MEMORY, given, ran)
+		assert_bool(checked.ok).is_false()
+		assert_str(checked.cases[0].field).is_equal("x")

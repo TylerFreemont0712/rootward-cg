@@ -47,9 +47,11 @@ func test_adult_edition_covers_story_places_lessons_and_formatted_results() -> v
 	assert_str(Text.t("An old piece of code. Read it from the top, one line at a time, and keep track of what each name holds.")).is_equal(
 		"古いコードだよ。上から一行ずつ読み、各変数に何が入っているか追ってみよう。"
 	)
-	assert_str(Text.t("There is a new name in the Book of Makers. Yours.")).is_equal(
-		"作り手の本に、新たな名前が記されたぞ。君の名前じゃ。"
-	)
+	var story := "There. That is your work, being used by the town."
+	assert_str(Text.t(story)).is_equal("ほら、町が君の仕事を使っているよ。")
+	Text.setup("ja", "hiragana")
+	assert_str(Text.t(story)).is_equal("ほら、まちが きみの しごとを つかっているよ。")
+	Text.setup("ja", "kanji")
 	assert_str(Text.f("Bought %s for %d coins.", ["まつぼっくり", 3])).is_equal("まつぼっくりを3コインで購入しました。")
 	assert_str(Text.t("night")).is_equal("夜")
 

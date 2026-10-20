@@ -1,12 +1,13 @@
 extends GdUnitTestSuite
 ## The two code editors at their compact size (ADR-0061): the boots' and the lessons'. A Scribe can open a glossary beside
 ## the code with a Hints button, which does not change the panel's size and leaves the code most of the width; a
-## Builder has no such button. Each mode shows many more lines of code than before (about 12). The editors are instanced
+## Builder has no such button. Teaching notes and experiments share the workspace with the code. The editors are instanced
 ## on their own, in a temporary save folder, and given a couple of frames to lay themselves out.
 
 const ROOT := "user://test-code-editors"
-## The most lines the code once showed was about 12; every mode shows at least double that now.
-const MIN_LINES := 24
+## The expanded lesson keeps a short function visible; folding notes restores room to edit longer functions.
+const MIN_LINES := 16
+const LEARNING_LINES := 10
 ## The code keeps at least this much of the body's width with the hints open.
 const CODE_SHARE := 0.7
 
@@ -102,6 +103,8 @@ func test_boots_builder_has_no_hints() -> void:
 func test_boots_show_many_lines_in_both_styles() -> void:
 	for style: String in [OverworldState.BUILDER, OverworldState.SCRIBE]:
 		var boots := await _boots(style)
+		(boots.get("_learning") as LessonGuide).set_expanded(false)
+		await _frames(3)
 		var panel := (
 			boots.get("_typed") as BootsCodePanel if style == OverworldState.SCRIBE else boots.get("_preview")
 			as BootsCodePanel
@@ -172,6 +175,9 @@ func test_lessons_show_many_lines_in_both_styles() -> void:
 		for scribe: bool in [false, true]:
 			var editor := await _lesson(lesson, scribe, Lessons.PYTHON)
 			var code := editor.get("_code") as LessonCode
+			assert_int(code.editor.get_visible_line_count()).is_greater_equal(LEARNING_LINES)
+			(editor.get("_guide") as LessonGuide).set_expanded(false)
+			await _frames(3)
 			(
 				assert_int(code.editor.get_visible_line_count())
 				. override_failure_message("%s (%s) lines" % [lesson, "Scribe" if scribe else "Builder"])
@@ -226,3 +232,17 @@ func _visible_hints_buttons(root: Node) -> bool:
 		if button.text == Text.t("Hints") and button.is_visible_in_tree():
 			return true
 	return false
+
+
+func test_boots_experiment_runs_draft_without_installing_and_marks_later_edits_stale() -> void:
+	var boots := await _boots(OverworldState.BUILDER)
+	var before: Dictionary = (boots.state.boots as Dictionary).duplicate(true)
+	var installed: Array = []
+	boots.tried.connect(func(now: Dictionary) -> void: installed.append(now))
+	await boots._run_experiment("right", {"x": 3, "y": 2})
+	var practice := boots.get("_experiment") as BootsExperiment
+	assert_str((practice.get("_result") as Label).text).contains("(4, 2)")
+	assert_dict(boots.state.boots).is_equal(before)
+	assert_array(installed).is_empty()
+	boots._change(0, "by", -1)
+	assert_str((practice.get("_result") as Label).text).contains("program changed")
