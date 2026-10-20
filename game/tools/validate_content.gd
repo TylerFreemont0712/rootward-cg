@@ -9,6 +9,8 @@ func _initialize() -> void:
 	var loaded := ContentLoader.load_shardrun()
 	var diagnostics: Array = loaded.diagnostics
 	var catalog: Dictionary = loaded.catalog
+	var world := OverworldContent.load_world()
+	diagnostics.append_array(world.diagnostics)
 	var executed := 0
 	if loaded.ok and not OS.get_cmdline_user_args().has("--no-exec"):
 		diagnostics.append_array(ShardExamples.check(catalog))
@@ -27,5 +29,10 @@ func _initialize() -> void:
 	]
 	var line := "Loaded %d shards, %d program cards, %d relics, %d foes; ran %d worked examples in each language."
 	print(line % (counts + [executed]))
+	var town: Dictionary = world.catalog
+	print("Loaded Lanternroot: %d maps, %d townsfolk, %d conversations, %d quests, %d tasks, %d coded things." % [
+		(town.maps as Dictionary).size(), (town.townsfolk as Dictionary).size(), (town.talk as Dictionary).size(),
+		(town.quests as Dictionary).size(), (town.tasks as Dictionary).size(), (town.things as Dictionary).size(),
+	])
 	print("%d error(s), %d warning(s) in %.1fs" % [errors, warnings, (Time.get_ticks_msec() - started) / 1000.0])
 	quit(1 if errors > 0 else 0)

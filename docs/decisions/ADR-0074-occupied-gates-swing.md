@@ -20,9 +20,11 @@ wide entrances must behave consistently for the player and townspeople.
   Reduced motion selects the endpoint immediately. Only the gate sprite changes; walking never rebuilds the map.
 - Programmed gates retain `TownThings` state and collision, including the cabbage-gate lesson and its saved state.
   Solid or programmed gates cannot accidentally become automatic passages. Building doorway warps are unchanged.
-- `build_gate_art.gd` creates nine native vector gate designs with thirteen poses each. Wood has solid planks,
+- `build_gate_art.gd` now creates eight active native vector gate designs with thirteen poses for each opening side
+  (26 registered frames per sheet). Wood has solid planks,
   timber frames, braces, iron hinges and brass latches; the existing iron variant retains bars. Posts remain fixed
-  and every piece rotates in the ground plane around the same hinge. Horizontal doors open into screen depth;
+  and every piece rotates in the ground plane around the same hinge. The opener's facing selects its opening arc;
+  horizontal doors open into screen depth;
   vertical doors open into a front-facing panel. Wide doors use paired leaves without a middle post.
 - The generator saves registered source PNGs and endpoint SVGs under `Concept/v0.3/Update/gate-swing/`. Normal
   world cuts enforce palette and hard alpha. Shared canvases include room for the swing. Catalog and placement

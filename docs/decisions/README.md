@@ -1,7 +1,7 @@
 # Decisions
 
 One file per decision a later reader could reasonably question: context, options, decision, consequences.
-The next number is **ADR-0078**.
+The next number is **ADR-0080**.
 
 - [ADR-0048](ADR-0048-paradigm-laws-and-focuses.md): paradigm laws and focuses, fight memory, pure Index reads and
   compatibility with existing drafts and trial lessons (implementation in progress).
@@ -108,3 +108,5 @@ The next number is **ADR-0078**.
 - [ADR-0076](ADR-0076-studio-sizing-and-asset-reviews.md): immediate building/prop sizing with stable artwork and collision baselines, persistent right-click art feedback, and prompted replacement variants through the existing remake queue where supported.
 - [ADR-0077](ADR-0077-land-variety-and-area-selection.md): nineteen distinct outdoor surfaces, connected exposed-edge paths, stable authored texture variants, palette-safe terrain generation, and filtered area selection for clearing groups of objects in one undo step.
 - [ADR-0078](ADR-0078-lanternroot-learning-workshops.md): Lanternroot's shared-supper story, content-authored learning notes and predictions, real sandbox experiments, save wires and ordered lamp blocks, and a developed 92 × 64 town.
+- [ADR-0079](ADR-0079-lanternroot-2-starting-area.md): Retired Lanternroot 2 starting-village experiment; runtime area and creator choice removed at the player’s request, with safe recovery for existing saves.
+- [ADR-0080](ADR-0080-grid-boundaries-and-gate-swing.md): shared cardinal sockets and ground anchors for boundary materials, one/two-cell gates and opener-facing swing arcs.

@@ -157,7 +157,7 @@ func test_paradigm_and_focus_picks_show_their_relic_art() -> void:
 	await _settle()
 
 
-func test_program_loot_shows_card_faces_beside_its_payout_ledger() -> void:
+func test_program_loot_shows_its_ledger_and_cards_before_the_script_stage() -> void:
 	Game.use("program")
 	Game.session.saves.delete_run("program")
 	Game.session.start(SandboxJob.JAVASCRIPT, "beginner", "screen-loot-ledger")
@@ -171,17 +171,29 @@ func test_program_loot_shows_card_faces_beside_its_payout_ledger() -> void:
 	}
 	var loot := RoomPanel.create(session)
 	add_child(loot)
-	var body := loot.get_child(1) as HBoxContainer
-	assert_int(body.get_child_count()).is_equal(2)
 	assert_int(loot.find_children("*", "CardFace", true, false).size()).is_equal(3)
-	var script_icon := loot.find_children("*", "TextureRect", true, false).filter(
+	var labels: Array[String] = []
+	for label: Label in loot.find_children("*", "Label", true, false):
+		labels.append(label.text)
+	assert_array(labels).contains(["$ time ./main", Text.f("cycles %d earned", [12])])
+	assert_int(_reward_script_icons(loot).size()).is_equal(0)
+	loot.queue_free()
+	var skipped: Dictionary = await session.command({"type": "take", "shard_id": null})
+	assert_bool(skipped.ok).is_true()
+	var script_stage := RoomPanel.create(session)
+	add_child(script_stage)
+	assert_int(script_stage.find_children("*", "CardFace", true, false).size()).is_equal(0)
+	assert_int(_reward_script_icons(script_stage).size()).is_equal(1)
+	script_stage.queue_free()
+	await _settle()
+
+
+func _reward_script_icons(panel: Control) -> Array[Node]:
+	return panel.find_children("*", "TextureRect", true, false).filter(
 		func(node: Node) -> bool:
 			var picture := node as TextureRect
 			return picture.texture != null and picture.texture.resource_path.ends_with("/script-kill-9.png")
 	)
-	assert_int(script_icon.size()).is_equal(1)
-	loot.queue_free()
-	await _settle()
 
 
 func _shows_relic(root: Node, relic_id: String) -> bool:

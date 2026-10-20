@@ -85,3 +85,26 @@ func test_old_and_new_sources_are_known_for_every_placeable_picture() -> void:
 			old_count += 1
 	print("catalog sources: %d new (40 px), %d old (enlarged)" % [new_count, old_count])
 	assert_array(bad).override_failure_message("pictures without a usable source: %s" % [bad]).is_empty()
+
+
+func test_refreshed_pictures_keep_their_source_placement_defaults() -> void:
+	var assets: Dictionary = _parsed(CATALOG).assets
+	var index := OverworldArt.index("world")
+	var refreshed := 0
+	for art: String in index:
+		if not art.contains("-update-"):
+			continue
+		refreshed += 1
+		var source := art.get_slice("-update-", 0)
+		assert_bool(assets.has(art)).override_failure_message(art).is_true()
+		if not assets.has(art):
+			continue
+		var entry: Dictionary = assets[art]
+		var original: Dictionary = assets[source]
+		for field: String in ["kind", "category", "subcategory", "place", "size", "solid", "draw_layer", "flippable"]:
+			assert_that(entry.get(field)).override_failure_message("%s: %s" % [art, field]).is_equal(original.get(field))
+		assert_array(entry.size).override_failure_message(art).is_equal(index[art].footprint)
+		for axis: String in (original.get("line", {}) as Dictionary):
+			var target := String(original.line[axis])
+			assert_str(String(entry.line[axis])).is_equal(art if target == source else target)
+	assert_int(refreshed).is_greater(0)

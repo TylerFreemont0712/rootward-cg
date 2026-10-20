@@ -2,6 +2,15 @@
 
 Things worth understanding in this codebase, with pointers. Newest last.
 
+## 2026-10-20 — A second start needs the whole opening route
+
+A character's starting-area choice is saved with that character's starting map, but later Play must always honor the
+saved map instead of reapplying the creator's last choice. The opening quest also has map-shaped assumptions: a new
+starting village needs its own interior, outdoor exit, return route and coded cabbage gate. Keep the gate's ID unique,
+then let the quest count the shared cabbage-gate prefix; this preserves independent player code and lets either gate
+complete the same step. Determine town-versus-indoor presentation from each map's interior field rather than from
+one hard-coded town ID.
+
 ## 32-bit maths in a 64-bit language (`game/core/rng.gd`)
 GDScript has one integer type, a signed 64-bit `int`. The hash and the generators are defined on unsigned 32-bit
 words, so every step masks with `& 0xFFFFFFFF`, and multiplication splits one factor into 16-bit halves (`Rng.imul`)
@@ -1966,6 +1975,25 @@ condition before and after a change instead of inferring step identity from the 
 The Studio's content writers preserve canonical JSONC layouts. Rewrite quests with that writer, retain headers,
 and derive text-edit test anchors from current content so new story prose does not invalidate byte-preserving edits.
 
+## 2026-10-20 — Area removal, saved positions and durable character writes
+
+A saved position is meaningful only against the current map. The overworld already had a normalizer capable of
+moving a character out of a newly blocked cell, but the real loader never supplied its map. Pass the catalog map at
+load time. When the map itself has been retired, return home while retaining the rest of the character's progress.
+
+Opening a temporary save file does not prove its contents were written. Check the write and flush result before
+renaming it over the last complete snapshot. A failed character creation must keep the entered name and appearance
+available for retry; a failed progress save must also tell the player, rather than silently continuing as if saved.
+
+A linked program run and the object whose editor is open have different identities. Keep the editor target separate
+from queued hooks, or closing or rerunning the original editor can save its code onto the last linked object.
+
+Area deletion must consider incoming transitions, map metadata, schedule anchors and references from lessons and
+other programs. A clean-looking document can still have coordinated Redo records, so check histories again after
+opening stored sessions. Tests need the same isolation discipline: cleaning a shared fixture parent can delete a
+second test process's active world. Each suite should remove only its own fixtures. Content validation must load
+Lanternroot as well as the Shardrun catalog to catch the world errors the player actually encounters.
+
 
 ## 2026-10-20 — Terrain boundaries need the actual neighbour underneath
 
@@ -1982,3 +2010,14 @@ materials with hard alpha, preserving the pixel palette without a universal pain
 Independent source swatches can also have different lighting. Grass and meadow need a shared turf value; dirt needs
 its broad lighting removed before tiling, since low-frequency highlights otherwise become a visible checkerboard.
 Variation should change fine details while keeping seam geometry and directional materials consistent.
+
+## 2026-10-20 — Boundary art needs shared sockets and a shared ground anchor
+
+Connection metadata can keep different materials flush only if their pixel geometry uses the same socket locations.
+All wall and fence styles now use one cell canvas and center joint; only palette and surface details vary. Clip patterned
+fills to the active arm so lattice strokes do not bleed into an unconnected direction. Cache a spatial index per join
+group and compute masks for the full map in one pass; recomputing a map scan per segment scales quadratically.
+
+A gate's facing maps to one of two registered swing arcs. When facing runs parallel to the hinge axis, use the side the
+walker entered from, because that facing has no across-axis direction. Keep diagonal walls out of the cardinal system
+until the movement and collision rules can represent them too.

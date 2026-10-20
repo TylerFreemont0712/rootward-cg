@@ -52,6 +52,11 @@ generated images may not be protectable as your own work in some countries. Read
   the sixteen source swatches used for the refreshed land materials. The source remains intact; the existing local
   pixel pipeline samples it, derives variants and enforces the world palette. Water retains its previous source.
   This generated source follows the same release review requirements described above.
+- **Lanternroot 2 art from ChatGPT ImageGen** (2026-10-20): the sluice wheel, kite rack and basin bell use the
+  approved sources in `Concept/v0.5/lanternroot-2/imagegen/`, re-cut through `pipeline/world` to the shared palette.
+  Edda, Lio, Tarek and Ona's dialogue portraits use the generated portraits in the same folder. Exact prompts and
+  the area brief are in `Concept/v0.5/lanternroot-2/README.md`. OpenAI output terms still need review before release.
+  The eight `lr2-*` building files are copies of existing project art, with the originals retained.
 - **Player animation and commander replacement** (2026-10-17): the player explicitly requested ChatGPT image
   generation for the higher-quality characters. Built-in OpenAI imagegen produced the selected directional sources
   for `game/assets/overworld/player/male.png`, `female.png` and the replacement `cast/sergeant.png`, using the

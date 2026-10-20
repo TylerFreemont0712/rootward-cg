@@ -1,0 +1,240 @@
+{
+  "main": {
+    "id": "0560a5450a01a79a",
+    "type": "split",
+    "children": [
+      {
+        "id": "b35d311732fd0c90",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0ba9c2cb67d60b55",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Concept/v0.5/02-contracts-and-world-state.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "02-contracts-and-world-state"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "8c34a486dce8c2b3",
+    "type": "split",
+    "children": [
+      {
+        "id": "1cf7baca2d453698",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "df9422701d854614",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "e82649c3dbec1775",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "78c020ed016cc064",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "5e71b7c23c0f6320",
+    "type": "split",
+    "children": [
+      {
+        "id": "b8b02a3393429156",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "74964628bd660390",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "docs/PHASE2.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "45594a034d64f234",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "docs/PHASE2.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "bfa976164e069a6c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "1759edfbab3d7ecd",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "ec37fa8bd915c96c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "docs/PHASE2.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "0ba9c2cb67d60b55",
+  "lastOpenFiles": [
+    "shots/terrain-overhaul/town-before-art.png",
+    "Concept/v0.5/CONCEPT/Direction - Ideals.md",
+    "Concept/v0.5/02-contracts-and-world-state.md",
+    "shots/terrain-overhaul/fixture-renderer-fix.png",
+    "game/reports/report_1425/css/logo.png.import",
+    "game/reports/report_1425/godot_report_log.html",
+    "game/reports/report_1425/css/styles.css",
+    "game/reports/report_1425/css/logo.png",
+    "game/reports/report_1425/css/breadcrumb.css",
+    "game/reports/report_1425/css",
+    "game/reports/report_1425/index.html",
+    "game/reports/report_1425/test_suites/test.scenes.ground_layer_test.html",
+    "game/reports/report_1425/test_suites",
+    "game/reports/report_1425/path/test.scenes.html",
+    "game/reports/report_1425/path",
+    "shots/terrain-overhaul/fixture-before.png",
+    "Concept/v0.5/01-guild-hall-gameplay.md",
+    "Concept/v0.5/README.md",
+    "Concept/v0.5/terrain-overhaul/art-source/woodland-materials-imagegen.png",
+    "Concept/v0.5/lanternroot-village-direction/village-wide-concept.png",
+    "Concept/v0.5/lanternroot-2/retired-runtime/buildings/lr2-smithy.png",
+    "Concept/v0.5/lanternroot-2/retired-runtime/buildings/lr2-workshop.png",
+    "Concept/v0.5/lanternroot-2/retired-runtime/buildings/lr2-cottage.png",
+    "Concept/v0.5/lanternroot-2/README.md",
+    "Concept/v0.5/lanternroot-2/imagegen/sluice-wheel-alpha.png",
+    "Concept/v0.5/lanternroot-2/imagegen/basin-bell-alpha.png",
+    "Concept/v0.45/README.md",
+    "Concept/v0.35/05-delivery-checklist.md",
+    "Concept/v0.35/README.md",
+    "docs/decisions/ADR-0074-occupied-gates-swing.md",
+    "docs/decisions/ADR-0073-quest-evidence-and-growing-journal.md",
+    "docs/decisions/ADR-0072-registered-world-art-states.md",
+    "docs/decisions/ADR-0071-authored-player-animation.md",
+    "Concept/v0.4/07-handoff.md",
+    "docs/decisions/ADR-0070-the-town-in-japanese.md",
+    "docs/decisions/ADR-0069-the-town-keeps-time.md",
+    "Concept/v0.4/06-japanese.md",
+    "Concept/v0.4/05-chapter-3.md",
+    "WIP.md",
+    "docs/decisions/ADR-0067-music-through-comfyui-in-packages.md",
+    "Concept/v0.3/13-soundtrack-solid.md",
+    "Concept/v0.3/12-studio-handoff.md",
+    "Concept/v0.3/Update/artchecklist.md",
+    "file:/home/joejin/personal-project/VoiceMe/README.md",
+    "Concept/v0.3/Update/updateprogress.md",
+    "Concept/v0.3/Update/README.md"
+  ]
+}

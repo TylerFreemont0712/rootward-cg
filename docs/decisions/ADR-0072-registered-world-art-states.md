@@ -17,7 +17,7 @@ crossed a diagonal. The player requested better art, consistent horizontal/verti
 - `import_town_boundaries.gd` registers one timber material and shared post into all sixteen north/east/south/west
   masks: isolated post, four ends, two straights, four corners, four tees and a crossing. Native vertical faces use
   the same post height, rail heights, ground anchor and tile depth as horizontal runs.
-- Closed/open gate sheets share their hinges. Wide 2/3-cell horizontal and 2-cell vertical gates have one full-width
+- Closed/open gate sheets share their hinges. Wide 2-cell horizontal and vertical gates have one full-width
   frame rather than repeated single-cell doors. Town drawing and Studio ghosts recognize full-footprint programmed
   art; legacy one-cell program art can still repeat. Existing static gate runs become one wide object. The cabbage
   gate retains its program and collision rules. ADR-0074 supersedes the initial permanently open display of ordinary
@@ -31,6 +31,8 @@ crossed a diagonal. The player requested better art, consistent horizontal/verti
 - A stroke and its neighboring changes are one undo transaction. Moving, removing or swapping boundaries also
   reconciles the surrounding fence shapes in that transaction. Preview hides superseded sprites until the gesture
   ends. A cached plan is reused while the document, template, cells and placement mode remain unchanged.
+- The 2026-10-20 boundary refresh in ADR-0080 adds shared cardinal sockets for every catalog boundary material. The
+  three-cell gate is no longer offered; registered legacy art remains available to old map documents.
 - Sources, complete prompts, previous art and the interactive comparison live in
   `Concept/v0.3/Update/town-polish/`. Rebuild registration before the normal world `cut` stage.
 

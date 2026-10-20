@@ -12,6 +12,11 @@ const OLD_LOOK := {"outfit": "outfit/armor", "hat": "hat/kettle", "colours": {"m
 var screen: CharacterSelect
 
 
+class FailingStore extends OverworldStore:
+	func save_character(_id: String, _state: Dictionary) -> Error:
+		return ERR_CANT_CREATE
+
+
 func before_test() -> void:
 	Game.reset(ROOT)
 	Game.boot()
@@ -227,11 +232,13 @@ func test_a_look_the_kit_cannot_draw_still_shows_a_picture_about_as_tall() -> vo
 	assert_bool(screen.lineup.slots[3].stand.silhouette).is_true()
 
 
-## Every Label's text under `node`.
+## Every label and button's text under `node`.
 func _texts(node: Node) -> Array[String]:
 	var out: Array[String] = []
 	if node is Label:
 		out.append((node as Label).text)
+	elif node is Button:
+		out.append((node as Button).text)
 	for child in node.get_children():
 		out.append_array(_texts(child))
 	return out
@@ -260,3 +267,41 @@ func test_the_detail_line_has_the_language_the_style_and_the_time_played() -> vo
 	state.boots.style = OverworldState.SCRIBE
 	state["played_seconds"] = 720
 	assert_str(CharacterCard.detail_line(state)).is_equal("Python · Scribe · 12 min")
+
+
+func test_new_characters_start_at_home_without_a_retired_area_choice() -> void:
+	await _open()
+	screen.open_creator()
+	assert_bool(screen.creator.visible).is_true()
+	assert_bool(_texts(screen.creator).has("Starting area")).is_false()
+	assert_bool(_texts(screen.creator).has("Lanternroot 2")).is_false()
+	screen._on_created(ROBE_LOOK, "New Tinker")
+	var saved := OverworldStore.for_profile().load_state()
+	assert_str(String(saved.map)).is_equal("home")
+	assert_that(OverworldState.cell(saved)).is_equal(OverworldMap.cell_of(screen.catalog.maps.home.start))
+	assert_str(String(saved.name)).is_equal("New Tinker")
+	assert_dict(saved.look).is_equal(ROBE_LOOK)
+
+
+func test_failed_character_save_keeps_creation_open_and_can_be_retried() -> void:
+	await _open()
+	screen.open_creator()
+	screen.creator._name.text = "Retry Tinker"
+	screen.creator._choose_model("female")
+	var working_store := screen.store
+	screen.store = FailingStore.new(working_store.root)
+	var previous := OverworldStore.current
+	screen.creator._finish()
+	assert_str(screen.went_to).is_equal("")
+	assert_str(OverworldStore.current).is_equal(previous)
+	assert_bool(screen.creator.visible).is_true()
+	assert_bool(screen.creator._closing).is_false()
+	assert_bool(screen.creator._problem.visible).is_true()
+	assert_str(screen.creator._problem.text).contains("Could not save your character")
+	assert_str(screen.creator._name.text).is_equal("Retry Tinker")
+	assert_int(working_store.characters().size()).is_equal(0)
+	screen.store = working_store
+	screen.creator._finish()
+	assert_str(screen.went_to).is_equal(Game.OVERWORLD)
+	assert_str(String(working_store.load_state().name)).is_equal("Retry Tinker")
+	assert_str(String(working_store.load_state().look.model)).is_equal("female")
