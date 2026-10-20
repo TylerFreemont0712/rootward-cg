@@ -21,6 +21,9 @@ Studio also mixed buildings, gates and ordinary props in one Build shelf, and F2
   stable and undoable as the action that created it.
 - Walls, fences and gates use one boundary placement path. Horizontal and vertical catalog variants choose their
   edge orientation; a drag stays on its starting axis. Boundary objects cannot be resized as ordinary cell footprints.
+- The generated boundary atlas supplies eight material styles. A vertical segment or gate uses a clockwise quarter-turn
+  of its matching horizontal module, so it spans a full grid edge with the same construction and finish. The placed
+  gate and Studio ghost share bounds centered on the edge coordinate; a vertical edge uses `x = at.x * TILE`.
 - An automatic gate opens while a Walker approaches or occupies either side of its edge. The opener's facing selects
   the swing side; the incoming side resolves along-edge approaches. An open gate releases its edge collision. Existing
   one- and two-cell gate families remain the supported sizes.
@@ -36,6 +39,7 @@ the same edge coordinates. A boundary can sit beside a barrel or crop without ta
 one or two edge segments wide. Neighboring art stays unchanged unless the user explicitly edits it. Existing cell-based
 boundary placements need conversion to edge coordinates when they are authored or migrated.
 
-The edge review is `shots/studio/edge-boundaries.png`; the Build shelf review is
-`shots/studio/build-walls-doors.png`. Focused checks cover map schema retention, cell movement, boundary placement and
-undo, gate orientation/opening, Build shelf scopes, and F2/Fit map behavior.
+The edge review is `shots/studio/edge-boundaries.png`; the generated art and grid review is
+`shots/studio/edge-boundaries-redesign.png`; the Build shelf review is `shots/studio/build-walls-doors.png`. Focused
+checks cover map schema retention, cell movement, boundary placement and undo, gate orientation/opening, Build shelf
+scopes, and F2/Fit map behavior.

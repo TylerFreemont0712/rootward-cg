@@ -2036,3 +2036,10 @@ does not make a placement usable if the editor serializes runtime vectors into a
 Treat every edge placement as its own command. Computing a new corner mask by scanning and re-arting neighbours makes
 an apparently local edit change unrelated objects; explicit segments preserve what the user drew and keep one undo
 step aligned to that action.
+
+## 2026-10-20 — Rotate edge art with the boundary
+
+End-on post pictures do not show a fence running along a vertical edge. Derive vertical fence and gate modules by
+rotating the matching horizontal module; then both orientations cover one full edge and share the same material details.
+Center the rotated visual on the vertical grid line, and put the gate ghost and placed sprite on the same bounds so the
+preview cannot imply a different position.

@@ -666,7 +666,8 @@ This follow-up is prioritized before old S10/S11; historical phase completion be
       named runs, scoped lint and EN/JA native review. Logs/screenshots: `shots/studio-b01/`.
 - [x] B02: boundaries and gates use tile edges with independent, undoable segments; the Build shelf separates
       Buildings, Walls & doors and Other objects. F2 opens one zoom step wider than Play; Fit map enters full-map view.
-      Native reviews: `shots/studio/build-walls-doors.png`, `shots/studio/edge-boundaries.png`. See ADR-0081.
+      Native reviews: `shots/studio/build-walls-doors.png`, `shots/studio/edge-boundaries.png`, and the generated
+      eight-style art with grid alignment in `shots/studio/edge-boundaries-redesign.png`. See ADR-0081.
 - [ ] B03–B06: existing building sizing/door contract, room furnishing, remaining map controls and acceptance.
 - [ ] M01–M08: rectangular modular shells, assembled roofs, owned partitioned interiors and full compatibility.
 - [ ] W01–W07: new outdoor areas, reference index, coordinated expansion, paired routes, districts and save migration.
