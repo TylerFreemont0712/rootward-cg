@@ -1,7 +1,7 @@
 # Decisions
 
 One file per decision a later reader could reasonably question: context, options, decision, consequences.
-The next number is **ADR-0084**.
+The next number is **ADR-0085**.
 
 - [ADR-0048](ADR-0048-paradigm-laws-and-focuses.md): paradigm laws and focuses, fight memory, pure Index reads and
   compatibility with existing drafts and trial lessons (implementation in progress).
@@ -115,3 +115,5 @@ The next number is **ADR-0084**.
 - [ADR-0082](ADR-0082-upright-boundaries-and-mounted-gates.md): actual upright views, fixed frames and hinged leaves, wall-mounted gate installation/restoration, and diagonal placement with shared movement collision.
 
 - [ADR-0083](ADR-0083-authored-village-residents.md): stable named cast identities, complete v0.5 resident import, Build People scope and preservation of authored sheets through regeneration.
+
+- [ADR-0084](ADR-0084-shared-portrait-background-and-framing.md): cached village backgrounds for transparent portraits, visible-bust bottom alignment and dialogue motion that respects container padding.

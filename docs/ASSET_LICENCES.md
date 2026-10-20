@@ -97,6 +97,11 @@ generated images may not be protectable as your own work in some countries. Read
 - **3D:** TRELLIS (verify) and anything imported through the Blender MCP from Sketchfab or Poly Pizza (licence per
   model; Poly Haven is CC0).
 
+The shared portrait background added on 2026-10-20 was generated with built-in OpenAI imagegen. Selected source and
+exact prompt are in `Concept/v0.5/characters/portrait-backdrop/`; the 512 × 512 runtime copy is
+`game/assets/overworld/portrait_backdrops/village.png`. It follows the same OpenAI output-terms release review as the
+other requested imagegen assets above.
+
 ## Do not ship as is
 
 - **Characters from existing games or shows.** A model or portrait of someone else's character cannot ship, however

@@ -2076,3 +2076,16 @@ Authored people also need identity beyond fallback parts. Optional `look.cast` c
 cache key; two residents can share simple fallback clothes without showing the same complete character. The importer
 uses one scale for all views and a shared ground row so turning or breathing does not move the feet. Approved sheets
 are marked authored, so even forced cast regeneration preserves them. Source plates and prompts stay reproducible.
+
+## 2026-10-20 — Ground the visible portrait and let containers own their padding
+
+A centered transparent image can have its torso cropped well above the lower frame: its canvas bounds include empty
+space that is not part of the person. Measure the alpha silhouette, preserve the full bust and anchor its visible
+bottom to the window's lower edge, with headroom. Compose a shared background once in the portrait cache so dialogue,
+round journal faces and progress views agree, while the original cutout remains reusable. A small transparency
+tolerance preserves paintings with antialiased corners.
+
+PanelContainer controls the child's position as part of layout. Tweening that child's y back to zero overwrites its
+theme padding, even if the hop itself looks correct. Animate an offset on the frame, compose it with the current
+baseline, and reset offsets when motion is interrupted. A live resize can then move the baseline without fighting
+the animation. Tests step the Tween directly to check completion and interruption without time-dependent sleeps.

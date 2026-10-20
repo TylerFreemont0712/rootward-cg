@@ -679,6 +679,10 @@ This follow-up is prioritized before old S10/S11; historical phase completion be
       Maribel art, four facing rows, portraits, greetings/JA and Build → People. Registered authored sheets survive
       pipeline regeneration. Combined checks 112/112; cast pipeline 14/14; asset checks rerun 3/3 after portrait trim.
       Native lineup, Build placement and boundary previews inspected; see `Concept/v0.5/characters/expansion/README.md`.
+- [x] Portrait presentation follow-up (2026-10-20, ADR-0084): reusable blurred village background for transparent
+      portraits, visible-bust bottom alignment/headroom, preserved painted backgrounds and container-safe dialogue
+      slide/hop. Focused checks 25/25; lint clean; native resident lineup and actual-town dialogue inspected.
+      Source, prompt and review commands: `Concept/v0.5/characters/portrait-backdrop/README.md`.
 - [ ] B03–B06: existing building sizing/door contract, room furnishing, remaining map controls and acceptance.
 - [ ] M01–M08: rectangular modular shells, assembled roofs, owned partitioned interiors and full compatibility.
 - [ ] W01–W07: new outdoor areas, reference index, coordinated expansion, paired routes, districts and save migration.
