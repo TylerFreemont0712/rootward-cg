@@ -62,7 +62,7 @@ func test_without_progress_the_card_shows_pips() -> void:
 
 func test_a_mounted_tracker_rebuilds_its_japanese_copy_when_the_reading_changes() -> void:
 	Text.setup("ja", "hiragana")
-	var key := "The town is glad you came."
+	var key := "Meet the Hollow"
 	tracker.set("_wanted", {"id": "reading", "step": 0, "title": key, "text": key, "done": 0, "total": 1})
 	tracker.call("_draw_now")
 	var kana_step := tracker.step_text()

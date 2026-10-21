@@ -1,6 +1,6 @@
 extends GdUnitTestSuite
-## The v0.4 task editor, its Builder blocks and its results (Concept/v0.4): opened on the shortcuts task, in a save
-## folder of its own. The sandbox takes about 0.1 s per check, so a check is awaited with a generous timeout.
+## The v0.4 task editor, its Builder blocks and its results (Concept/v0.4): opened on the shortcuts task (an old task,
+## kept as a fixture: test/fixtures/old_tasks), in a save folder of its own. The sandbox takes about 0.1 s per check, so a check is awaited with a generous timeout.
 
 const ROOT := "user://test-task-editor"
 
@@ -11,7 +11,7 @@ var _catalog: Dictionary
 func before_test() -> void:
 	Game.reset(ROOT)
 	Game.boot()
-	_catalog = OverworldContent.load_world().catalog
+	_catalog = TestWorld.catalog(["shortcuts"])
 	_task = _catalog.tasks.shortcuts
 	CodeHints.remembered_open = false
 	HintBox.remembered_open = false
@@ -25,7 +25,7 @@ func after_test() -> void:
 
 
 func _state(style := OverworldState.BUILDER, language := "python") -> Dictionary:
-	var state := OverworldState.fresh("lanternroot", Vector2i(18, 8), "right", language)
+	var state := OverworldState.fresh("kindle-hollow", Vector2i(18, 8), "right", language)
 	state.name = "Tinker"
 	state.boots.style = style
 	return state

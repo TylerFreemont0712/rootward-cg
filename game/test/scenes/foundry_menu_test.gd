@@ -49,9 +49,9 @@ func after_test() -> void:
 	UiTheme.refresh_fonts()
 
 
-func test_home_separates_adventure_from_lanternroot() -> void:
+func test_home_separates_adventure_from_the_road() -> void:
 	assert_object(_button(_title, "Adventure")).is_not_null()
-	assert_object(_button(_title, "Lanternroot")).is_not_null()
+	assert_object(_button(_title, "The Road")).is_not_null()
 	assert_object(_button(_title, "Academy")).is_null()
 	assert_object(_button(_title, "Play")).is_null()
 	assert_bool(Game.session.in_progress()).is_false()

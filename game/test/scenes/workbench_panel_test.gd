@@ -10,7 +10,8 @@ var _catalog: Dictionary
 func before_test() -> void:
 	Game.reset(ROOT)
 	Game.boot()
-	_catalog = OverworldContent.load_world().catalog
+	# The game's own tasks are the village's four jobs; the Workbench is tested on a task of the old curriculum.
+	_catalog = TestWorld.catalog(["shortcuts"])
 
 
 func after_test() -> void:
@@ -19,7 +20,7 @@ func after_test() -> void:
 
 
 func _state() -> Dictionary:
-	var state := OverworldState.fresh("lanternroot", Vector2i(18, 8), "right", "python")
+	var state := OverworldState.fresh("kindle-hollow", Vector2i(18, 8), "right", "python")
 	state.name = "Tinker"
 	return state
 

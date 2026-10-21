@@ -43,7 +43,7 @@ func after_test() -> void:
 func _seed() -> void:
 	var store := OverworldStore.for_profile()
 	for who: Array in [["Taro", OLD_LOOK], ["Mina", ROBE_LOOK], ["Kai", {}]]:
-		var state := OverworldState.fresh("lanternroot", Vector2i(13, 45), "down", "python")
+		var state := OverworldState.fresh("kindle-hollow", Vector2i(10, 19), "down", "python")
 		state.look = who[1]
 		state.name = who[0]
 		store.save_character(store.new_id(), state)
@@ -256,12 +256,12 @@ func test_the_card_is_basic_with_no_count_boxes() -> void:
 	# One line for the language, how they build and the time played; then the rule and what they are doing now.
 	assert_bool(texts.has("Python · Builder · A few minutes")).is_true()
 	assert_bool(texts.has("Now:")).is_true()
-	assert_bool(texts.has(Text.t(String(screen.catalog.quests.boots.title)))).is_true()
+	assert_bool(texts.has(Text.t(String(screen.catalog.quests["first-steps"].title)))).is_true()
 	assert_bool(screen._play.visible and screen._progress_button.visible and screen._delete.visible).is_true()
 
 
 func test_the_detail_line_has_the_language_the_style_and_the_time_played() -> void:
-	var state := OverworldState.fresh("lanternroot", Vector2i(13, 45), "down", "python")
+	var state := OverworldState.fresh("kindle-hollow", Vector2i(10, 19), "down", "python")
 	state["played_seconds"] = 4800
 	assert_str(CharacterCard.detail_line(state)).is_equal("Python · Builder · 1 h 20 min")
 	state.boots.style = OverworldState.SCRIBE

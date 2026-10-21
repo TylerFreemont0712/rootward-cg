@@ -7,7 +7,8 @@
 set -uo pipefail
 cd "$(dirname "$0")/../game"
 GODOT="${GODOT_BIN:-godot}"
-"$GODOT" --headless --import --path . >/dev/null 2>&1 || true
+# SKIP_IMPORT=1 when several runs go side by side and an import pass has just been made.
+[ -n "${SKIP_IMPORT:-}" ] || "$GODOT" --headless --import --path . >/dev/null 2>&1 || true
 targets=("$@")
 if [ ${#targets[@]} -eq 0 ]; then
 	for file in test/scenes/studio_*_test.gd; do targets+=("res://$file"); done
