@@ -121,3 +121,7 @@ The next number is **ADR-0086**.
 - [ADR-0085](ADR-0085-pebblebrook-and-the-reacting-world.md): Pebblebrook, a small test village with a job board and three LeetCode-style jobs (Fizz Buzz, Contains Duplicate, Two Sum) whose finished work changes the map through `when`/`unless` objects and `dark_until` lamps (`MapWorld`), and the task editor's hints folded into an expandable box.
 
 - [ADR-0086](ADR-0086-builder-shows-blocks-the-code-arrives-when-it-works.md): the task editor's Learn notes folded by default as a chip beside Hints, the Builder and Scribe as separate screens, the Builder showing only blocks and revealing its Python (with a chips-fly-to-code animation from `Tasks.source_map`) when every case works, and blocks laid out flush left with switch cards.
+
+- [ADR-0087](ADR-0087-level-0-kindle-hollow.md): Level 0, Kindle Hollow, replaces Lanternroot: a village that teaches the boots, `greet`, `sacks`, `label_jars` and `is_clear` in order, a new cast and dialogue, and the brook road to Pebblebrook; the old town's content goes (git keeps it).
+
+- [ADR-0088](ADR-0088-studio-people-per-map-and-shorter-publish.md): Studio: a person on each map (schedules name their map, `map:<id>` facts), Objects and Build split, People & Doors in four views, quests grouped by area, person or status, strokes that follow the pointer, and a Publish that folds what follows from one unreadable map.

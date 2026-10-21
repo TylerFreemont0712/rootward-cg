@@ -47,9 +47,9 @@ func test_resident_art_has_four_grounded_views_and_a_portrait() -> void:
 		assert_object(StudioThumbs.thumb(id, "person")).override_failure_message(id + " builder thumbnail").is_not_null()
 
 
-## Pebblebrook (ADR-0085) is where some of them were placed on purpose, to give out its jobs; nowhere else are they placed
+## Pebblebrook (ADR-0085) and Kindle Hollow (ADR-0087) are where some of them were placed on purpose, to give out jobs; nowhere else are they placed
 ## for the player, and none keeps a schedule.
-const PLACED_ON_PURPOSE := ["pebblebrook"]
+const PLACED_ON_PURPOSE := ["pebblebrook", "kindle-hollow"]
 
 
 func test_new_residents_do_not_appear_on_maps_or_receive_schedules_until_placed() -> void:

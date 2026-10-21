@@ -23,7 +23,7 @@ func test_japanese_editions_cover_the_same_keys_and_keep_format_and_code_tokens(
 			if before != after:
 				mismatches.append(english + " : " + str(before) + " => " + str(after))
 	assert_array(mismatches).is_empty()
-	assert_int(changed).is_greater(2000)
+	assert_int(changed).is_greater(1500)
 
 
 func test_japanese_loads_and_translates_prose_only() -> void:

@@ -824,3 +824,24 @@ board, write a real program for a resident, and watch the village react. Rewards
       blocks flush left with switch cards; the glossary button renamed Words.
 - [ ] Next: the board as a panel, rewards, a second stage per job, the reaction run from the player's program, pause and
       leave, the contract state of `Concept/v0.5/02`.
+
+### Level 0, Kindle Hollow, and the Studio pass — 2026-10-21 (ADR-0087, ADR-0088, `Concept/v0.5/05-level-0-kindle-hollow.md`)
+
+On the player's list after painting and publishing in the Studio: a level 0 before Pebblebrook, Lanternroot gone, and the
+Studio's rough edges (ground strokes, Publish noise, one-place people, loose Objects, one flat People shelf, one long quest list).
+
+- [x] Land strokes follow the pointer and the button (they waited off the view, ended on a motion with no button, and were
+      put back when a dialog opened); `scripts/test-ui.sh` runs the Studio's mouse tests natively at 2560 x 1440.
+- [x] Publish: the schema reads `boundary_mask`; a map that cannot be read folds the problems that follow from it
+      (59 errors and 22 warnings became 6 and 2); a repeated problem is one row with a count.
+- [x] A person is placed once on each map; schedules name their map; `map:<id>` facts for talk and quests.
+- [x] Objects is the loose things; Build is Buildings and Walls & doors; People & Doors has People (Current Map), People
+      (All), Entrances and Player start; the quest list groups by area, person or status, sorts and searches.
+- [x] Kindle Hollow (48 x 36) and the cottage; seven residents with new dialogue; seven quests; four tutorial tasks
+      (`greet`, `sacks`, `label_jars`, `is_clear`) with Builder blocks, Learn notes, hints and Japanese; Hotaru's four
+      opening beats rewritten; the brook road opens to Pebblebrook.
+- [x] Lanternroot's map, quests, talk, schedules, shop, pickups, things, parts tasks and cast removed (git tags
+      `checkpoint-before-level-0`, `snapshot-before-level-0`); the title's second button says The Road.
+- [ ] Next: the Studio suites that copied Lanternroot's content as a fixture (rooms, land growth, publish) need fixtures of
+      their own; the parts curriculum and the lamps lesson have no village (their code is dormant); a screenshot tour of the
+      whole level 0 flow in Japanese; a second map for each house.

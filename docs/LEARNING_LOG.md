@@ -2123,3 +2123,29 @@ breaks the first time either changes.
 Two buttons that open different things should not share a word. "Hints" was both the task's coaching and the code
 glossary; the glossary is now "Words".
 
+
+## 2026-10-21: a stroke is the pointer and the button, a person is one per map, and a failed map should say so once
+
+A drag in the Land tab kept painting wherever the pointer went: over the panels (cells that were never on screen) and, when
+a dialog took the release, with no button held. The render was innocent: a probe that repaints random strokes of all 28
+grounds and compares each with a whole bake found no difference, and a single painted cell reaches at most 4 px past its
+own. Before trusting a visual report, measure the two things that could cause it (what the data holds, what the picture
+draws) and look at the input path last: it was the input. A mouse motion carries `button_mask`; that is the cheap truth
+about whether a button is down, and a test can push it.
+
+One unreadable file can drown a review. Fifty pieces carried a field the schema did not know, so the map was never built,
+and every door that led there, every place and pickup and schedule inside it was an error too: 59 for one cause. Mark the
+problems that mean "this file could not be read", fold the ones that merely follow from it into a single note, and the
+list shrinks to what can be acted on (6 and 2) without hiding any of them: fixing the one thing brings the rest back.
+
+"A person is placed once in the whole world" was a rule that read like a fact. It stopped Pip standing in his house because
+he stood in the town. The runtime only ever shows one map at a time (people are keyed by id per map), so the true rule is
+once per map. A schedule is the one thing that is about one place, so it names its map (`Schedules`), and talk can ask which
+map the player is in (`map:<id>`, a fact like `bag:<item>`), so one person can say different things in each.
+
+A headless Godot run does not carry input events, which hid that the Studio's mouse tests only ever passed at the laptop's
+2560 x 1440 (several reach rows a smaller view does not show). `scripts/test-ui.sh` runs them on a private display at that
+size; a failing suite that "was always failing" deserves a look at how it was run before it is blamed on the code.
+
+To replace a whole world, leave a way back first: `git tag` the last commit and make a tree of the uncommitted work without
+touching the index (`GIT_INDEX_FILE=... git add -A; git write-tree; git commit-tree`), tagged too. Then deleting is cheap.

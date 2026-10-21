@@ -24,7 +24,9 @@ func test_adult_japanese_uses_complete_translations_and_preserves_unknown_text()
 	assert_str(Text.t("a dictionary")).is_equal("辞書")
 	assert_str(Text.t("Japanese reading")).is_equal("日本語の表記")
 	assert_str(Text.t("the recursion went too deep")).is_equal("再帰呼び出しが深すぎます")
-	assert_str(Text.t("That sounds like a lot of writing.")).is_equal("ずいぶん書くことが多そうですね。")
+	assert_str(Text.t("The jars are not going anywhere. They are very heavy, which helps.")).is_equal(
+		"瓶はどこにも行かないよ。とても重いから、かえって助かるんだ。"
+	)
 	assert_str(Text.f("Time played: %s", ["まち"])).is_equal("プレイ時間：まち")
 	assert_str(Text.apply_japanese_reading("まちがって いろいろ")).is_equal("まちがって いろいろ")
 	assert_str(Text.apply_japanese_reading("`かず` \"まち\" codeWord")).is_equal("`かず` \"まち\" codeWord")
@@ -42,17 +44,17 @@ func test_adult_japanese_uses_complete_translations_and_preserves_unknown_text()
 
 func test_adult_edition_covers_story_places_lessons_and_formatted_results() -> void:
 	Text.setup("ja", "kanji")
-	assert_str(Text.t("North Green")).is_equal("北の緑地")
+	assert_str(Text.t("Brook Gate")).is_equal("小川の門")
 	assert_str(Text.t("Pinecone")).is_equal("松ぼっくり")
-	assert_str(Text.t("An old piece of code. Read it from the top, one line at a time, and keep track of what each name holds.")).is_equal(
-		"古いコードだよ。上から一行ずつ読み、各変数に何が入っているか追ってみよう。"
+	assert_str(Text.t("A function takes an input and gives an output. return sends the answer back, and + joins two pieces of text into one.")).is_equal(
+		"関数は、入力を受け取って、出力を出すよ。return は答えを返して、+ は二つの文字を一つにつなげるんだ。"
 	)
-	var story := "There. That is your work, being used by the town."
-	assert_str(Text.t(story)).is_equal("ほら、町が君の仕事を使っているよ。")
+	var story := "The guest book has its first line, and the Hollow has its banners. Thank you, tinker."
+	assert_str(Text.t(story)).is_equal("ゲストブックに最初の行が書けて、ホロウに旗が上がったよ。ありがとう、修理屋さん。")
 	Text.setup("ja", "hiragana")
-	assert_str(Text.t(story)).is_equal("ほら、まちが きみの しごとを つかっているよ。")
+	assert_str(Text.t(story)).is_equal("ゲストブックに さいしょの ぎょうが かけて、ホロウに はたが あがったよ。ありがとう、しゅうりやさん。")
 	Text.setup("ja", "kanji")
-	assert_str(Text.f("Bought %s for %d coins.", ["まつぼっくり", 3])).is_equal("まつぼっくりを3コインで購入しました。")
+	assert_str(Text.f("%d weak ×1.5", [3])).is_equal("3発が弱点 ×1.5")
 	assert_str(Text.t("night")).is_equal("夜")
 
 
@@ -93,9 +95,13 @@ func test_reviewed_hiragana_corpus_and_town_catalog_sample() -> void:
 		if actual != String(pair.hiragana):
 			mismatches.append(String(pair.kanji) + " => " + actual + " (expected " + String(pair.hiragana) + ")")
 	assert_array(mismatches).is_empty()
-	assert_str(Text.t("The town is glad you came.")).is_equal("むらは きみが きてくれて、よろこんで おるぞ。")
+	assert_str(Text.t("The lamps are lit, and the sky is honest. Thank you, tinker.")).is_equal(
+		"ランプが ともって、そらは しょうじきだね。ありがとう、しゅうりやさん。"
+	)
 	Text.setup("ja", "kanji")
-	assert_str(Text.t("The town is glad you came.")).is_equal("村は君が来てくれて、喜んでおるぞ。")
+	assert_str(Text.t("The lamps are lit, and the sky is honest. Thank you, tinker.")).is_equal(
+		"ランプが灯って、空は正直だね。ありがとう、修理屋さん。"
+	)
 	Text.setup("ja", "hiragana")
 	var residuals: Array[String] = []
 	var locale_dir := DirAccess.open("res://content/packs/core/locales/ja")
