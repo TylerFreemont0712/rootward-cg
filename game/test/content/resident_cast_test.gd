@@ -47,9 +47,16 @@ func test_resident_art_has_four_grounded_views_and_a_portrait() -> void:
 		assert_object(StudioThumbs.thumb(id, "person")).override_failure_message(id + " builder thumbnail").is_not_null()
 
 
+## Pebblebrook (ADR-0085) is where some of them were placed on purpose, to give out its jobs; nowhere else are they placed
+## for the player, and none keeps a schedule.
+const PLACED_ON_PURPOSE := ["pebblebrook"]
+
+
 func test_new_residents_do_not_appear_on_maps_or_receive_schedules_until_placed() -> void:
 	for id: String in RESIDENTS:
 		assert_bool(_world.catalog.schedules.has(id)).override_failure_message(id).is_false()
 		for map_id: String in _world.catalog.maps:
+			if map_id in PLACED_ON_PURPOSE:
+				continue
 			for person: Dictionary in _world.catalog.maps[map_id].people:
 				assert_str(String(person.id)).override_failure_message(id + " must be placed deliberately").is_not_equal(id)

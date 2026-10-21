@@ -2089,3 +2089,37 @@ PanelContainer controls the child's position as part of layout. Tweening that ch
 theme padding, even if the hop itself looks correct. Animate an offset on the frame, compose it with the current
 baseline, and reset offsets when motion is interrupted. A live resize can then move the baseline without fighting
 the animation. Tests step the Tween directly to check completion and interruption without time-dependent sleeps.
+
+## 2026-10-20 — A pop-down must be last in the tree, and a world that reacts must keep its indexes
+
+`z_index` decides what a Control is drawn over, not what the mouse reaches: picking walks the tree from the last child
+back. A folded hint box that popped down over the Learn panel looked right and lost every click to the panel under it
+(the screenshot showed the hint; a real mouse event, pushed in the shot tool, hit Learn's header row). The fix is
+structural: the editor hands its root to the box, which moves its pop-down to the end of that tree and places it under
+the bar every frame it is open. Check a pop-over with a pushed mouse event and `gui_get_hovered_control()`, not by eye.
+Opening it should also move nothing: a box that pushes the layout makes the whole centred panel jump.
+
+A map that reacts to flags is tempting to rebuild without the objects that are hidden. Lanternroot Studio (and every
+saved index) counts the objects in file order, so a shorter list would write the wrong object. Keep the built map as it
+is, and make a shown copy that shares the list and leaves out what a hidden object blocks (its cells, door, edges and
+person). Two objects that are never there together (`when` X, `unless` X) can then share a cell, but the cell must
+remember both, or hiding one would unblock a cell the other still holds. Redraw only when the signature of what is shown
+changes: a talk sets flags all the time, and drawing the town again moves every person back to their first cell.
+
+A conversation can be the whole of a small feature. A job board that is a talk with conditional choices, `set` flags and
+an `open` token needs no new screen, is edited in Studio's talk editor, and keeps every state (open, taken, done) in the
+flags the quest log already reads. Build the panel when the talk's limits are felt, not before.
+
+A screen that teaches by showing code should not show the answer's code before the answer exists. Keep the code out of the
+editor (not just hidden behind a note) until the sandbox says every case works, then let it arrive: ask a pure function
+(`Tasks.source_map`) for where each chip landed in the generated text, and fly a copy of each chip to that spot. The
+animation is decoration over data, so tests check the map and the cleanup, not the pixels.
+
+A Control that must line up with its siblings but wears a box with padding can hang the padding outside its rect with the
+StyleBox's `expand_margin_*` and set the content margin to zero. What is inside then starts exactly where plain rows
+start, and the box's edge sits in the margin. Aligning by guessing a spacer's width (the box's padding plus its border)
+breaks the first time either changes.
+
+Two buttons that open different things should not share a word. "Hints" was both the task's coaching and the code
+glossary; the glossary is now "Words".
+

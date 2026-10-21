@@ -1,7 +1,7 @@
 # Decisions
 
 One file per decision a later reader could reasonably question: context, options, decision, consequences.
-The next number is **ADR-0085**.
+The next number is **ADR-0086**.
 
 - [ADR-0048](ADR-0048-paradigm-laws-and-focuses.md): paradigm laws and focuses, fight memory, pure Index reads and
   compatibility with existing drafts and trial lessons (implementation in progress).
@@ -117,3 +117,7 @@ The next number is **ADR-0085**.
 - [ADR-0083](ADR-0083-authored-village-residents.md): stable named cast identities, complete v0.5 resident import, Build People scope and preservation of authored sheets through regeneration.
 
 - [ADR-0084](ADR-0084-shared-portrait-background-and-framing.md): cached village backgrounds for transparent portraits, visible-bust bottom alignment and dialogue motion that respects container padding.
+
+- [ADR-0085](ADR-0085-pebblebrook-and-the-reacting-world.md): Pebblebrook, a small test village with a job board and three LeetCode-style jobs (Fizz Buzz, Contains Duplicate, Two Sum) whose finished work changes the map through `when`/`unless` objects and `dark_until` lamps (`MapWorld`), and the task editor's hints folded into an expandable box.
+
+- [ADR-0086](ADR-0086-builder-shows-blocks-the-code-arrives-when-it-works.md): the task editor's Learn notes folded by default as a chip beside Hints, the Builder and Scribe as separate screens, the Builder showing only blocks and revealing its Python (with a chips-fly-to-code animation from `Tasks.source_map`) when every case works, and blocks laid out flush left with switch cards.

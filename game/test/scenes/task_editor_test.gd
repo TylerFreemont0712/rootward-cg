@@ -14,10 +14,12 @@ func before_test() -> void:
 	_catalog = OverworldContent.load_world().catalog
 	_task = _catalog.tasks.shortcuts
 	CodeHints.remembered_open = false
+	HintBox.remembered_open = false
 
 
 func after_test() -> void:
 	CodeHints.remembered_open = false
+	HintBox.remembered_open = false
 	Sound.silence()
 	Game.reset()
 
@@ -92,14 +94,91 @@ func test_scribe_with_the_starter_fails_and_says_why() -> void:
 	assert_bool(results.find_children("*", "Label", true, false).any(func(l: Label) -> bool: return l.text == 'shortcut("escape")')).is_true()
 
 
-func test_a_failed_try_shows_the_next_hint() -> void:
+func test_the_hints_start_folded_with_the_first_one_earned() -> void:
 	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE))
-	var first := editor.hint_text()
-	assert_str(first).is_equal(Tasks.hints(_task, 0)[0])
+	var box := editor.hint_box()
+	assert_bool(box.is_open()).is_false()
+	assert_int(box.shown_count()).is_equal(1)
+	assert_int(box.total()).is_equal(Tasks.hints(_task, 0).size())
+	assert_str(editor.hint_text()).is_equal(Tasks.hints(_task, 0)[0])
+	assert_str(box.bar_text()).contains("1 of %d" % box.total())
+	await _frames(2)
+
+
+func test_a_failed_try_earns_the_next_hint_quietly() -> void:
+	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE))
+	var box := editor.hint_box()
 	await editor.try_it()
 	assert_str(editor.hint_text()).is_equal(Tasks.hints(_task, 0)[1])
-	(editor.get("_next_hint") as Button).pressed.emit()
+	assert_bool(box.is_open()).override_failure_message("a failed try must not open the box").is_false()
+	assert_bool(box.has_unseen()).is_true()
+	await _frames(2)
+
+
+func test_asking_for_a_hint_opens_the_box_on_it() -> void:
+	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE))
+	var box := editor.hint_box()
+	assert_bool(box.reveal()).is_true()
+	assert_bool(box.is_open()).is_true()
+	assert_bool(box.has_unseen()).is_false()
+	assert_str(editor.hint_text()).is_equal(Tasks.hints(_task, 0)[1])
+	box.reveal()
 	assert_str(editor.hint_text()).is_equal(Tasks.hints(_task, 0)[2])
+	await _frames(2)
+
+
+func test_every_hint_can_be_earned_and_no_more() -> void:
+	var box := HintBox.new()
+	add_child(box)
+	var hints: Array[String] = ["one", "two", "three"]
+	box.setup(hints)
+	assert_bool(box.earn()).is_true()
+	assert_bool(box.earn()).is_true()
+	assert_bool(box.earn()).override_failure_message("nothing is left to earn").is_false()
+	assert_int(box.shown_count()).is_equal(3)
+	box.setup([])
+	assert_bool(box.visible).override_failure_message("a stage without hints has no bar").is_false()
+	await _frames(2)
+
+
+func test_a_new_stage_starts_over_and_the_bar_remembers_open_for_the_run() -> void:
+	var box := HintBox.new()
+	add_child(box)
+	var hints: Array[String] = ["one", "two"]
+	box.setup(hints)
+	box.reveal()
+	assert_bool(HintBox.remembered_open).is_true()
+	box.setup(hints)
+	assert_int(box.shown_count()).is_equal(1)
+	assert_bool(box.is_open()).override_failure_message("the next stage opens as the last was left").is_true()
+	await _frames(2)
+
+
+func test_the_open_box_is_last_in_the_editor_so_it_takes_the_mouse_first() -> void:
+	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE))
+	var box := editor.hint_box()
+	box.set_open(true)
+	await _frames(2)
+	assert_bool(box.box_visible()).is_true()
+	var body := box.next_button().get_parent().get_parent() as Control
+	assert_object(body.get_parent()).is_same(editor)
+	assert_int(body.get_index()).override_failure_message("the box is the editor's last child").is_equal(editor.get_child_count() - 1)
+	box.set_open(false)
+	assert_bool(box.box_visible()).is_false()
+	await _frames(2)
+
+
+func test_ctrl_h_folds_and_opens_the_hints() -> void:
+	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE))
+	var box := editor.hint_box()
+	var press := InputEventKey.new()
+	press.keycode = KEY_H
+	press.ctrl_pressed = true
+	press.pressed = true
+	editor._input(press)
+	assert_bool(box.is_open()).is_true()
+	editor._input(press)
+	assert_bool(box.is_open()).is_false()
 	await _frames(2)
 
 
@@ -220,3 +299,146 @@ func test_learning_guide_prediction_explains_and_can_be_retried() -> void:
 	guide.set_expanded(false)
 	assert_bool((guide.get("_details") as ScrollContainer).visible).is_false()
 	assert_bool((guide.get("_idea") as Label).visible).is_true()
+
+
+# --- the Builder shows blocks, and its code arrives when it works (ADR-0085) ---------------------------------------------
+
+
+## The Builder's answer for the shortcuts task, as its fixture has it.
+func _answer(editor: TaskEditor) -> void:
+	var blocks := editor.get("_blocks") as TaskBlocks
+	blocks.set_toggle("menu", true)
+	blocks.choose("menu_key", 1)
+	blocks.choose("menu_panel", 1)
+
+
+func test_learn_and_the_hints_are_folded_chips_until_the_player_opens_them() -> void:
+	var editor := await _editor()
+	var guide := editor.get("_guide") as LessonGuide
+	assert_bool(guide.is_expanded()).is_false()
+	assert_bool(guide.visible).override_failure_message("nothing of the notes takes room while folded").is_false()
+	assert_bool(editor.hint_box().is_open()).is_false()
+	var chip := guide.get("_toggle") as Button
+	assert_str(chip.text).contains("Learn")
+	assert_bool(chip.is_inside_tree()).override_failure_message("the chip sits in the editor's row of chips").is_true()
+	guide.set_expanded(true)
+	assert_bool(guide.visible).is_true()
+	assert_bool((guide.get("_details") as ScrollContainer).visible).is_true()
+	await _frames(2)
+
+
+func test_the_builder_shows_only_blocks_and_keeps_its_code_behind_a_note() -> void:
+	var editor := await _editor()
+	var code := editor.get("_code") as LessonCode
+	assert_object(editor.get("_blocks")).is_not_null()
+	assert_bool(code.is_veiled()).is_true()
+	assert_bool(code.editor.visible).is_false()
+	assert_str(code.editor.text).override_failure_message("the code is not even in the editor").is_empty()
+	# A try that does not work leaves it behind the note.
+	await editor.try_it()
+	await _frames(2)
+	assert_bool(code.is_veiled()).is_true()
+	await _frames(2)
+
+
+func test_the_scribe_is_a_separate_screen_with_no_blocks_and_no_note() -> void:
+	var editor := await _editor(0, {}, _state(OverworldState.SCRIBE))
+	var code := editor.get("_code") as LessonCode
+	assert_object(editor.get("_blocks")).is_null()
+	assert_bool(code.is_veiled()).is_false()
+	assert_bool(code.editor.visible).is_true()
+	assert_bool(code.editor.editable).is_true()
+	await _frames(2)
+
+
+func test_the_code_is_revealed_when_every_case_works_and_copies_of_the_chips_fly_to_it() -> void:
+	var saved := Settings.reduced_motion
+	Settings.reduced_motion = false
+	var editor := await _editor()
+	var code := editor.get("_code") as LessonCode
+	_answer(editor)
+	await editor.try_it()
+	assert_bool(code.is_veiled()).is_false()
+	assert_str(code.editor.text).is_equal(Tasks.source(_task, (editor.get("_blocks") as TaskBlocks).blocks(), "python"))
+	await _frames(4)
+	var fx := editor.get("_fx") as Control
+	var mapped := Tasks.source_map(_task, (editor.get("_blocks") as TaskBlocks).blocks(), "python")
+	assert_int(fx.get_child_count()).override_failure_message("a copy of each chip and each switch").is_equal((mapped.slots as Array).size() + (mapped.toggles as Array).size())
+	# Each copy begins over its chip, inside the editor, and none is left once the reveal is over.
+	var inside := (editor.get("_panel") as Control).get_global_rect().grow(4.0)
+	for ghost: Node in fx.get_children():
+		assert_bool(inside.has_point((ghost as Control).global_position)).is_true()
+	await get_tree().create_timer(2.6).timeout
+	assert_int(fx.get_child_count()).is_equal(0)
+	assert_float(code.modulate.a).is_equal_approx(1.0, 0.001)
+	Settings.reduced_motion = saved
+
+
+func test_with_reduced_motion_the_code_is_simply_there() -> void:
+	var saved := Settings.reduced_motion
+	Settings.reduced_motion = true
+	var editor := await _editor()
+	_answer(editor)
+	await editor.try_it()
+	await _frames(3)
+	assert_bool((editor.get("_code") as LessonCode).is_veiled()).is_false()
+	assert_int((editor.get("_fx") as Control).get_child_count()).is_equal(0)
+	Settings.reduced_motion = saved
+
+
+func test_a_stage_that_passed_before_shows_its_code_from_the_start() -> void:
+	var editor := await _editor(0, {"passed": 1, "source": "x", "language": "python"})
+	assert_bool((editor.get("_code") as LessonCode).is_veiled()).is_false()
+	assert_str((editor.get("_code") as LessonCode).editor.text).is_equal(Tasks.source(_task, (editor.get("_blocks") as TaskBlocks).blocks(), "python"))
+	assert_int((editor.get("_fx") as Control).get_child_count()).is_equal(0)
+	await _frames(2)
+
+
+func test_the_builders_trips_do_not_name_a_line_of_code_the_player_cannot_see() -> void:
+	var editor := await _editor()
+	var blocks := editor.get("_blocks") as TaskBlocks
+	blocks.set_toggle("menu", true)
+	blocks.choose("menu_key", 2)
+	await editor.try_it()
+	await _frames(2)
+	var results := editor.get("_results") as TaskResults
+	for label: Label in results.find_children("*", "Label", true, false):
+		assert_str(label.text.to_lower()).override_failure_message("no row says line: %s" % label.text).not_contains("(line ").not_contains("line 1:")
+	assert_str((editor.get("_advice") as Label).text.to_lower()).not_contains("line ")
+	await _frames(2)
+
+
+func test_the_hints_pop_down_as_wide_as_the_chips_column_and_under_it() -> void:
+	var editor := await _editor()
+	var box := editor.hint_box()
+	box.set_open(true)
+	await _frames(3)
+	var body := box.next_button().get_parent().get_parent() as Control
+	var chips_row := box.get_parent() as Control
+	var asks := chips_row.get_parent() as Control
+	assert_float(body.global_position.x).is_equal_approx(asks.global_position.x, 2.0)
+	assert_float(body.size.x).is_equal_approx(asks.size.x, 2.0)
+	assert_bool(body.global_position.y >= chips_row.global_position.y + chips_row.size.y - 1.0).is_true()
+	await _frames(2)
+
+
+func test_every_code_line_of_the_blocks_starts_at_the_same_left_edge_inside_a_card_or_not() -> void:
+	var blocks := TaskBlocks.new()
+	add_child(blocks)
+	blocks.setup(_task, Tasks.fresh_blocks(_task), "python", 0)
+	await _frames(3)
+	var edges: Array[float] = []
+	for row in (blocks.get("_column") as VBoxContainer).get_children():
+		var body: Control = null
+		var lines := (blocks.get("_group_lines") as Dictionary).values()
+		for candidate: Variant in lines:
+			if (row as Node).is_ancestor_of(candidate as Node):
+				body = candidate as Control
+		if body == null:
+			body = (row as Node).get_child(1) as Control
+		edges.append(body.global_position.x)
+	assert_int(edges.size()).is_greater(1)
+	for edge: float in edges:
+		assert_float(edge).override_failure_message("lines start at %s" % [edges]).is_equal_approx(edges[0], 1.0)
+	blocks.queue_free()
+	await _frames(2)

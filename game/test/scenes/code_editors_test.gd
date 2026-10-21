@@ -225,11 +225,11 @@ func _has_text(root: Node, text: String) -> bool:
 	return false
 
 
-## Whether a Button reading "Hints" is showing anywhere under `root`.
+## Whether the glossary's button (reading "Words") is showing anywhere under `root`.
 func _visible_hints_buttons(root: Node) -> bool:
 	for node in root.find_children("*", "Button", true, false):
 		var button := node as Button
-		if button.text == Text.t("Hints") and button.is_visible_in_tree():
+		if button.text == Text.t("Words") and button.is_visible_in_tree():
 			return true
 	return false
 

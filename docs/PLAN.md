@@ -805,3 +805,22 @@ and one intentional water-under-watermill warning. See ADR-0078 and the uncommit
 
 The Guild Hall work in this slice is a specification; its gameplay has not been implemented. Terrain improvements
 are live in the existing world and Studio Land painter. Existing terrain IDs and movement/collision stay compatible.
+
+### Pebblebrook test village and quieter hints — 2026-10-20
+
+A small experiment toward the Guild Hall (ADR-0085, `Concept/v0.5/04-pebblebrook-test-village.md`): pick a job from a
+board, write a real program for a resident, and watch the village react. Rewards stay open. Not the contract system.
+
+- [x] The task editor's hints folded into an expandable box (`HintBox`): closed to begin with, "New" after a failed try,
+      Ctrl+H, a pop-down that is drawn and clicked over the Learn panel and moves nothing.
+- [x] `MapWorld`: objects with `when`/`unless`, lamp groups with `dark_until`, exclusive objects sharing a cell, the
+      map shown for the flags, redrawn only when what it shows changes. Studio still sees every object.
+- [x] Pebblebrook (36 × 24), its road from Lanternroot, places, job board, eight residents.
+- [x] Three jobs from LeetCode's easy list as real Python/JavaScript tasks with Builder blocks, Learn notes, hints and
+      Japanese (hiragana and kanji): Fizz Buzz, Contains Duplicate, Two Sum; each with a giver, a quest and a reaction.
+- [x] Tests: rules, layout reachability before and after, talks, quest flags, the three tasks, the mounted redraw.
+- [x] Editor polish (ADR-0086): Learn folded by default as a chip beside Hints; the Builder and the Scribe separate (the
+      Builder shows only blocks, its Python is revealed with a chips-fly-to-code animation when every case works); the
+      blocks flush left with switch cards; the glossary button renamed Words.
+- [ ] Next: the board as a panel, rewards, a second stage per job, the reaction run from the player's program, pause and
+      leave, the contract state of `Concept/v0.5/02`.
