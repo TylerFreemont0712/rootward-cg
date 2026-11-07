@@ -8,7 +8,11 @@ extends Node2D
 
 enum Kind { WARD, CAST, BOLT, BURST, WAVE, VORTEX }
 
-const FOXFIRE_WARD := preload("res://assets/fx/foxfire-ward.png")
+const FOXFIRE_WARD_PATH := "res://assets/fx/foxfire-ward.png"
+## LEARN: loaded on first draw, not preloaded: a preload of a missing picture is a parse error that stops every
+## script depending on this one from compiling, and assets are optional (AGENT.md). Null means the lines draw alone.
+static var _foxfire_ward: Texture2D
+static var _foxfire_ward_tried := false
 const SPELL_SHADER := preload("res://scenes/shardrun/fight/spell_sprite.gdshader")
 const SPRITES := "res://assets/fx/spell/%s.png"
 ## Drawn sizes of the sprites, in stage pixels, before the effect's own scale.
@@ -470,13 +474,23 @@ static func _radial(offsets: Array, colours: Array) -> Texture2D:
 # --- the line art (no sprites) --------------------------------------------------------------------------------------
 
 
+static func _foxfire() -> Texture2D:
+	if not _foxfire_ward_tried:
+		_foxfire_ward_tried = true
+		if ResourceLoader.exists(FOXFIRE_WARD_PATH):
+			_foxfire_ward = load(FOXFIRE_WARD_PATH) as Texture2D
+	return _foxfire_ward
+
+
 func _draw_ward(t: float, fade: float) -> void:
 	var reveal := smoothstep(0.0, 0.16, t)
 	var pulse := 0.92 + sin(elapsed * 13.0) * 0.08
 	var alpha := fade * reveal * pulse
 	var grow := lerpf(0.84, 1.08, reveal)
 	draw_set_transform(Vector2.ZERO, elapsed * 0.12, Vector2.ONE * grow)
-	draw_texture_rect(FOXFIRE_WARD, Rect2(-104, -104, 208, 208), false, Color(0.78, 0.92, 1.0, alpha * 0.42))
+	var ward := _foxfire()
+	if ward != null:
+		draw_texture_rect(ward, Rect2(-104, -104, 208, 208), false, Color(0.78, 0.92, 1.0, alpha * 0.42))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	var shield := _ellipse(76.0 * grow, 126.0 * grow, 0.0, TAU, 72, sin(elapsed * 0.8) * 0.045)
 	var glass := Color(0.26, 0.73, 0.94, alpha * 0.07)
@@ -506,7 +520,9 @@ func _draw_cast(t: float, fade: float) -> void:
 	var alpha := fade * reveal
 	var spin := elapsed * 2.4
 	draw_set_transform(Vector2.ZERO, -spin * 0.34, Vector2.ONE * (radius / 112.0))
-	draw_texture_rect(FOXFIRE_WARD, Rect2(-104, -104, 208, 208), false, Color(1.0, 0.68, 0.34, alpha * 0.28))
+	var ward := _foxfire()
+	if ward != null:
+		draw_texture_rect(ward, Rect2(-104, -104, 208, 208), false, Color(1.0, 0.68, 0.34, alpha * 0.28))
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	draw_circle(Vector2.ZERO, radius, Color(tint.r, tint.g, tint.b, alpha * 0.12))
 	draw_polyline(_ellipse(radius, radius, 0.0, TAU, 64, spin), Color(1.0, 0.77, 0.36, alpha * 0.95), 2.4, true)

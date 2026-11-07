@@ -22,3 +22,8 @@ pipeline/local/
 
 # Old local music takes (read-only, found through pipeline/music/config.json read_also)
 /test/
+
+# Dependencies and builds, for any copy of the project (an evaluation upload too)
+node_modules/
+venv/
+dist/
