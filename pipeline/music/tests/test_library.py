@@ -90,7 +90,7 @@ class Packages(unittest.TestCase):
         (Path(self.tmp.name) / f"{name}.json").write_text(text)
 
     def test_a_package_lists_its_tracks_and_which_are_missing(self):
-        self.write("menu", {"name": "menu", "title": "Menu", "concept": "Concept/v0.3/05-lanternroot-overworld.md",
+        self.write("menu", {"name": "menu", "title": "Menu", "concept": "docs/decisions/ADR-0061-lanternroot-overworld.md",
                             "tracks": ["rest", "lanternroot-not-yet-written"]})
         package = library.load_package("menu")
         self.assertEqual(package.title, "Menu")

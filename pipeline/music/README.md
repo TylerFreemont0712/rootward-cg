@@ -73,7 +73,7 @@ A package is a list of tracks made together: `packages/<name>.json`:
 
 ```json
 {"name": "menu-and-lanternroot", "title": "The main menu and Lanternroot",
- "concept": "Concept/v0.3/05-lanternroot-overworld.md", "tracks": ["title", "lanternroot-front"]}
+ "concept": "docs/decisions/ADR-0061-lanternroot-overworld.md", "tracks": ["title", "lanternroot-front"]}
 ```
 
 `perform.py --package` performs them one after another (never two GPU jobs at once), skips the takes already rendered,

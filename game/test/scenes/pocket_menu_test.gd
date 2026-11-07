@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Hotaru's pocket menu (Concept/v0.4/01 section 8.1): the stand-in menu before the player builds one. It always has
+## Hotaru's pocket menu (ADR-0068): the stand-in menu before the player builds one. It always has
 ## Continue, Your boots, Save, Settings, Quit to title and Quit game; Save waits for the player's own save; and when
 ## the player's shortcut() lets go of Esc its note says so and a Fix it item appears.
 

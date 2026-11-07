@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The Workbench (Concept/v0.4, section 7) and the part-built banner: which cards there are, what they say, and that
+## The Workbench (ADR-0068) and the part-built banner: which cards there are, what they say, and that
 ## two banners queue.
 
 const ROOT := "user://test-workbench"

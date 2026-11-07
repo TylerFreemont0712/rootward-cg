@@ -1,5 +1,5 @@
 extends Control
-## Chapter 3's new pieces for screenshots (Concept/v0.4/05), each on a plain background:
+## Chapter 3's new pieces for screenshots (ADR-0069), each on a plain background:
 ##   CH3_SHOT=shop scripts/screenshot.sh res://tools/ch3_ui_shot.tscn shots/v04/ch3-shop.png 40
 ## Moments: shop (Nym's shop on the Sell tab, the price code's answers in, a status line), bag (the Bag with coins, a
 ## total of 9 things and "T: tidy"), rain (rain falling over the plain background), cloud (the grey veil instead).

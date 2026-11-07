@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Lanternroot's catalog against the real content (ADR-0066, Concept/v0.3/10-lanternroot-studio.md section 8): every
+## Lanternroot's catalog against the real content (ADR-0066, docs/decisions/ADR-0066-lanternroot-studio.md section 8): every
 ## picture a map can use and every townsperson has exactly one valid entry, and every building or prop entry has a
 ## source the Studio can show: new (drawn for the 40 px tile) or old (enlarged until it is remade).
 

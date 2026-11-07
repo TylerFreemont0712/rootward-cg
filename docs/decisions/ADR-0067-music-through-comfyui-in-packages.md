@@ -1,7 +1,7 @@
 # ADR-0067: Composed scores performed through ComfyUI, in packages, to a solid soundtrack concept
 
-Accepted 2026-10-13. Builds on ADR-0019 (the soundtrack is composed, not prompted). The concept is
-`Concept/v0.3/13-soundtrack-solid.md`; the pipeline is `pipeline/music/README.md`.
+Accepted 2026-10-13. Builds on ADR-0019 (the soundtrack is composed, not prompted). The pipeline is
+`pipeline/music/README.md`.
 
 ## Context
 

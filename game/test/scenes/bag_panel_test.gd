@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The town's Bag (Concept/v0.4/01 section 8.4): a slot for each of the player's stacks, in their order, the selected
+## The town's Bag (ADR-0068): a slot for each of the player's stacks, in their order, the selected
 ## one named at the bottom, and the empty bag's own words.
 
 const ITEMS := {

@@ -33,7 +33,7 @@ static var _held := ""
 
 
 ## The first of `ids` that has a file, played as `music` plays it: a place's own track falls back to the next one
-## until it is made (Concept/v0.3/13-soundtrack-solid.md). Nothing plays when none has a file.
+## until it is made (docs/decisions/ADR-0067-music-through-comfyui-in-packages.md). Nothing plays when none has a file.
 static func music_first(ids: Array[String]) -> void:
 	for id: String in ids:
 		if Art.music(id) != null:

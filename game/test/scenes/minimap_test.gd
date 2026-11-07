@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Lanternroot's minimap (v0.4, Concept/v0.4/01 section 9.2): the picture is baked in the player's colours (ground by
+## Lanternroot's minimap (v0.4, ADR-0068): the picture is baked in the player's colours (ground by
 ## ground, solid footprints by their kind), the player's dot sits on its cell, and it appears only once enabled.
 
 const TERRAIN := {"grass": {"walk": true}, "water": {"walk": false}, "path": {"walk": true}}

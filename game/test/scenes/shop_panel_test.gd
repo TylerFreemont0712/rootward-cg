@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Nym's shop (Concept/v0.4/05, section 2.9): the Sell and Buy lists, the prices that come in after the rows appear, the
+## Nym's shop (ADR-0069): the Sell and Buy lists, the prices that come in after the rows appear, the
 ## signals for a sale and a purchase, the mouse, and Esc.
 
 const ITEMS := {

@@ -1,7 +1,6 @@
 # ADR-0068: the parts of the game the player builds
 
-Accepted 2026-10-15. Builds on ADR-0061 (the overworld, the boots and the lessons) and ADR-0066 (the Studio). The
-design is `Concept/v0.4/`.
+Accepted 2026-10-15. Builds on ADR-0061 (the overworld, the boots and the lessons) and ADR-0066 (the Studio).
 
 ## Context
 
@@ -23,7 +22,7 @@ built that way would be a dozen copies.
   - optionally `unlocked_by`.
   The task also holds its starters, its glossary, and its Builder blocks, which are a cloze of the real lines (switches
   and choices) and never a second language. A new task needs no engine code unless it needs a new judge, which is one
-  static function. Its format is `Concept/v0.4/02`.
+  static function. The task format is defined by the fields above.
 - **One harness and one runner.** `tasks.py`, `tasks.js` and `TaskRun` call any function on any argument lists in one
   job.
   - Each call names its function, so checking stage *n* runs every earlier stage's cases too, and a later stage never

@@ -440,8 +440,6 @@ Started 2026-10-06. The Academy was scrapped at the player's request and a new m
 - [x] Move smoothing, measured in the live Blender: the cast snaps, the finger ramps and the guard's entry are longer or
       softer (commit 8fbf10d). [ ] Bezier keys with auto-clamped handles and 60 fps export. [ ] The spikes left in
       cast-skyward and cast-slam, to be judged in the motion lab.
-- [ ] The walkable hamlet (`docs/WALKABLE_HAMLET.md`): a proposal only; slice 1 waits for the player's choice of beside
-      or instead.
 - [ ] Code bugs from the audit: Sweep's guards, Hash Merge's key, Fractional Knapsack's remainder, Import Collections+
       and Import Bisect+ (no real upgrade), and the billing of Permutations and Pairwise.
 
@@ -461,7 +459,7 @@ Started 2026-10-06. The Academy was scrapped at the player's request and a new m
 - [ ] Gating of the legendary looks is open (none yet).
 
 
-### 2026-10-10: the Lanternroot town overhaul (ADR-0062, `Concept/v0.3/09-lanternroot-town-overhaul.md`)
+### 2026-10-10: the Lanternroot town overhaul (ADR-0062, `docs/decisions/ADR-0062-lanternroot-town-overhaul.md`)
 - [x] The brief's design pass: nine read-only specialists and a reality check; their decisions are the concept's section 2.
 - [x] The outdoor base is 512 x 288: 5x on the player's 2560 x 1440 laptop panel, 3x at 1920 x 1080, float-guarded. Interior zoom stays 2.0.
 - [x] Characters at 25 x 35: 52 parts redrawn by hand, the frame landed atomically (`characters.py`, `overworld_art.gd`, the walker's anchor, the preview zooms). Pixel unit tests 20 of 20; the pixel lint is clean.
@@ -505,7 +503,7 @@ Started 2026-10-06. The Academy was scrapped at the player's request and a new m
   hat, and colours), with one size on every tab; this rendering was rolled back on 2026-10-17.
 - [x] The music pipeline: the ComfyUI route performs the composed score (it used to play its own planner's), packages,
   `master.py` and `listen.py` working again, safe partial renders and a lock (63 Python tests). The concept
-  `Concept/v0.3/13-soundtrack-solid.md`; a new `title` and four Lanternroot tracks (front door, town, indoors, coding)
+  `docs/decisions/ADR-0067-music-through-comfyui-in-packages.md`; a new `title` and four Lanternroot tracks (front door, town, indoors, coding)
   performed (two takes each), measured, picked by their numbers and mastered into the game, with the overworld choosing
   the place's track and falling back to `music-rest`.
 - [ ] The player listens and swaps any pick (`pipeline/cache/music/index-menu-and-lanternroot.html`, then `pick` and `master.py`).
@@ -632,72 +630,7 @@ Started 2026-10-06. The Academy was scrapped at the player's request and a new m
 - [x] Three meadow variants are flower-free, Grass uses deeper green shades, and Forest floor keeps its leaf-litter
       patterns with greener tones. Terrain-only build and palette lint are clean; native Studio screenshots reviewed.
 
-### v0.35 Studio follow-up: workspaces, construction and world areas
-
-Specification: [`Concept/v0.35/README.md`](../Concept/v0.35/README.md), detailed Luna execution guide and packet checklist.
-This follow-up is prioritized before old S10/S11; historical phase completion below is unchanged.
-
-- [x] 2026-10-19: detailed implementation package written against the current code. Includes shared workspace/input
-      routing, concrete People & Doors and Build packets, modular building schemas/compiler/material sockets/managed
-      interiors, and new outdoor areas/reference-safe map growth/routes/districts/saved-coordinate handling.
-- [x] F01: shared shelf integration, tab state, input/focus priority and safe gesture cancellation. Complete
-      2026-10-19: `studio_mode_test` 11, `studio_catalog_panel_test` 18; native People workspace screenshots reviewed.
-- [x] P01: People/entrance/start panels and draft-aware read-only indexes. Complete 2026-10-19: `studio_people_test`
-      12, including edits, filter counts, undo/redo, draft reload, map switch, room creation and no canonical writes.
-- [x] P02/P03: reviewed placement transactions and completed link states/arrival preview. Fixed allocator-hash undo,
-      compatible saved-group restoration and cancelled-transition Redo; verified rollback/restart, schedules, grouped
-      Revert/Publish, map start, stale link checks, input isolation, actual draft/published arrivals and EN/JA views.
-      Hidden People shelf refresh is deferred; one-pass indexing and real-town benchmarks roughly halve placement time.
-      Final affected regression: 189 cases/15 suites, zero errors/failures/skips/orphans; named logs in `shots/studio-review/`.
-      Full run remains red: 2,097 cases, 5 errors/33 assertions before final fixture/fence corrections; README records
-      corrected cases and residual content/catalog, Shardrun, reading and quest-test problems.
-- [x] P04: existing room creation/opening/furnishing and unlinked room handling. Linked interiors expose **Furnish room**; unlinked new room drafts stay visible, support Locate and uniquely matched Reconnect with fresh snapshot checks, and block Revert while inbound links remain. Room suite 25/25 and draft-index suite 4/4 pass; scoped lint passes.
-- [x] P05: draft-aware dialogue/quest jumps and authored person details; Back to person, active document history,
-      missing/unreadable dialogue guards and structured entrance diagnostics in rows/overlays. Focused acceptance:
-      People 18/18, plus 49 doors/index/mode/quests cases in the earlier run. Native EN/JA and 1280×720 views reviewed;
-      evidence and the corrected initial test-fixture failure are recorded in `shots/studio-p05/` and the README.
-- [x] P06: mounted People & Doors delivery A, fixture Publish/empty-draft reload and linked building slide/resize
-      return acceptance. Effective targeted coverage 120 cases/10 suites across named runs; final Rooms 25/25 and
-      new walkthrough 2/2. Fixed empty-history typed-array and Japanese link-format errors. Native EN/JA evidence
-      and ordinary geometry history limits: `shots/studio-p06/evidence.txt`. Full project suite not rerun.
-- [x] B01: Build enabled with shared, scoped construction cards, two complete rows, independent search/scroll and
-      canonical templates. Exact category/family metadata separates 30 buildings, 51 boundaries, 9 gates and 37
-      furniture entries; Paint floor opens existing indoor Land tools. Effective focused coverage 55 cases across
-      named runs, scoped lint and EN/JA native review. Logs/screenshots: `shots/studio-b01/`.
-- [x] B02: boundaries and gates use tile edges with independent, undoable segments; the Build shelf separates
-      Buildings, Walls & doors and Other objects. F2 opens one zoom step wider than Play; Fit map enters full-map view.
-      Native reviews: `shots/studio/build-walls-doors.png`, `shots/studio/edge-boundaries.png`, and the generated
-      eight-style art with grid alignment in `shots/studio/edge-boundaries-redesign.png`. See ADR-0081.
-- [x] B02 foundation follow-up (ADR-0082): actual H/V/both-diagonal/post views in eight finishes, fixed gate frames,
-      hinged leaves, host-wall installation/restoration, explicit axes, and diagonal placement/collision. Native
-      review and reproducible art instructions: `pipeline/world/boundary-foundation/README.md`. Effective focused
-      checks: 100 cases across eleven suites pass; player depth regression and native screenshot reviewed.
-- [x] B02 drag/snapping follow-up (2026-10-20): each wall gesture infers H/V/both diagonals live; gates snap to
-      picked wall art/ground lines and full one/two-unit hosts. Mounted tests cover eight drag signs, direction
-      changes, both diagonal player crossings, post gaps and raised-face clicks. Obsolete three-wide runtime art retired.
-- [x] Placeable v0.5 residents (ADR-0083): eight original concepts plus seven new residents, including completed
-      Maribel art, four facing rows, portraits, greetings/JA and Build → People. Registered authored sheets survive
-      pipeline regeneration. Combined checks 112/112; cast pipeline 14/14; asset checks rerun 3/3 after portrait trim.
-      Native lineup, Build placement and boundary previews inspected; see `Concept/v0.5/characters/expansion/README.md`.
-- [x] Portrait presentation follow-up (2026-10-20, ADR-0084): reusable blurred village background for transparent
-      portraits, visible-bust bottom alignment/headroom, preserved painted backgrounds and container-safe dialogue
-      slide/hop. Focused checks 25/25; lint clean; native resident lineup and actual-town dialogue inspected.
-      Source, prompt and review commands: `Concept/v0.5/characters/portrait-backdrop/README.md`.
-- [ ] B03–B06: existing building sizing/door contract, room furnishing, remaining map controls and acceptance.
-- [ ] M01–M08: rectangular modular shells, assembled roofs, owned partitioned interiors and full compatibility.
-- [ ] W01–W07: new outdoor areas, reference index, coordinated expansion, paired routes, districts and save migration.
-
-Early requested slice (2026-10-19): Land resizing grows maps to 128 × 128 tiles with bounded edge controls. The map
-picker's New area flow creates a named, editable outdoor draft with a configurable start and opens it in Land; the
-existing People & Doors tools can connect entrances, and Publish reviews the new map file. The full W01–W07 packet
-remains open for districts, coordinated reference/save migration and paired route creation.
-
-Implementation and evidence are tracked in [`05-delivery-checklist.md`](../Concept/v0.35/05-delivery-checklist.md),
-with exact commands and screenshot paths in `WIP.md` and the v0.35 README. F01/P01–P06 and B01 are complete;
-construction continues with B02. New art is not part of the People & Doors specification. A
-separate user-requested refresh of Lanternroot's buildings is tracked in `WIP.md` and the v0.35 architecture concept.
-
-### Lanternroot Studio: the town's editor inside the game (spec `Concept/v0.3/10-lanternroot-studio.md`, ADR-0066 in S0)
+### Lanternroot Studio: the town's editor inside the game (spec `docs/decisions/ADR-0066-lanternroot-studio.md`, ADR-0066 in S0)
 
 - [x] S4 update (2026-10-18, ADR-0076): direct per-placement sizing and persistent art feedback supersede the
       original remake-only sizing restriction below. Every building and prop now has resize handles and fields;
@@ -719,49 +652,6 @@ separate user-requested refresh of Lanternroot's buildings is tracked in `WIP.md
 - [x] S9 The quest editor: steps, conditions, where it happens, how it is shown, flags browser, talk editor. Done: the Quests tab (`StudioQuestPanel`, with `StudioQuestList`, `StudioConditionEditor`, `StudioFlagBrowser`, `StudioTalkEditor`, `StudioQuestUi`, `StudioQuestEdit`) over the town: **Quests** in order (status words, add, move, remove), each quest's title, summary, giver and what it waits for, and its steps (text, hint, the done condition as kinds — flag, not, flag and not, count, all of — read back in words, a pin: a map and a cell, the schema's new optional `at`; up, down, remove, add); **Flags**: every flag with where it is set (talk nodes, things, lessons, the game itself) and read (quest steps, talk starts and choices, unlocks), orphans marked, a search, and jump-to (a quest step, a talk node, a thing on its map); **Talk**: a file's start rules, its nodes, a node's lines (speaker, mood, text), the flags it sets, its choices, next and open, and `Talk.problems` under it. Each edit is a command on its doc (`StudioDoc` kinds "quests" and "talk", path commands set_at, insert_at, remove_at) with the panel's own undo and redo (Ctrl+Z inside the tab), and the doc's text goes into the file drafts (`StudioQuestWork`), so Publish reviews and writes quests.jsonc and the talk files, and Play draft plays them. Writers `JsoncWriter.quests_text` and `talk_text` round-trip quests.jsonc and 18 of the 22 talk files byte for byte; archivist, hotaru-first-action, noticeboard and oracle are hand-formatted and are written in the standard layout the first time they are published (same data). Pure: `StudioQuests` (condition words, the flag index, orphans; 21 tests). Tests: `studio_quests_test` 6 (the acceptance: a step added to Hello, Lanternroot that needs a new flag set by talking to Pip; Play draft; the tracker shows the step and talking to Pip completes it; Publish writes both files and the world loads them), writers 10, commands +15, docs +4. Look: `shots/studio/studio-quests.png`, `studio-quests-flags.png`, `studio-quests-talk.png`. Left: Pick on map for a pin (x and y fields for now), renaming a quest or a node, and the tracker pointing at a pin.
 - [ ] S10 Heights: elevation, cliff edges, stairs.
 - [ ] S11 The players' build mode (house and yard, saved in the save file).
-
-### v0.4: the game you build from inside the game (spec `Concept/v0.4/`, ADR-0068)
-
-The player's brief of 2026-10-15: many more programming tasks, each one building a part of the game itself, an
-inventory, a small map, a richer tracker and a simpler character select. Conducted with Haiku task workers, Sonnet for
-the story and the UI, a Haiku checkpoint and an Opus final check.
-
-- [x] The engine: tasks in content (stages, judges, hints, cloze blocks), one harness (`tasks.py`, `tasks.js`),
-      `TaskRun`, `Tasks`, `TaskJudges`, `Parts`, `Bag`, the state's new fields, content loading, `PartsRuntime`,
-      `TaskHost`, the `has` condition and the tracked quest.
-- [x] Ten tasks with references, block answers, judges and tests: shortcuts, menu, options, volume, music, bag, map,
-      progress, clock and credits.
-- [x] The story: the menu quest in chapter 1, chapter 2's eight quests, the givers' talk and Hotaru's beats (`03-story.md`).
-- [x] The HUD: the tracker with the giver, a bar, the count and a direction; the minimap; the full map; Track in the
-      log; the character select made basic.
-- [x] The editor, the Workbench and the part-built banner; the pocket menu, the menu's own list, Options with a volume
-      curve, the music box, the bag and the credits.
-- [x] The art: sixteen item icons, the music box and Pell's map table, through the world pipeline.
-- [x] The level pass: the new assets placed, pickups and places; the overworld wired end to end; acceptance
-      (chapter2_acceptance 9, chapter2_town 5); screenshots; Haiku checkpoint; Opus final check.
-- [ ] Later (`Concept/v0.4/01` sections 16 and 18): the Studio's "Build part" poke, gear marks in the menu and the log,
-      more life round the square, the volume's pad nudge, the bag's later stages.
-
-#### Chapter 3, the town keeps time (`Concept/v0.4/05`, ADR-0069), and Japanese (`06`, ADR-0070)
-
-The player's brief of 2026-10-16: chapter 3 with as many tests and lessons as can be written, and the town
-completely accessible in Japanese. Conducted with Haiku workers for tasks, story, UI, level and translation.
-
-- [x] The engine: `args_after`, day and coins, five versions, schedules and the shop in content, the runtime's tables
-      (glow, weather, hours) and live calls (count, price, can_buy, total, tidy, changed), and the town's wiring
-      (rewards, the tally board, the lockbox, the drill board, the shop, rain, people's hours, Hotaru's glow).
-- [x] Eleven tasks with references, block answers, judges and tests: count, glow, drills, locks, forge, stones,
-      weather, hours, shop, tidy and history.
-- [x] The story: eleven quests (14 to 24), the givers' talk, Orin's opening and ending, Hotaru's glow beat, Fern's
-      wait for the rain.
-- [x] The UI: Nym's shop, the bag's coins, total and tidy, the Workbench's history, the rain layer, Hotaru's
-      brightness. The level: seven schedules, the shop's prices, three props.
-- [x] Japanese: every string the town shows counted (`OverworldStrings`), starter comments, templates, case
-      descriptions, the stale entries re-keyed, a term table and a consistency pass; wave 1 (1384 strings) and wave 2
-      (the chapter 3 strings).
-- [x] Acceptance: `chapter3_acceptance` 9, `chapter3_town` 8; screenshots of the shop, the bag, rain and the props.
-- [ ] Left (`Concept/v0.4/07-handoff.md`): the whole suite rerun, lint and validate, Japanese screenshots, a Haiku
-      checkpoint and an Opus final check.
 
 ### Lanternroot learning and village rewrite — 2026-10-20 (ADR-0078)
 
@@ -786,9 +676,6 @@ and one intentional water-under-watermill warning. See ADR-0078 and the uncommit
 - [x] Retire Lanternroot 2 and its home, residents, dialogue, gate and creator choice (ADR-0079).
 - [x] Recover characters saved on retired maps at home, preserving progress; check saved cells against current collision.
 - [x] Keep character creation open after a failed save, and check snapshot writes before replacing the last good save.
-- [ ] Validate the world, sandbox examples and regression suites; fix measured backend failures.
-- [ ] Add confirmed area clearing and deletion with backups, dependency checks and reload coverage.
-- [x] Generate one wide village direction painting using imagegen, stored under Concept/v0.5/lanternroot-village-direction/.
 
 
 ### v0.5 Guild Hall specification and coordinated terrain — 2026-10-20

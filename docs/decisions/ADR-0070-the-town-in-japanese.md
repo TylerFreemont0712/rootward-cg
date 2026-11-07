@@ -1,7 +1,6 @@
 # ADR-0070: Lanternroot completely in Japanese
 
-Accepted 2026-10-16. Builds on ADR-0047 (translation overlays). The voice and the glossary are
-`Concept/v0.4/06-japanese.md`.
+Accepted 2026-10-16. Builds on ADR-0047 (translation overlays).
 
 Updated 2026-10-17: ADR-0075 adds complete adult Japanese translations and a reading choice during creation and in
 Settings. It supersedes the earlier small vocabulary switch while preserving this coverage and template pipeline.

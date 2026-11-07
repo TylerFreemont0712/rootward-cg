@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The town's Music panel (Concept/v0.4/01 section 8.5): the player's titles, a note by the one playing, Enter plays,
+## The town's Music panel (ADR-0068): the player's titles, a note by the one playing, Enter plays,
 ## "Next" asks the player's next_track, and the town's track can be set or given back.
 
 const TITLES: Array[String] = ["Lanternroot", "Warm Hearth", "Study"]

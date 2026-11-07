@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Lanternroot's quest tracker (v0.4, Concept/v0.4/01 section 9.1): the bar when the player's `progress` is built and the
+## Lanternroot's quest tracker (v0.4, ADR-0068): the bar when the player's `progress` is built and the
 ## pips when it is not, the direction line (the arrow's eight ways, the distance, the place, a pin on another map), the
 ## tracked quest, and H hiding the whole tracker with the minimap. The tracker is made on its own with stand-in parts.
 

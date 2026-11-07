@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The v0.4 task editor, its Builder blocks and its results (Concept/v0.4): opened on the shortcuts task (an old task,
+## The v0.4 task editor, its Builder blocks and its results (ADR-0068): opened on the shortcuts task (an old task,
 ## kept as a fixture: test/fixtures/old_tasks), in a save folder of its own. The sandbox takes about 0.1 s per check, so a check is awaited with a generous timeout.
 
 const ROOT := "user://test-task-editor"

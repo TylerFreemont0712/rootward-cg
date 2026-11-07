@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The credits (Concept/v0.4/01 section 5.10): the player's lines roll up, Esc skips to the closing card, and the roll is
+## The credits (ADR-0068): the player's lines roll up, Esc skips to the closing card, and the roll is
 ## over once the card has been read.
 
 var credits: CreditsRoll

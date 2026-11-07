@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Hotaru's brightness (Concept/v0.4/05, section 2.2): the town can set how bright her halo and light are, and -1 brings
+## Hotaru's brightness (ADR-0069): the town can set how bright her halo and light are, and -1 brings
 ## the slow breathing back.
 
 var hotaru: HotaruSprite

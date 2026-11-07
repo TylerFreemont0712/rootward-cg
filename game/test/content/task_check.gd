@@ -1,6 +1,6 @@
 class_name TaskCheck
 extends RefCounted
-## What every task in content must hold (Concept/v0.4/02, section 9), as one helper each task's own test calls:
+## What every task in content must hold (the task format), as one helper each task's own test calls:
 ##
 ##   assert_array(TaskCheck.problems("volume")).is_empty()
 ##

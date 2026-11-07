@@ -1,5 +1,5 @@
 extends Control
-## Moments of v0.4's task editor, the Workbench and the part banner, for screenshots (Concept/v0.4):
+## Moments of v0.4's task editor, the Workbench and the part banner, for screenshots (ADR-0068):
 ##   ROOTWARD_TASK_SHOT=<moment> scripts/screenshot.sh res://tools/task_shot.tscn shots/v04/task.png 60
 ## Moments:
 ##   blocks         the Builder on shortcuts stage 2: the menu's switch on, the bag's off (dimmed)

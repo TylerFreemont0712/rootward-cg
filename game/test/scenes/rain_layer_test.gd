@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The town's weather layer (Concept/v0.4/05, section 2.7): rain falls as streaks, a cloud veils the town, sun and no
+## The town's weather layer (ADR-0069): rain falls as streaks, a cloud veils the town, sun and no
 ## weather draw nothing, reduced motion gives fewer and slower drops, and the layer ignores the mouse.
 
 var rain: RainLayer

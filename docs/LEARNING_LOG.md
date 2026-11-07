@@ -1651,7 +1651,7 @@ All 90 specs are current and palette-cut at 40 px tiles. Catalog and world-art c
 sheets and three in-game category screenshots were inspected in `shots/studio/expansion-*`.
 
 
-## The game the player builds (Concept/v0.4, ADR-0068)
+## The game the player builds (ADR-0068)
 
 **One job answers every question a part will ever be asked** (`PartsRuntime`, `Parts.domain`). The boots already
 did it: every key on every tile in one sandbox job. A part's function is asked the same way about everything the game
@@ -1873,15 +1873,6 @@ differences gradually. Dual-grid tiles shift the source by half a cell, so that 
 shift: the rendered seam otherwise cuts through the untouched source center. Dirt-path edge wear follows the actual
 exposed mask boundary, leaving connected interiors unframed. Regression checks compare neighboring path borders
 for all compatible corner masks and measure the green colors of empty and flowered meadow separately from petals.
-
-### 2026-10-19 — World expansion changes a coordinate contract
-
-The v0.35 Studio specifications distinguish enlarging a map, naming a district and creating a connected map.
-Growing west/north shifts authored cells, incoming doors, quest pins, named rectangles and scheduled anchors;
-moving the editor walker alone cannot preserve older character saves. The proposed implementation therefore plans
-those reference changes together, records published coordinate revisions and migrates saved positions once on load.
-Likewise, modular buildings need explicit ownership of generated room geometry while preserving furniture and floor
-paint. These are design contracts in `Concept/v0.35/`, not claims that migration or modular construction is built.
 
 ### 2026-10-19 — A transaction hashes identity, not allocation history
 

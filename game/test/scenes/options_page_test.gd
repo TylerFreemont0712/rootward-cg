@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The town's Options page (Concept/v0.4/01 section 8.3): the rows are the player's, in their order and words; a
+## The town's Options page (ADR-0068): the rows are the player's, in their order and words; a
 ## volume slider is locked while their volume() is not built and otherwise shows "7 → 49%" and says what changed.
 
 const ROWS: Array[Dictionary] = [

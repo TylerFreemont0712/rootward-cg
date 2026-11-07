@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Lanternroot's quest log (v0.4, Concept/v0.4/01 section 9.4): an open quest has a Track button (or T) that says which
+## Lanternroot's quest log (v0.4, ADR-0068): an open quest has a Track button (or T) that says which
 ## quest to follow, the tracked quest is marked, and each quest shows its giver's face.
 
 const QUESTS := {

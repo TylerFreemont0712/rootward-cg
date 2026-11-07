@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## Lanternroot's full map (v0.4, Concept/v0.4/01 section 9.3): it opens and closes (Esc, M, a click on the shade), its
+## Lanternroot's full map (v0.4, ADR-0068): it opens and closes (Esc, M, a click on the shade), its
 ## legend lists every ground the player's colours cover, and the map takes the largest whole-number scale that fits.
 
 const TERRAIN := {"grass": {"walk": true}, "water": {"walk": false}}

@@ -1,7 +1,6 @@
 # ADR-0069: chapter 3, the town keeps time
 
-Accepted 2026-10-16. Builds on ADR-0068 (the parts of the game the player builds). The design is
-`Concept/v0.4/05-chapter-3.md`.
+Accepted 2026-10-16. Builds on ADR-0068 (the parts of the game the player builds).
 
 ## Context
 

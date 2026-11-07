@@ -1,5 +1,5 @@
 extends GdUnitTestSuite
-## The real menu's list is the player's (Concept/v0.4/01 section 8.2): it shows `info.items` in their order and leaves
+## The real menu's list is the player's (ADR-0068): it shows `info.items` in their order and leaves
 ## out what is not asked for, with the words of the new items; the rule sits before the items that leave the town.
 
 var menu: PauseMenu

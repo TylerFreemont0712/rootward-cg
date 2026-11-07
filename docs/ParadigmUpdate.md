@@ -1380,10 +1380,6 @@ are drawn shapes; `map-prop-shop/issue` are for the room panels). A look at the 
   [`relics.png`](research/balance-probe/paradigm-update/art-review/relics.png) and
   [`map-markers.png`](research/balance-probe/paradigm-update/art-review/map-markers.png). Generated issue, script,
   cycle, registry, focus and room art is present in `game/assets/shardrun/` and consumed by the relevant views.
-- **Hand-card concepts:** [`Concept/v0.2/cards/index.html`](../Concept/v0.2/cards/index.html) presents four footprints
-  and layouts (164×232, 184×258, 152×216 and 224×184), each using the same real `import copy` example. The fixed
-  `object-fit: contain` art windows keep edge-filling icons in frame. This is a concept page; no production hand-card
-  layout was changed.
 - **Locale and room captures:** the complete Registry, Issue, reward, fight, map and rest capture set is in
   the [`final-handoff capture index`](research/balance-probe/paradigm-update/screenshots/final-handoff/README.md),
   with English, Japanese and C++ variants. The Issue captures cover the choice screen, an ordinary settled result and a
