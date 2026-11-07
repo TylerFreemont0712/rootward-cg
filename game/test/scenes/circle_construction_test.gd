@@ -165,7 +165,7 @@ func test_stage_anchor_is_identical_for_different_poses_and_skins() -> void:
 	stage.size = Vector2(1200, 700)
 	add_child(stage)
 	await get_tree().process_frame
-	stage.hero.set_preview_skin("dummy")
+	stage.hero.set_preview_skin("vesper-v1-5")
 	await get_tree().process_frame
 	var cards := CircleLayers.demo_cards(4)
 	stage.hero.play("cast-slam")

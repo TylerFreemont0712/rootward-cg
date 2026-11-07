@@ -85,17 +85,12 @@ static func stats_panel(state: Dictionary) -> Control:
 	var portrait := TextureRect.new()
 	var image := {
 		"vesper": "res://assets/portraits/vesper.png",
-		"emberfox": "res://assets/portraits/emberfox.png",
-		"mana": "res://assets/portraits/mana.png",
-		"anby": "res://assets/portraits/anby.png",
-		"shibu": "res://assets/portraits/shibu.png",
-		"dummy": "res://assets/portraits/dummy.png",
 	}
 	var local_portrait := Settings.LOCAL_SKINS + skin + "/portrait.png"
 	var portrait_path: String = (
 		"res://assets/portraits/%s.png" % skin
 		if ResourceLoader.exists("res://assets/portraits/%s.png" % skin)
-		else String(image.get(skin, image.emberfox))
+		else String(image.get(skin, image.vesper))
 	)
 	if ResourceLoader.exists(local_portrait) and skin not in image:
 		portrait_path = local_portrait

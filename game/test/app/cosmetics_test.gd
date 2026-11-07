@@ -80,7 +80,7 @@ func test_the_loadout_is_remembered_per_profile() -> void:
 	var first := String(Game.profile.id)
 	Settings.loadout = {"circle": "clockwork", "cast_heavy": "skyward-call"}
 	Game.remember_avatar()
-	var second: Dictionary = Game.profiles.create("Yuki", "ja", "shibu")
+	var second: Dictionary = Game.profiles.create("Yuki", "ja", "vesper-v1-5")
 	assert_bool(Game.select_profile(String(second.profile.id))).is_true()
 	assert_str(Cosmetics.look("circle").id).is_equal("codex")
 	assert_bool(Game.select_profile(first)).is_true()
@@ -92,27 +92,6 @@ func test_settings_keep_only_string_choices_for_known_slots() -> void:
 	var clean := Settings.clean_loadout({"circle": "rootglass", "bolt": 4, "hat": "tall"})
 	assert_dict(clean).is_equal({"circle": "rootglass"})
 	assert_dict(Settings.clean_loadout("nonsense")).is_empty()
-
-
-func test_a_fight_plays_the_worn_moves_and_falls_back_on_a_drawn_skin() -> void:
-	var hero: HeroView = auto_free(HeroView.new())
-	hero.preview_skin = "dummy"
-	hero.preview_loadout = {"idle": "lantern-bearer", "cast_heavy": "root-seal", "cast_light": "rune-trace"}
-	hero.size = Vector2(300, 400)
-	add_child(hero)
-	assert_str(hero.character.idle_clip).is_equal("idle-lantern")
-	hero.play_cast(true)
-	assert_str(hero.character.current).is_equal("cast-slam")
-	assert_bool(hero.character.is_cast("cast-slam")).is_true()
-	hero.play_cast(false)
-	assert_str(hero.character.current).is_equal("cast-trace")
-	var drawn: HeroView = auto_free(HeroView.new())
-	drawn.preview_skin = "vesper"
-	drawn.preview_loadout = hero.preview_loadout
-	add_child(drawn)
-	assert_str(drawn.move_clip("cast_heavy")).is_equal("cast-heavy")
-	assert_str(drawn.move_clip("idle")).is_equal("idle-breathe")
-
 
 func test_the_legendary_looks_sit_in_their_slots_and_are_never_first() -> void:
 	for slot: String in LEGENDARY_OPTIONS:

@@ -49,9 +49,9 @@ func after_test() -> void:
 	UiTheme.refresh_fonts()
 
 
-func test_home_separates_adventure_from_the_road() -> void:
+func test_home_offers_adventure_only() -> void:
 	assert_object(_button(_title, "Adventure")).is_not_null()
-	assert_object(_button(_title, "The Road")).is_not_null()
+	assert_object(_button(_title, "The Road")).is_null()
 	assert_object(_button(_title, "Academy")).is_null()
 	assert_object(_button(_title, "Play")).is_null()
 	assert_bool(Game.session.in_progress()).is_false()
@@ -82,11 +82,11 @@ func test_character_equips_a_skin_without_closing_or_starting_a_run() -> void:
 	var panel := _panel("FoundryCharacterPanel") as FoundryCharacterPanel
 	var looks: Array = panel.get("_looks")
 	for i in looks.size():
-		if looks[i].id == "emberfox":
+		if looks[i].id == "vesper-v2":
 			panel.set("_at", i)
 	panel.call("_equip_current")
-	assert_str(Settings.character_skin).is_equal("emberfox")
-	assert_str(Game.profiles.get_profile(String(Game.profile.id)).avatar).is_equal("emberfox")
+	assert_str(Settings.character_skin).is_equal("vesper-v2")
+	assert_str(Game.profiles.get_profile(String(Game.profile.id)).avatar).is_equal("vesper-v2")
 	assert_int((_title.get("_overlay") as Control).get_child_count()).is_greater(0)
 	assert_bool(Game.session.has_run()).is_false()
 	assert_str(panel.selected_class).is_equal("artificer")
@@ -102,7 +102,7 @@ func test_fitting_room_browses_real_skins_without_changing_equipment() -> void:
 	assert_bool(panel.rehearsal.clips().has("cast-light")).is_true()
 	var equipped := Settings.character_skin
 	var avatar: String = Game.profile.avatar
-	for id: String in ["dummy", "emberfox", "shibu", "vesper"]:
+	for id: String in ["vesper-v1-5", "vesper-v2", "vesper"]:
 		for i in panel._looks.size():
 			if panel._looks[i].id == id:
 				panel._at = i
@@ -201,16 +201,11 @@ func test_rehearsal_uses_live_circles_and_cleans_up_when_switching_skins() -> vo
 		await get_tree().process_frame
 	assert_bool(is_instance_valid(stage._circle)).is_false()
 	stage.play("cast-heavy")
-	stage.set_skin("dummy")
+	stage.set_skin("vesper-v2")
 	await get_tree().process_frame
 	assert_object(stage._circle).is_null()
 	assert_int(stage.stage._fx.get_child_count()).is_equal(0)
-	assert_object(stage.hero.character).is_not_null()
-	stage.play("cast-light")
-	stage.seek(0.1)
-	assert_float(stage.hero.character.player.current_animation_position).is_equal_approx(0.1, 0.001)
-	stage.step(1)
-	assert_float(stage.hero.character.player.current_animation_position).is_equal_approx(0.1 + 1.0 / 30.0, 0.001)
+	assert_object(stage.hero.sprite).is_not_null()
 	assert_bool(Game.session.has_run()).is_false()
 
 
@@ -250,21 +245,16 @@ func test_practice_ring_is_a_fight_stage_at_fight_proportions() -> void:
 	assert_int(ring.stage.foes.size()).is_equal(3)
 	assert_float(Engine.time_scale).is_equal(1.0)
 
-
 func test_a_practice_cast_plays_the_fight_and_leaves_the_targets_whole() -> void:
 	_title.call("_open_skins")
 	var panel := _panel("FoundryCharacterPanel") as FoundryCharacterPanel
 	var ring := panel.rehearsal
-	ring.set_skin("dummy")
+	ring.set_skin("vesper-v2")
 	ring.set_look("cast_heavy", "root-seal")
 	ring.set_look("impact", "judgment-pillar")
 	ring.set_speed(1.5)
 	ring.test_cast(3)
-	# The circle is built first with the hero idle; the worn move looses it.
 	var deadline := Time.get_ticks_msec() + 9000
-	while ring.hero.character.current != "cast-slam" and ring._playing and Time.get_ticks_msec() < deadline:
-		await get_tree().process_frame
-	assert_str(ring.hero.character.current).is_equal("cast-slam")
 	while ring._playing and Time.get_ticks_msec() < deadline:
 		await get_tree().process_frame
 	assert_bool(ring._playing).is_false()
@@ -434,14 +424,14 @@ func test_japanese_reading_mode_switches_live_and_persists_in_fonts_settings() -
 	panel = _panel("FoundrySettingsPanel") as FoundrySettingsPanel
 	_button(panel, "かんじ").pressed.emit()
 	assert_str(Game.profile.japanese_reading).is_equal("kanji")
-	assert_str(Text.f("Time played: %s", ["まち"])).is_equal("プレイ時間：まち")
+	assert_str(Text.t("Choose a paradigm.")).is_equal("パラダイムを選ぼう。")
 	assert_str(Game.profiles.get_profile(String(Game.profile.id)).japanese_reading).is_equal("kanji")
 	assert_bool(Game.select_profile(String(Game.profile.id), false)).is_true()
-	assert_str(Text.f("Time played: %s", ["まち"])).is_equal("プレイ時間：まち")
+	assert_str(Text.t("Choose a paradigm.")).is_equal("パラダイムを選ぼう。")
 	panel = _panel("FoundrySettingsPanel") as FoundrySettingsPanel
 	_button(panel, "ひらがな").pressed.emit()
 	assert_str(Game.profile.japanese_reading).is_equal("hiragana")
-	assert_str(Text.f("Time played: %s", ["まち"])).is_equal("あそんだ じかん：まち")
+	assert_str(Text.t("Choose a paradigm.")).is_equal("パラダイムをえらぼう。")
 	_title.call("_set_locale", "en")
 
 

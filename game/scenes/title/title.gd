@@ -205,7 +205,6 @@ func _home() -> void:
 		. hbox(
 			[
 				FoundryUi.icon_button("adventure", _text("Adventure", "冒険"), _show_setup, true),
-				FoundryUi.icon_button("lanternroot", _text("The Road", "旅の道"), _open_lanternroot),
 			],
 			18
 		)
@@ -313,11 +312,6 @@ func _mount_character() -> void:
 			_refresh_adventure = _setup
 	)
 	_show_overlay(character, false, false, true)
-
-
-## The Road opens on its front door: the player's characters, where one is chosen or made (ADR-0061, ADR-0087).
-func _open_lanternroot() -> void:
-	Game.go(Game.CHARACTERS)
 
 
 func _open_profiles() -> void:

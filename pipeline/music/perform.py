@@ -15,7 +15,7 @@ at a time (a lock in the takes folder).
 
     uv run --project pipeline python pipeline/music/perform.py <track>... [--takes 3] [--seed 1000] [--steps 32]
         [--engine auto|comfy|native] [--max-seconds 30]
-    uv run --project pipeline python pipeline/music/perform.py --package menu-and-lanternroot --takes 2
+    uv run --project pipeline python pipeline/music/perform.py --package menu --takes 2
 
 --max-seconds caps a take (a smoke take: `--max-seconds 30`). A package performs its tracks one after another, skips
 the takes already rendered, and goes on past a track that fails; the summary at the end says what happened.

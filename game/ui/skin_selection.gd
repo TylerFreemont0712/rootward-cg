@@ -40,27 +40,6 @@ const LOOKS: Array[Array] = [
 		"A fresh pass on her crescent hat, plum capelet, and starlit palm strike.",
 		"res://assets/portraits/vesper-v2.png",
 	],
-	[
-		"emberfox",
-		"Emberfox",
-		"Salvage Runner",
-		"Amber eyes, a teal field coat, and one bright ember tail.",
-		"res://assets/portraits/emberfox.png",
-	],
-	[
-		"shibu",
-		"Shibu",
-		"Hovering Caster · 3D trial",
-		"A VRoid model on the new move set: she drives her palms through the circle at the foes.",
-		"res://assets/portraits/shibu.png",
-	],
-	[
-		"dummy",
-		"Motion Dummy",
-		"Animation lab · plain mannequin",
-		"A jointed mannequin on the same skeleton as every 3D skin, for judging the moves with nothing to hide behind.",
-		"res://assets/portraits/dummy.png",
-	],
 ]
 
 ## [{id, name, epithet, note, portrait}] in the wheel's order.

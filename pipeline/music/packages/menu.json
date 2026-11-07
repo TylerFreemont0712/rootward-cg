@@ -1,0 +1,8 @@
+{
+  "name": "menu",
+  "title": "The main menu",
+  "concept": "docs/decisions/ADR-0067-music-through-comfyui-in-packages.md",
+  "tracks": [
+    "title"
+  ]
+}

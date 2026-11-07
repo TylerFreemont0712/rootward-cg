@@ -23,7 +23,8 @@ func test_japanese_editions_cover_the_same_keys_and_keep_format_and_code_tokens(
 			if before != after:
 				mismatches.append(english + " : " + str(before) + " => " + str(after))
 	assert_array(mismatches).is_empty()
-	assert_int(changed).is_greater(1500)
+	# The open world carried most kanji editions until ADR-0089; the card game has about 300.
+	assert_int(changed).is_greater(250)
 
 
 func test_japanese_loads_and_translates_prose_only() -> void:

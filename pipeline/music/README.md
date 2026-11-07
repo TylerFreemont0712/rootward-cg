@@ -72,8 +72,8 @@ other two paths.
 A package is a list of tracks made together: `packages/<name>.json`:
 
 ```json
-{"name": "menu-and-lanternroot", "title": "The main menu and Lanternroot",
- "concept": "docs/decisions/ADR-0061-lanternroot-overworld.md", "tracks": ["title", "lanternroot-front"]}
+{"name": "menu", "title": "The main menu",
+ "concept": "docs/decisions/ADR-0067-music-through-comfyui-in-packages.md", "tracks": ["title"]}
 ```
 
 `perform.py --package` performs them one after another (never two GPU jobs at once), skips the takes already rendered,
@@ -82,8 +82,7 @@ whose folder is not there yet is listed as missing and skipped, so a package can
 package file is checked when it is loaded (its name, its title, its ids, no repeats). `library.py <package>` says which
 tracks have takes and which are still missing.
 
-The package `menu-and-lanternroot` lists the title and the four Lanternroot tracks the composers had written when it was
-made (`lanternroot-front`, `-home`, `-lesson`, `-town`); the conductor adds to it as they are written.
+The package `menu` lists the title track; the conductor adds to it as tracks are written.
 
 ## Mastering and the game
 

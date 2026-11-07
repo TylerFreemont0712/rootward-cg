@@ -17,7 +17,7 @@ func after_test() -> void:
 func test_create_list_rename_delete_and_last_played_order() -> void:
 	var store := ProfileStore.new(ROOT)
 	var a: Dictionary = store.create("  Aki  ", "ja", "vesper")
-	var b: Dictionary = store.create("Mio", "en", "emberfox")
+	var b: Dictionary = store.create("Mio", "en", "vesper-v2")
 	assert_bool(a.ok).is_true()
 	assert_str(a.profile.name).is_equal("Aki")
 	assert_str(a.profile.japanese_reading).is_equal("hiragana")

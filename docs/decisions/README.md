@@ -1,7 +1,7 @@
 # Decisions
 
 One file per decision a later reader could reasonably question: context, options, decision, consequences.
-The next number is **ADR-0086**.
+The next number is **ADR-0090**.
 
 - [ADR-0048](ADR-0048-paradigm-laws-and-focuses.md): paradigm laws and focuses, fight memory, pure Index reads and
   compatibility with existing drafts and trial lessons (implementation in progress).
@@ -77,8 +77,6 @@ The next number is **ADR-0086**.
 
 - [ADR-0052](ADR-0052-graphics-settings-and-drawing-device.md): a Graphics settings tab (window, vsync, frame limit, interface size, background slowdown) and a choice of drawing device and renderer applied by relaunching the game; the player's flicker was the NVIDIA-to-AMD frame copy.
 
-- [ADR-0055](ADR-0055-lanternroot.md): Lanternroot replaces the Academy: a town that is the player's program (files are houses, imports are bridges, passing letters are lanterns), with a Night Watch that reruns every test each night.
-
 - [ADR-0056](ADR-0056-the-forge-acts-on-the-cards.md): the forge opens on doors (melt, refactor, widen, bind) beside the anvil; each stage is framed in its colour, and melting and refactoring act on the cards themselves, through the same one command.
 
 - [ADR-0057](ADR-0057-each-element-strikes-with-its-own-blow.md): fire, frost and spark bolts land with blows of their own (hit-ember, hit-rime, hit-arc), drawn without a GPU; anything else keeps the bracket slam.
@@ -89,39 +87,7 @@ The next number is **ADR-0086**.
 
 - [ADR-0060](ADR-0060-the-legendary-looks.md): the legendary looks, an orrery circle whose last star launches seeded constellation bolts and a black-hole impact per foe, drawn by name in the catalogue; program bolts carry their card and role.
 
-- [ADR-0061](ADR-0061-lanternroot-overworld.md): Lanternroot's overworld, a top-down pixel town walked on the player's own `on_key` code (one sandbox job makes a table), blocks that are code, a 480 x 270 logical outdoor view at 1080p with whole-number pixel scaling, art from hand-placed parts, code-made tiles and palette-locked buildings.
-- [ADR-0062](ADR-0062-lanternroot-town-overhaul.md): Lanternroot's town overhaul: an 80 x 56 town in seven districts, a 512 x 288 outdoor base (5x on the 2560 x 1440 laptop, 3x at 1080p), 25 x 35 characters, compact menus, ComfyUI cottages, inns and shrines, and the first programmable town things (Space uses what you face, X edits its code).
-- [ADR-0063](ADR-0063-cast-sprite-sheets.md): Lanternroot's cast as ComfyUI sprite sheets: one shared Blender body with blockout parts, turned to the front, left and back, restyled by img2img, held to the turn's outline and cut on one camera (32 x 48, stop and idle, four facings), keyed by look with parts as the fallback.
-- [ADR-0064](ADR-0064-lanternroot-at-40px.md): Lanternroot at 40 px: a 1280 x 720 view (2x on the laptop, the same 32 x 18 tiles), 64 x 96 people, one scale shared by the game and the pipelines, art that records its tile, interiors at the town's scale on black, and a pipeline for background objects.
-- [ADR-0065](ADR-0065-player-looks-as-layers.md) (reverted prototype): the player's look as layers of the cast's style, tried briefly and rolled back after visual review on 2026-10-17.
-- [ADR-0066](ADR-0066-lanternroot-studio.md): Lanternroot Studio, an in-game editor for the town behind a developer toggle, where the edit view is the play view and Publish writes checked content files.
 - [ADR-0067](ADR-0067-music-through-comfyui-in-packages.md): composed scores performed through ComfyUI (or yue2.cpp) in packages, a solid soundtrack concept, and Lanternroot's own tracks for each place with fallbacks.
-- [ADR-0068](ADR-0068-the-game-the-player-builds.md): the parts of the game the player builds: tasks in content with stages, judges, hints and cloze blocks, one generic harness, tables made once per part, the last passing program running, Hotaru's pocket menu until the menu is built, and the bag's counts as facts beside the flags.
-- [ADR-0069](ADR-0069-the-town-keeps-time.md): chapter 3: days follow the clock and the weather the days, Fern's wait for the rain, people keeping the player's hours, purity read through `args_after`, drills judged by running them, coins counted twice, five versions kept, and beats that share a told flag acting as one.
-- [ADR-0070](ADR-0070-the-town-in-japanese.md): Lanternroot completely in Japanese: one list of everything the town shows (`OverworldStrings`), coverage and stale tests, templates translated before they are filled, starter comments translated and code never, and one term table.
-- [ADR-0071](ADR-0071-authored-player-animation.md): complete male/female 64 x 96 player sheets, authored four-direction walking and idle, a continuous gait across grid steps, simplified creation, and a portrait-matching commander replacement.
-- [ADR-0072](ADR-0072-registered-world-art-states.md): registered source canvases, authored wide gate states, sixteen connected fence shapes and one-transaction drag placement accompany the town art refresh.
 
-- [ADR-0073](ADR-0073-quest-evidence-and-growing-journal.md): independent quest evidence, boots milestone repair, progress-safe flag merges, clickable instructions and a compact journal upgraded by the progress coding task.
-- [ADR-0074](ADR-0074-occupied-gates-swing.md): solid gates at rest, occupancy-driven quarter turns for every Walker, fixed hinges, reusable swing metadata and thirteen-frame native gate art.
 - [ADR-0075](ADR-0075-complete-japanese-reading-editions.md): complete adult Japanese alongside the hiragana edition, one selected catalog across all presentation paths, a staged character-creation choice and saved menu settings.
-- [ADR-0076](ADR-0076-studio-sizing-and-asset-reviews.md): immediate building/prop sizing with stable artwork and collision baselines, persistent right-click art feedback, and prompted replacement variants through the existing remake queue where supported.
-- [ADR-0077](ADR-0077-land-variety-and-area-selection.md): nineteen distinct outdoor surfaces, connected exposed-edge paths, stable authored texture variants, palette-safe terrain generation, and filtered area selection for clearing groups of objects in one undo step.
-- [ADR-0078](ADR-0078-lanternroot-learning-workshops.md): Lanternroot's shared-supper story, content-authored learning notes and predictions, real sandbox experiments, save wires and ordered lamp blocks, and a developed 92 × 64 town.
-- [ADR-0079](ADR-0079-lanternroot-2-starting-area.md): Retired Lanternroot 2 starting-village experiment; runtime area and creator choice removed at the player’s request, with safe recovery for existing saves.
-- [ADR-0080](ADR-0080-grid-boundaries-and-gate-swing.md) (superseded): shared cardinal sockets and ground anchors for boundary materials, one/two-cell gates and opener-facing swing arcs.
-- [ADR-0081](ADR-0081-boundaries-as-grid-edges.md): fences, walls and gates occupy tile edges; placement does not mutate neighboring pieces, and Build shelves separate Buildings, Walls & doors and Other objects.
-
-- [ADR-0082](ADR-0082-upright-boundaries-and-mounted-gates.md): actual upright views, fixed frames and hinged leaves, wall-mounted gate installation/restoration, and diagonal placement with shared movement collision.
-
-- [ADR-0083](ADR-0083-authored-village-residents.md): stable named cast identities, complete v0.5 resident import, Build People scope and preservation of authored sheets through regeneration.
-
-- [ADR-0084](ADR-0084-shared-portrait-background-and-framing.md): cached village backgrounds for transparent portraits, visible-bust bottom alignment and dialogue motion that respects container padding.
-
-- [ADR-0085](ADR-0085-pebblebrook-and-the-reacting-world.md): Pebblebrook, a small test village with a job board and three LeetCode-style jobs (Fizz Buzz, Contains Duplicate, Two Sum) whose finished work changes the map through `when`/`unless` objects and `dark_until` lamps (`MapWorld`), and the task editor's hints folded into an expandable box.
-
-- [ADR-0086](ADR-0086-builder-shows-blocks-the-code-arrives-when-it-works.md): the task editor's Learn notes folded by default as a chip beside Hints, the Builder and Scribe as separate screens, the Builder showing only blocks and revealing its Python (with a chips-fly-to-code animation from `Tasks.source_map`) when every case works, and blocks laid out flush left with switch cards.
-
-- [ADR-0087](ADR-0087-level-0-kindle-hollow.md): Level 0, Kindle Hollow, replaces Lanternroot: a village that teaches the boots, `greet`, `sacks`, `label_jars` and `is_clear` in order, a new cast and dialogue, and the brook road to Pebblebrook; the old town's content goes (git keeps it).
-
-- [ADR-0088](ADR-0088-studio-people-per-map-and-shorter-publish.md): Studio: a person on each map (schedules name their map, `map:<id>` facts), Objects and Build split, People & Doors in four views, quests grouped by area, person or status, strokes that follow the pointer, and a Publish that folds what follows from one unreadable map.
+- [ADR-0089](ADR-0089-the-card-game-only.md): the open world (The Road) and the 3D models leave this repository, and its history is rewritten without them; the skins are the three drawn Vespers.

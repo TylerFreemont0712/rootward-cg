@@ -38,9 +38,6 @@ func _build() -> void:
 		"Battle": FoundryUi.text("Spell playback", "呪文の再生")
 	}
 	var tab_names: Array[String] = ["Display", "Graphics", "Fonts", "Audio", "Battle"]
-	if StudioFiles.can_write(StudioMode.content_dir):
-		names["Developer"] = StudioText.t("developer")
-		tab_names.append("Developer")
 	if not names.has(_tab):
 		_tab = "Display"
 	for tab: String in tab_names:
@@ -93,11 +90,6 @@ func _build() -> void:
 				]
 			)
 		)
-	elif _tab == "Developer":
-		column.add_child(_setting(
-			StudioText.t("studio_name"), StudioText.t("studio_settings_tip"),
-			_on_off(Settings.studio, func(on: bool) -> void: Settings.studio = on)
-		))
 	elif _tab == "Graphics":
 		_graphics_tab(column)
 	elif _tab == "Display":

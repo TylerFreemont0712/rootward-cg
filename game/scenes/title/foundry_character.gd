@@ -8,7 +8,7 @@ const CLASSES: Array[Dictionary] = [
 		"name": "Artificer",
 		"ja": "工匠",
 		"available": true,
-		"skins": ["vesper", "vesper-v1-5", "vesper-v2", "emberfox", "shibu", "dummy"]
+		"skins": ["vesper", "vesper-v1-5", "vesper-v2"]
 	},
 	{"id": "ward-duelist", "name": "Ward Duelist", "ja": "結界の決闘者", "available": false},
 	{"id": "storm-cartographer", "name": "Storm Cartographer", "ja": "嵐の地図師", "available": false},

@@ -24,10 +24,6 @@ func test_every_shipped_skin_is_fitted_to_the_same_figure_height() -> void:
 
 
 func test_statures_are_measured_from_the_models() -> void:
-	var shibu: StageCharacter = auto_free(StageCharacter.create("shibu"))
-	var fox: StageCharacter = auto_free(StageCharacter.create("emberfox"))
-	assert_float(shibu.stature()).is_between(1.55, 1.75)
-	assert_float(fox.stature()).is_between(1.45, 1.65)
 	var vesper: SpriteCharacter = auto_free(SpriteCharacter.create("vesper"))
 	assert_float(vesper.stature()).is_between(0.85, 0.98)
 

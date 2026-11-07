@@ -1,0 +1,24 @@
+// Japanese for interface words the card game shares with the open world that left this repository (ADR-0089):
+// the reading choice, a few menu words and labels, kept from the old overworld overlays, keyed by the English (ADR-0047).
+[
+  {"en": "imports", "to": "import", "kanji": "import"},
+  {"en": "strings", "to": "文字列", "kanji": "文字列"},
+  {"en": "return", "to": "return（返す）", "kanji": "return（返す）"},
+  {"en": "loops", "to": "ループ", "kanji": "ループ"},
+  {"en": "Reset", "to": "やりなおす", "kanji": "リセット"},
+  {"en": "yes", "to": "はい", "kanji": "はい"},
+  {"en": "Character", "to": "キャラクター", "kanji": "キャラクター"},
+  {"en": "Delete", "to": "けす", "kanji": "消す"},
+  {"en": "Settings", "to": "せってい", "kanji": "設定"},
+  {"en": "Later", "to": "あとで", "kanji": "後で"},
+  {"en": "Hiragana", "to": "ひらがな", "kanji": "ひらがな"},
+  {"en": "Kanji", "to": "かんじ", "kanji": "漢字"},
+  {"en": "Japanese reading", "to": "にほんごの よみかた", "kanji": "日本語の表記"},
+  {"en": "Choose hiragana or standard Japanese with kanji. You can change this in Settings anytime.", "to": "ひらがなと かんじを えらべるよ。あとから せっていで かえられるよ。", "kanji": "ひらがな中心の表記か、漢字を使った通常の日本語を選べます。設定からいつでも変更できます。"},
+  {"en": "Python", "to": "Python", "kanji": "Python"},
+  {"en": "JavaScript", "to": "JavaScript", "kanji": "JavaScript"},
+  {"en": "by", "to": "を", "kanji": "を"},
+  {"en": "left", "to": "ひだり", "kanji": "左"},
+  {"en": "right", "to": "みぎ", "kanji": "右"},
+  {"en": "Name", "to": "なまえ", "kanji": "名前"}
+]

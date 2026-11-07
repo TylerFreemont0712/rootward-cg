@@ -21,13 +21,8 @@ func test_a_key_translates_and_an_unknown_line_stays_english() -> void:
 
 func test_adult_japanese_uses_complete_translations_and_preserves_unknown_text() -> void:
 	Text.setup("ja", "kanji")
-	assert_str(Text.t("a dictionary")).is_equal("辞書")
 	assert_str(Text.t("Japanese reading")).is_equal("日本語の表記")
-	assert_str(Text.t("the recursion went too deep")).is_equal("再帰呼び出しが深すぎます")
-	assert_str(Text.t("The jars are not going anywhere. They are very heavy, which helps.")).is_equal(
-		"瓶はどこにも行かないよ。とても重いから、かえって助かるんだ。"
-	)
-	assert_str(Text.f("Time played: %s", ["まち"])).is_equal("プレイ時間：まち")
+	assert_str(Text.t("Choose a paradigm.")).is_equal("パラダイムを選ぼう。")
 	assert_str(Text.apply_japanese_reading("まちがって いろいろ")).is_equal("まちがって いろいろ")
 	assert_str(Text.apply_japanese_reading("`かず` \"まち\" codeWord")).is_equal("`かず` \"まち\" codeWord")
 	assert_str(Text.apply_japanese_reading("中心 行動 山札")).is_equal("中心 行動 山札")
@@ -40,83 +35,6 @@ func test_adult_japanese_uses_complete_translations_and_preserves_unknown_text()
 	assert_str(Text.apply_japanese_reading("60文字までだよ")).is_equal("60もじまでだよ")
 	assert_str(Text.apply_japanese_reading("番人（ばんにん）")).is_equal("ばんにん")
 	assert_str(Text.apply_japanese_reading("中心 行動 山札")).is_equal("中心 行動 山札")
-
-
-func test_adult_edition_covers_story_places_lessons_and_formatted_results() -> void:
-	Text.setup("ja", "kanji")
-	assert_str(Text.t("Brook Gate")).is_equal("小川の門")
-	assert_str(Text.t("Pinecone")).is_equal("松ぼっくり")
-	assert_str(Text.t("A function takes an input and gives an output. return sends the answer back, and + joins two pieces of text into one.")).is_equal(
-		"関数は、入力を受け取って、出力を出すよ。return は答えを返して、+ は二つの文字を一つにつなげるんだ。"
-	)
-	var story := "The guest book has its first line, and the Hollow has its banners. Thank you, tinker."
-	assert_str(Text.t(story)).is_equal("ゲストブックに最初の行が書けて、ホロウに旗が上がったよ。ありがとう、修理屋さん。")
-	Text.setup("ja", "hiragana")
-	assert_str(Text.t(story)).is_equal("ゲストブックに さいしょの ぎょうが かけて、ホロウに はたが あがったよ。ありがとう、しゅうりやさん。")
-	Text.setup("ja", "kanji")
-	assert_str(Text.f("%d weak ×1.5", [3])).is_equal("3発が弱点 ×1.5")
-	assert_str(Text.t("night")).is_equal("夜")
-
-
-func test_reading_mode_refreshes_auto_translated_controls_from_immutable_catalog() -> void:
-	var key := "Your menu_items() didn't give a menu the town can use, so the menu is in the town's order for now."
-	var label := Label.new()
-	label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_ALWAYS
-	add_child(label)
-	Text.setup("ja", "kanji")
-	label.text = key
-	await get_tree().process_frame
-	assert_str(label.text).is_equal(key) # Godot retains the source string; translation happens at draw time.
-	assert_str(String(TranslationServer.translate(key))).is_equal(
-		"menu_items() が有効なメニューを返さなかったため、現在は町の標準の順番で表示しています。"
-	)
-	Text.setup("ja", "hiragana")
-	await get_tree().process_frame
-	assert_str(label.text).is_equal(key)
-	assert_str(String(TranslationServer.translate(key))).is_equal(
-		"きみの menu_items() は、まちが つかえる メニューを かえして くれなかったよ。だから、いまは まちの じゅんばんで メニューが でるよ。"
-	)
-	Text.setup("ja", "kanji")
-	await get_tree().process_frame
-	assert_str(label.text).is_equal(key)
-	assert_str(String(TranslationServer.translate(key))).is_equal(
-		"menu_items() が有効なメニューを返さなかったため、現在は町の標準の順番で表示しています。"
-	)
-	label.queue_free()
-
-
-func test_reviewed_hiragana_corpus_and_town_catalog_sample() -> void:
-	Text.setup("ja", "hiragana")
-	var parsed := Jsonc.parse_file("res://content/japanese_hiragana_readings.jsonc")
-	assert_bool(parsed.get("ok", false)).is_true()
-	var mismatches: Array[String] = []
-	for pair: Dictionary in parsed.value:
-		var actual := Text.apply_japanese_reading(String(pair.kanji))
-		if actual != String(pair.hiragana):
-			mismatches.append(String(pair.kanji) + " => " + actual + " (expected " + String(pair.hiragana) + ")")
-	assert_array(mismatches).is_empty()
-	assert_str(Text.t("The lamps are lit, and the sky is honest. Thank you, tinker.")).is_equal(
-		"ランプが ともって、そらは しょうじきだね。ありがとう、しゅうりやさん。"
-	)
-	Text.setup("ja", "kanji")
-	assert_str(Text.t("The lamps are lit, and the sky is honest. Thank you, tinker.")).is_equal(
-		"ランプが灯って、空は正直だね。ありがとう、修理屋さん。"
-	)
-	Text.setup("ja", "hiragana")
-	var residuals: Array[String] = []
-	var locale_dir := DirAccess.open("res://content/packs/core/locales/ja")
-	for filename: String in locale_dir.get_files():
-		if not filename.begins_with("overworld") or not filename.ends_with(".jsonc"):
-			continue
-		var locale_file := Jsonc.parse_file("res://content/packs/core/locales/ja/" + filename)
-		for entry: Dictionary in locale_file.value:
-			var rendered := Text.apply_japanese_reading(String(entry["to"]))
-			for codepoint: int in rendered.to_utf32_buffer():
-				if codepoint >= 0x4E00 and codepoint <= 0x9FFF:
-					residuals.append(String(entry["en"]) + " => " + rendered)
-					break
-	assert_array(residuals).is_empty()
-
 
 func test_a_sentence_is_matched_to_its_format_and_its_names_translated() -> void:
 	Text.setup("ja")

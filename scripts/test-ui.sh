@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Run gdUnit4 suites that need a real window (mouse events, viewports: the Studio's scene tests) on a private virtual X
+# Run gdUnit4 suites that need a real window (mouse events, viewports) on a private virtual X
 # display, so nothing opens on the desktop. Headless Godot does not carry InputEvents, which is why scripts/test.sh
 # fails those suites. The window is 2560x1440, the laptop the tests were written for (TEST_SIZE=1920x1080 for another);
-# several tests reach rows that a smaller view does not show. Pass res:// suites or folders; with none, every Studio suite runs.
-#   scripts/test-ui.sh res://test/scenes/studio_land_test.gd
+# several tests reach rows that a smaller view does not show. Pass res:// suites or folders; with none, every scene suite runs.
+#   scripts/test-ui.sh res://test/scenes/foundry_menu_test.gd
 set -uo pipefail
 cd "$(dirname "$0")/../game"
 GODOT="${GODOT_BIN:-godot}"
@@ -11,7 +11,7 @@ GODOT="${GODOT_BIN:-godot}"
 [ -n "${SKIP_IMPORT:-}" ] || "$GODOT" --headless --import --path . >/dev/null 2>&1 || true
 targets=("$@")
 if [ ${#targets[@]} -eq 0 ]; then
-	for file in test/scenes/studio_*_test.gd; do targets+=("res://$file"); done
+	for file in test/scenes/*_test.gd; do targets+=("res://$file"); done
 fi
 status=0
 for target in "${targets[@]}"; do

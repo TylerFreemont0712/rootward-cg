@@ -21,24 +21,14 @@
 - The Mutator's census (which mutants of each program card still run, ADR-0026): `scripts/mutants.sh`, after changing
   any program card's code (loading warns when it is stale).
 - Sandbox timings: `godot --headless --path game -s res://tools/bench_sandbox.gd`.
-- Moves for VRM skins (ADR-0028, pipeline/moves/README.md): `scripts/moves.sh` (tests the motion, keys every clip in
+- Moves (ADR-0028, pipeline/moves/README.md; no 3D skin ships since ADR-0089, the skins are the drawn Vespers): `scripts/moves.sh` (tests the motion, keys every clip in
   Blender, imports, review sheets in `shots/moves/`), `--reel` also films them (`shots/moves/reel.mp4`). The Blender
   side runs without `--factory-startup` (that disables the VRM extension).
 - **Asset tools are free and local only** (the player's rule, 2026-10-09): ComfyUI, Blender, their MCPs, code, hand-placed
   pixels, CC0 packs on disk. Never propose paid services or packs. Keep the list of assets that could not ship
   commercially in `docs/ASSET_LICENCES.md` current.
-- Lanternroot's scale (ADR-0064): 40 px tiles, a 1280 x 720 view (2x on the laptop), people 64 x 96, one palette. The
-  numbers live in `OverworldScale` and `game/content/packs/core/overworld/scale.jsonc` (a test keeps them equal).
-- Lanternroot's things (buildings, trees, props, furniture; pipeline/world/README.md, the `rootward-world-art` skill):
-  `scripts/world.sh new <id> --kind building --footprint 5x5 --what "..."`, then `scripts/world.sh make --only <id>`
-  (Blender blockout, ComfyUI restyle, cut; it stops and starts ComfyUI itself), then look at `Concept/v0.3/world/<id>.png`.
-- Lanternroot's people (pipeline/animation/README.md, ADR-0063): `scripts/cast.sh turns|restyle|sheets|check`.
-- Lanternroot's older pixel art (pipeline/pixel/README.md, ADR-0061): `scripts/pixel.sh` (hand-placed parts and props,
-  code-made ground tiles at the world's tile, portraits, then a lint that fails soft alpha or off-palette colours).
-- Screenshot the overworld: `ROOTWARD_LANTERNTOWN=town scripts/screenshot.sh res://tools/overworld_shot.tscn
-  shots/overworld/town.png 50` (creator, wake, home, boots, code, town, square, talk; `-ja` for Japanese).
 - Assets (pipeline/README.md): `scripts/art.sh --only '<ids>'`, `scripts/audio.sh --only '<ids>'` (`--reprocess` for
-  post-processing only, no GPU), `scripts/character.sh <id>` (Blender export, import, screenshots in `shots/`).
+  post-processing only, no GPU).
   Never ComfyUI and Blender at once; the scripts refuse.
 - Godot MCP (`godot`, user scope, `@coding-solo/godot-mcp@0.1.1`): launch the editor, run the project and read its
   debug output, create and edit scenes. Tests and screenshots still go through the scripts above.

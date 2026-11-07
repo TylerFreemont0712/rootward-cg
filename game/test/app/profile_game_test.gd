@@ -26,12 +26,12 @@ func test_switching_player_reloads_only_that_players_run_and_preferences() -> vo
 	var first := Game.profile.duplicate(true)
 	assert_bool(first.needs_name).is_true()
 	Game.session.start(SandboxJob.JAVASCRIPT, "beginner", "first-player")
-	var second: Dictionary = Game.profiles.create("ゆき 🌸", "ja", "emberfox")
+	var second: Dictionary = Game.profiles.create("ゆき 🌸", "ja", "vesper-v2")
 	assert_bool(second.ok).is_true()
 	assert_bool(Game.select_profile(String(second.profile.id))).is_true()
 	assert_bool(Game.session.has_run()).is_false()
 	assert_bool(TranslationServer.get_locale().begins_with("ja")).is_true()
-	assert_str(Settings.character_skin).is_equal("emberfox")
+	assert_str(Settings.character_skin).is_equal("vesper-v2")
 	Settings.language = SandboxJob.JAVASCRIPT
 	Settings.difficulty = "programmer"
 	Game.remember_profile_settings()
