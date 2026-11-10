@@ -17,10 +17,9 @@ Each step ends with tests green, screenshots of anything visible, this file tick
 
 ## Next
 
-- [ ] **Where public downloads live.** The repository is private, so the installer installs only from files beside it.
-      Choose: a public repository holding only the release files, the source made public, or offline installs only.
-      Before anything is public: itemised credits for the CC-BY and OGA-BY sounds, and the AI models' licences
-      (`docs/ASSET_LICENCES.md`; YuE's music weights are CC BY-NC).
+- [x] The repository is public (2026-11-10): the installer downloads by itself; `CREDITS.md` credits the recordings.
+- [ ] A licence for Rootward itself (all rights reserved until then), and the AI models' licences read in full before
+      anything is ever sold (`docs/ASSET_LICENCES.md`; YuE's music weights are CC BY-NC).
 - [ ] A known failing test: ten program cards have no upgrade (`program_upgrades_test`).
 - [ ] The dormant 3D character stack (VRM and MToon addons, the move library, `pipeline/moves`, `pipeline/blender`): no
       3D skin ships since ADR-0089. Remove it, or bring a 3D skin back.

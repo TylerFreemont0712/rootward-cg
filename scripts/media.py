@@ -333,19 +333,20 @@ def download(lock: Lock, pid: str, dest: Path) -> None:
             source = matches[0] if matches else source
         shutil.copyfile(source, dest)
         return
+    url = f"https://github.com/{lock.repo}/releases/download/{p['tag']}/{name}"
+    try:
+        urllib.request.urlretrieve(url, dest)
+        return
+    except OSError as error:
+        failure = f"could not download {url}: {error}"
+    # A private fork's releases need a sign-in: the GitHub CLI has one.
     if shutil.which("gh"):
         run = subprocess.run(["gh", "release", "download", p["tag"], "-R", lock.repo, "-p", name, "-O", str(dest),
                               "--clobber"], capture_output=True, text=True)
         if run.returncode == 0:
             return
-        print(f"  gh could not download {name} ({run.stderr.strip()}); trying a plain download", file=sys.stderr)
-    url = f"https://github.com/{lock.repo}/releases/download/{p['tag']}/{name}"
-    try:
-        urllib.request.urlretrieve(url, dest)
-    except OSError as error:
-        sys.exit(f"could not download {url}: {error}\n"
-                 "The repository is private: install the GitHub CLI and run `gh auth login`, "
-                 "or set ROOTWARD_MEDIA_FROM to a folder holding the packs.")
+    sys.exit(f"{failure}\nIf the repository is private, run `gh auth login`; offline, set ROOTWARD_MEDIA_FROM to a "
+             "folder holding the packs.")
 
 
 def obtain(lock: Lock, pid: str) -> Path:

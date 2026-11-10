@@ -6,7 +6,7 @@
 #   scripts/fetch-media.sh --status   what is installed, missing or changed; installs nothing
 #   --force                           also replace files changed here since they were fetched
 # Every pack and file is pinned by SHA-256 in media.lock. Safe to re-run; it only fetches what is missing or stale.
-# The repository is private: downloads go through the GitHub CLI (`gh auth login` once). Offline, point
+# Downloads come straight from the public releases (the GitHub CLI is used only if that fails). Offline, point
 # ROOTWARD_MEDIA_FROM at a folder holding the packs (`<pack>.tar`, or a cache's `<pack>-<hash>.tar`).
 # The game runs without any of it: every picture and sound has a fallback.
 set -euo pipefail

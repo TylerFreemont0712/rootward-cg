@@ -5,7 +5,7 @@
 - First, on a fresh checkout: `scripts/fetch-sandbox.sh` installs the sandbox runtime (wasmtime, CPython and
   QuickJS for WASI, about 100 MB, pinned by SHA-256) into `game/sandbox/runtime/`. The sandbox tests need it.
 - Media (ADR-0090): pictures, sound and models are not in git. `scripts/fetch-media.sh` installs what the game uses
-  (about 330 MB from the private repo's GitHub releases, needs `gh auth login`); `dev` or `all` adds the
+  (about 330 MB from the repo's public GitHub releases); `dev` or `all` adds the
   pipeline's sources. After a pipeline writes new media: `scripts/pack-media.sh` (what changed),
   `--write` (packs and `media.lock`), commit and push, then `--publish`. A new doc screenshot is media unless it is
   named `docs/images/rootward-*`.

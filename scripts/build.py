@@ -122,6 +122,7 @@ def licences(into: Path) -> None:
     for font in sorted((GAME / "ui" / "fonts").glob("OFL-*.txt")):
         shutil.copyfile(font, into / f"font-{font.name}")
     shutil.copyfile(ROOT / "docs" / "ASSET_LICENCES.md", into / "ASSETS.md")
+    shutil.copyfile(ROOT / "CREDITS.md", into / "CREDITS.md")
 
 
 README = """Rootward {version}

@@ -104,9 +104,9 @@ with a progress bar and proper branding from the game."*
   on both systems in the game's own style, testable here; the price is size (the Windows installer is Godot's
   109 MB runtime, as an .exe cannot be compressed without tools antivirus programs flag).
 - **Downloads** come from the folder beside the installer when it holds a manifest (an offline install), else from
-  `installer/config.json`'s address. GitHub release assets of a private repository need a sign-in an installer must
-  never carry, so online installs wait on a public home for the release files (a decision for the player: it would
-  publish art and music whose licences `docs/ASSET_LICENCES.md` says to check first).
+  `installer/config.json`'s address: the repository's own releases, `releases/latest/download/`. The player made the
+  repository public on 2026-11-10 so the installer needs no sign-in (an installer must never carry one); `CREDITS.md`
+  names the CC-BY recordings and ships in every build.
 - **Windows is checked on Windows**: `.github/workflows/windows-check.yml` (run by hand) installs a release with the
   real installer on a clean `windows-latest` machine, checks the files, the shortcut, the Apps entry and the
   self-test, and uninstalls.

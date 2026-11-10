@@ -1,6 +1,7 @@
 # Installs a published release on a clean Windows machine with the real installer, proves the game's sandbox runs
 # there, and uninstalls it (ADR-0091). Run by hand: gh workflow run windows-check.yml -f tag=v1.0.0
-# It installs offline, from the release files put beside the installer, since the repository is private.
+# Online (the default) it downloads only the installer, which fetches the rest from the release, as a player's would;
+# offline it puts the release files beside the installer.
 name: Windows install check
 
 on:
@@ -9,6 +10,10 @@ on:
       tag:
         description: Release tag to check
         default: v1.0.0
+      online:
+        description: Let the installer download the game itself (false puts the files beside it)
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -24,8 +29,12 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force release | Out-Null
-          gh release download "${{ inputs.tag }}" -R "${{ github.repository }}" -D release `
-            -p "Rootward-Setup-*.exe" -p "rootward-*-windows-*.zip" -p "rootward-*.pck" -p "rootward-manifest.json"
+          if ("${{ inputs.online }}" -eq "true") {
+            gh release download "${{ inputs.tag }}" -R "${{ github.repository }}" -D release -p "Rootward-Setup-*.exe"
+          } else {
+            gh release download "${{ inputs.tag }}" -R "${{ github.repository }}" -D release `
+              -p "Rootward-Setup-*.exe" -p "rootward-*-windows-*.zip" -p "rootward-*.pck" -p "rootward-manifest.json"
+          }
           Get-ChildItem release | Format-Table Name, Length
 
       - name: Install silently
