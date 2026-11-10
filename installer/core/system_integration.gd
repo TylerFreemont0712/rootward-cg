@@ -133,7 +133,16 @@ static func remove_after_exit(dir: String) -> void:
 	var file := FileAccess.open(script, FileAccess.WRITE)
 	if file == null:
 		return
-	file.store_string("@echo off\r\nping -n 3 127.0.0.1 >nul\r\nattrib -r \"%s\\*\" /s /d >nul 2>&1\r\nrmdir /s /q \"%s\"\r\ndel \"%%~f0\"\r\n" % [
-		_win(dir), _win(dir)])
+	# LEARN: Windows will not remove a folder that is some process's current directory, and this script inherits the
+	# uninstaller's, which is the game's folder: everything inside went, the empty folder stayed (seen on the Windows
+	# check). So the script first moves to its own folder (%~dp0, the TEMP folder), then tries for up to 30 seconds, in
+	# case something else (an antivirus scan) holds the folder for a moment.
+	var target := _win(dir)
+	var lines := PackedStringArray([
+		"@echo off", "cd /d \"%~dp0\"", "set tries=0", ":again", "ping -n 3 127.0.0.1 >nul",
+		"attrib -r \"%s\\*\" /s /d >nul 2>&1" % target, "rmdir /s /q \"%s\" >nul 2>&1" % target, "set /a tries+=1",
+		"if exist \"%s\" if %%tries%% lss 15 goto again" % target, "del \"%~f0\"",
+	])
+	file.store_string("\r\n".join(lines) + "\r\n")
 	file.close()
 	OS.create_process("cmd.exe", ["/c", _win(script)])
