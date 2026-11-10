@@ -61,8 +61,10 @@ jobs:
           $p = Start-Process -FilePath "$game\Rootward Setup.exe" -ArgumentList "--headless --silent --uninstall --log $log" -Wait -PassThru
           Get-Content $log
           if ($p.ExitCode -ne 0) { throw "uninstall exited with $($p.ExitCode)" }
-          Start-Sleep -Seconds 10
-          if (Test-Path $game) { Get-ChildItem -Recurse $game | Select-Object -First 20 | Format-Table FullName; throw "the game's folder is still there" }
+          # The uninstaller cannot delete its own .exe while it runs; a script it leaves behind finishes the job.
+          for ($i = 0; $i -lt 30 -and (Test-Path $game); $i++) { Start-Sleep -Seconds 1 }
+          "cleanup scripts left in TEMP: $((Get-ChildItem $env:TEMP -Filter 'rootward-uninstall-*.cmd' -ErrorAction SilentlyContinue | Measure-Object).Count)"
+          if (Test-Path $game) { cmd /c "dir /a /s `"$game`""; throw "the game's folder is still there" }
           if (Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Rootward") { throw "the Apps entry is still there" }
           if (Test-Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Rootward.lnk") { throw "the Start menu shortcut is still there" }
           "uninstalled cleanly"
