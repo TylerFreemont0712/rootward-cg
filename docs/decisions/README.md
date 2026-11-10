@@ -1,7 +1,7 @@
 # Decisions
 
 One file per decision a later reader could reasonably question: context, options, decision, consequences.
-The next number is **ADR-0090**.
+The next number is **ADR-0091**.
 
 - [ADR-0048](ADR-0048-paradigm-laws-and-focuses.md): paradigm laws and focuses, fight memory, pure Index reads and
   compatibility with existing drafts and trial lessons (implementation in progress).
@@ -91,3 +91,4 @@ The next number is **ADR-0090**.
 
 - [ADR-0075](ADR-0075-complete-japanese-reading-editions.md): complete adult Japanese alongside the hiragana edition, one selected catalog across all presentation paths, a staged character-creation choice and saved menu settings.
 - [ADR-0089](ADR-0089-the-card-game-only.md): the open world (The Road) and the 3D models leave this repository, and its history is rewritten without them; the skins are the three drawn Vespers.
+- [ADR-0090](ADR-0090-media-in-release-packs.md): pictures, sound and models live in packs on GitHub releases, pinned by `media.lock`; git holds code, content and docs, so a clone stays small.

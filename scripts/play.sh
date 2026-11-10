@@ -8,6 +8,9 @@ set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 game="$root/game"
 GODOT="${GODOT_BIN:-$(command -v godot || echo "$HOME/godot")}"
+if [ -f "$root/media.lock" ] && [ -z "$(find "$game/assets" -name '*.png' -print -quit 2>/dev/null)" ]; then
+	echo "No pictures or sound yet (a fresh clone): scripts/fetch-media.sh installs them. Playing without." >&2
+fi
 stamp="$game/.godot/rootward-imported"
 if [ ! -f "$stamp" ] || [ -n "$(find "$game" -path "$game/.godot" -prune -o -newer "$stamp" -type f -print -quit)" ]; then
 	"$GODOT" --headless --import --path "$game" < /dev/null > /dev/null 2>&1 || true

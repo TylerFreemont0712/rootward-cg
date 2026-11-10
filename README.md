@@ -20,9 +20,15 @@ program runs in the sandbox, and its measured work races the foes' tempo, so a s
 
 ```
 scripts/fetch-sandbox.sh   # once: wasmtime, CPython and QuickJS for WASI, about 100 MB, pinned by SHA-256
+scripts/fetch-media.sh     # once: the game's pictures and sound, about 350 MB (gh auth login first: the repo is private)
 scripts/play.sh            # or: godot --path game
 scripts/test.sh            # gdUnit4, headless
 ```
+
+The clone holds code, content and docs only. Pictures, sound and models live in packs on the repository's GitHub
+releases, each file pinned by SHA-256 in `media.lock` (ADR-0090). The game runs without them, drawn plainly and
+silent. `scripts/fetch-media.sh dev` adds the making-of sources (concept boards, pipeline sources, research figures);
+`scripts/pack-media.sh` packs and publishes new media.
 
 Needs Godot 4.7.2 on the PATH. Developed and tested on Linux. There is no licence file yet, so all rights are reserved
 for now.

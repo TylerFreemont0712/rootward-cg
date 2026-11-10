@@ -1505,3 +1505,26 @@ theme padding, even if the hop itself looks correct. Animate an offset on the fr
 baseline, and reset offsets when motion is interrupted. A live resize can then move the baseline without fighting
 the animation. Tests step the Tween directly to check completion and interruption without time-dependent sleeps.
 
+
+## 2026-11-10: a repository's size is its history, and media is most of it
+
+A clone downloads every version of every file, so deleting art from the working tree shrinks nothing: 842 pictures
+and sounds were 533 MB of the checkout and about 600 MB of history, while the code, content and docs of 178 commits
+pack into 7 MB. Git compresses text against earlier versions (delta compression), but a PNG or Ogg is already
+compressed and changes whole, so each repaint adds its full size forever.
+
+The fix has two halves. Going forward, a `.gitignore` block makes media invisible to git and `media.lock` records each
+file's SHA-256 instead: a content address, the same idea as a Git LFS pointer or a lockfile in a package manager. The
+commit says *which* bytes it expects; a release holds the bytes. Going back, `git filter-repo --filename-callback`
+rewrote every commit without the media (a new hash for each commit, since a commit's hash covers its tree and its
+parent's hash).
+
+Two details worth keeping. The packs are deterministic tars (sorted names, zero times and owners), so the same files
+always make the same hash. But extracting a tar restores those zero times, which would make 1970-dated pictures that
+an "import whatever is newer than the last import" check never sees; the fetch writes each file fresh instead, so it
+gets the current time.
+
+A trap found on the way: in Godot, `ResourceLoader.exists("res://x.png")` is true when `x.png.import` exists, even
+with the picture and its imported texture gone, because the loader resolves the path through the sidecar's remap.
+So "is the art here?" checks have to have no sidecar to find: each `.import` file ships in the same pack as its
+picture, never alone in git.

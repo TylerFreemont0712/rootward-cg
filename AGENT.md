@@ -42,6 +42,8 @@ Then say in one short message what you are picking up, ask any blocking question
   project.godot), tests first for `core/` and `sandbox/`, clear names. Lint (`scripts/lint.sh`) is loose and only
   flags likely bugs; formatting is advice. Verify Godot APIs against the 4.7 docs or the engine itself; do not guess.
 - **Assets are optional.** Every picture, model and sound has a fallback, and a missing file never breaks a screen.
+  A fresh clone has no media at all (ADR-0090: it lives in release packs, `scripts/fetch-media.sh`), so this is
+  what a first launch looks like. Never `preload` a file under `res://assets/`.
 - **Look at it.** Anything visible is checked with a screenshot (`scripts/screenshot.sh`) before it is called done.
 - **Teaching mode.** `# LEARN:` comments where a decision or a language feature is non-obvious, with an entry in
   `docs/LEARNING_LOG.md`.

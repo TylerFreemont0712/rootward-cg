@@ -1,3 +1,47 @@
+# >>> media
+# Pictures, sound and models live in packs on GitHub releases, not in git (ADR-0090): media.lock names every file,
+# scripts/fetch-media.sh installs them, scripts/pack-media.sh packs new ones. scripts/media.py reads this block to
+# decide what media is, so keep it between these two markers and keep it first (rules below it still win).
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.ogg
+*.wav
+*.mp3
+*.flac
+*.glb
+*.gltf
+*.vrm
+*.fbx
+*.blend
+*.exr
+*.psd
+*.mp4
+*.webm
+# Godot's sidecars travel with their media: with a .import file and no picture, ResourceLoader.exists() is true and
+# load() fails, so a fresh clone would log an error for every fallback instead of quietly drawing it.
+*.png.import
+*.jpg.import
+*.jpeg.import
+*.webp.import
+*.gif.import
+*.ogg.import
+*.wav.import
+*.mp3.import
+*.flac.import
+*.glb.import
+*.gltf.import
+*.vrm.import
+*.fbx.import
+*.blend.import
+*.exr.import
+# Kept in git all the same: the addons as their authors ship them, and the README's screenshots.
+!/game/addons/**
+!/docs/images/rootward-*
+# <<< media
+
 # Godot
 game/.godot/
 game/reports/
