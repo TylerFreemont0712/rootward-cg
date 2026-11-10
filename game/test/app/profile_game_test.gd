@@ -15,6 +15,8 @@ func before_test() -> void:
 func after_test() -> void:
 	Background.finish_all()
 	Settings.path = _old_path
+	# A test here ends on a Japanese profile; the next suite must not inherit its language.
+	Text.setup("en")
 	Game.reset(ROOT)
 	_clear(ROOT)
 
