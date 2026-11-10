@@ -12,8 +12,10 @@ config_version=5
 
 config/name="Rootward"
 config/description="A programming roguelite: every spell is real code, run in a sandbox."
+config/version="1.0.0"
 run/main_scene="res://scenes/boot/boot.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
+config/icon="res://assets/brand/icon-256.png"
 
 [autoload]
 

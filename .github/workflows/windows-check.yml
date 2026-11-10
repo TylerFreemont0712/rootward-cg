@@ -1,0 +1,68 @@
+# Installs a published release on a clean Windows machine with the real installer, proves the game's sandbox runs
+# there, and uninstalls it (ADR-0091). Run by hand: gh workflow run windows-check.yml -f tag=v1.0.0
+# It installs offline, from the release files put beside the installer, since the repository is private.
+name: Windows install check
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to check
+        default: v1.0.0
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Download the Windows release files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force release | Out-Null
+          gh release download "${{ inputs.tag }}" -R "${{ github.repository }}" -D release `
+            -p "Rootward-Setup-*.exe" -p "rootward-*-windows-*.zip" -p "rootward-*.pck" -p "rootward-manifest.json"
+          Get-ChildItem release | Format-Table Name, Length
+
+      - name: Install silently
+        shell: pwsh
+        run: |
+          $setup = (Get-ChildItem release -Filter "Rootward-Setup-*.exe").FullName
+          $log = "$env:RUNNER_TEMP\setup.log"
+          $p = Start-Process -FilePath $setup -ArgumentList "--headless --silent --dir $env:RUNNER_TEMP\Games --log $log" -Wait -PassThru
+          Get-Content $log
+          if ($p.ExitCode -ne 0) { throw "setup exited with $($p.ExitCode)" }
+
+      - name: Check what was installed
+        shell: pwsh
+        run: |
+          $game = "$env:RUNNER_TEMP\Games\Rootward"
+          Get-ChildItem $game | Format-Table Name, Length
+          foreach ($f in "Rootward.exe", "Rootward.console.exe", "Rootward.pck", "Rootward Setup.exe", "sandbox\bin\wasmtime.exe", "rootward-install.json") {
+            if (-not (Test-Path "$game\$f")) { throw "missing $f" }
+          }
+          Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Rootward" | Format-List DisplayName, DisplayVersion, InstallLocation, UninstallString
+          if (-not (Test-Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Rootward.lnk")) { throw "no Start menu shortcut" }
+          "standard library read-only: $((Get-Item "$game\sandbox\python\lib\python3.14\os.py").IsReadOnly)"
+          $p = Start-Process -FilePath "$game\Rootward.console.exe" -ArgumentList "--headless -- --self-test" -Wait -PassThru -NoNewWindow `
+            -RedirectStandardOutput "$env:RUNNER_TEMP\selftest.txt"
+          Get-Content "$env:RUNNER_TEMP\selftest.txt"
+          if ($p.ExitCode -ne 0) { throw "the self-test failed ($($p.ExitCode))" }
+
+      - name: Uninstall silently
+        shell: pwsh
+        run: |
+          $game = "$env:RUNNER_TEMP\Games\Rootward"
+          $log = "$env:RUNNER_TEMP\uninstall.log"
+          $p = Start-Process -FilePath "$game\Rootward Setup.exe" -ArgumentList "--headless --silent --uninstall --log $log" -Wait -PassThru
+          Get-Content $log
+          if ($p.ExitCode -ne 0) { throw "uninstall exited with $($p.ExitCode)" }
+          Start-Sleep -Seconds 10
+          if (Test-Path $game) { Get-ChildItem -Recurse $game | Select-Object -First 20 | Format-Table FullName; throw "the game's folder is still there" }
+          if (Test-Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\Rootward") { throw "the Apps entry is still there" }
+          if (Test-Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Rootward.lnk") { throw "the Start menu shortcut is still there" }
+          "uninstalled cleanly"

@@ -4,6 +4,9 @@ extends Control
 
 
 func _ready() -> void:
+	if SelfTest.requested():
+		get_tree().quit(SelfTest.run())
+		return
 	theme = UiTheme.shared()
 	var ground := ColorRect.new()
 	ground.color = UiTheme.GROUND

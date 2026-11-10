@@ -1,0 +1,4 @@
+{
+  "_about": "Where the installer downloads Rootward from: a folder of release files (rootward-manifest.json and the packages it names). GitHub's releases/latest/download/ always points at the newest release. A private repository's releases need a sign-in the installer does not have; ADR-0091.",
+  "downloads": "https://github.com/TylerFreemont0712/rootward-cg/releases/latest/download/"
+}

@@ -44,6 +44,10 @@
 
 # Godot
 game/.godot/
+installer/.godot/
+# The installer's brand art, fonts and version are copied in by scripts/build.py from the game (ADR-0091)
+installer/brand/
+installer/version.txt
 game/reports/
 game/addons/gdUnit4/reports/
 *.import.tmp

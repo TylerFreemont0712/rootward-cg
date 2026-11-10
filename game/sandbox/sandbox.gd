@@ -27,11 +27,16 @@ const WASM_STACK_BYTES := 8 * 1024 * 1024
 const READ_CHUNK := 65536
 
 
-## Where scripts/fetch-sandbox.sh installed wasmtime and the language modules.
+## Where wasmtime and the language modules are: `sandbox/` beside the executable in an exported build
+## (scripts/build.sh puts it there), or game/sandbox/runtime/ when the game runs from source (scripts/fetch-sandbox.sh).
+## LEARN: res:// is a folder only when the game runs from source. In an exported build it is the inside of the .pck,
+## which wasmtime, a separate program, cannot open, so the runtime ships as ordinary files next to the game.
 static func runtime_dir() -> String:
 	var override := OS.get_environment(RUNTIME_ENV)
 	if override != "":
 		return override
+	if OS.has_feature("template"):
+		return OS.get_executable_path().get_base_dir().path_join("sandbox")
 	return ProjectSettings.globalize_path("res://sandbox/runtime")
 
 
@@ -80,7 +85,43 @@ static func run(job: SandboxJob) -> SandboxResult:
 
 
 static func _wasmtime() -> String:
-	return runtime_dir().path_join("bin/wasmtime")
+	return runtime_dir().path_join("bin/wasmtime.exe" if OS.has_feature("windows") else "bin/wasmtime")
+
+
+## Makes every file of the shipped Python standard library read-only, once per install; returns how many it marked.
+## A program sees the library as a folder it could write to (wasmtime has no read-only mount), so the files themselves
+## must refuse: WASI has no chmod and no attributes, so nothing inside the sandbox can undo this. From source,
+## scripts/fetch-sandbox.sh does it with chmod. A Linux build's tar keeps the marks, but a zip unpacked on Windows
+## drops them, so an exported game marks the files itself on its first start. Folders stay writable so the game's
+## folder can still be deleted; a program could add a file to the library, but not change one.
+static func protect_stdlib() -> int:
+	if not OS.has_feature("template"):
+		return 0
+	var lib := runtime_dir().path_join("python/lib")
+	# Keyed by the library's place and its files' age, so a reinstall or an update in the same folder marks again.
+	var age := FileAccess.get_modified_time(lib.path_join("python3.14/os.py"))
+	var stamp := OS.get_user_data_dir().path_join("sandbox/protected-%s" % ("%s@%d" % [lib, age]).md5_text())
+	if not DirAccess.dir_exists_absolute(lib) or FileAccess.file_exists(stamp):
+		return 0
+	var marked := _protect(lib)
+	DirAccess.make_dir_recursive_absolute(stamp.get_base_dir())
+	_write_text(stamp, "%d files\n" % marked)
+	return marked
+
+
+static func _protect(dir: String) -> int:
+	var marked := 0
+	for name in DirAccess.get_files_at(dir):
+		var path := dir.path_join(name)
+		if OS.has_feature("windows"):
+			FileAccess.set_read_only_attribute(path, true)
+		else:
+			FileAccess.set_unix_permissions(path, FileAccess.UNIX_READ_OWNER | FileAccess.UNIX_READ_GROUP
+				| FileAccess.UNIX_READ_OTHER)
+		marked += 1
+	for name in DirAccess.get_directories_at(dir):
+		marked += _protect(dir.path_join(name))
+	return marked
 
 
 static func _arguments(job: SandboxJob, dir: String) -> PackedStringArray:

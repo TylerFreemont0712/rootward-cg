@@ -1,0 +1,31 @@
+; Rootward Setup (ADR-0091): the installer, a small Godot project of its own so its download stays small.
+; scripts/build.py copies the game's brand art and fonts into brand/ and writes version.txt before exporting it.
+
+config_version=5
+
+[application]
+
+config/name="Rootward Setup"
+config/description="Installs, updates and uninstalls Rootward."
+run/main_scene="res://setup.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://brand/icon.png"
+boot_splash/show_image=false
+boot_splash/bg_color=Color(0.0706, 0.0549, 0.0392, 1)
+
+[debug]
+
+gdscript/warnings/untyped_declaration=2
+
+[display]
+
+window/size/viewport_width=1120
+window/size/viewport_height=680
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

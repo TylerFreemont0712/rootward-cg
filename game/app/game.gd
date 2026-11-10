@@ -35,6 +35,7 @@ static func boot() -> bool:
 		return diagnostics.all(func(d: Dictionary) -> bool: return d.severity != "error")
 	_loaded = true
 	Sandbox.sweep_stale()
+	Sandbox.protect_stdlib()
 	var loaded := ContentLoader.load_shardrun()
 	catalog = loaded.catalog
 	diagnostics = loaded.diagnostics

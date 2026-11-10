@@ -5,10 +5,16 @@
 - First, on a fresh checkout: `scripts/fetch-sandbox.sh` installs the sandbox runtime (wasmtime, CPython and
   QuickJS for WASI, about 100 MB, pinned by SHA-256) into `game/sandbox/runtime/`. The sandbox tests need it.
 - Media (ADR-0090): pictures, sound and models are not in git. `scripts/fetch-media.sh` installs what the game uses
-  (about 350 MB from the private repo's GitHub releases, needs `gh auth login`); `dev` or `all` adds the concept boards,
-  pipeline sources and research figures. After a pipeline writes new media: `scripts/pack-media.sh` (what changed),
+  (about 330 MB from the private repo's GitHub releases, needs `gh auth login`); `dev` or `all` adds the
+  pipeline's sources. After a pipeline writes new media: `scripts/pack-media.sh` (what changed),
   `--write` (packs and `media.lock`), commit and push, then `--publish`. A new doc screenshot is media unless it is
   named `docs/images/rootward-*`.
+- Builds and the installer (ADR-0091): `scripts/build.sh` exports Linux and Windows with the sandbox beside the game,
+  self-tests the Linux build and makes Rootward Setup for both, into `build/release/`; `--publish` uploads them as the
+  release `v<version>` (`application/config/version` in `game/project.godot`). `Rootward -- --self-test` checks any
+  build. The installer is its own project (`installer/`); `.github/workflows/windows-check.yml` (`gh workflow run
+  windows-check.yml -f tag=v1.0.0`) installs a release on a clean Windows machine. The game exports with Godot's
+  official templates, downloaded once and checked against their SHA-512.
 - Tests (gdUnit4 6.2.1, headless): `scripts/test.sh`; one suite: `scripts/test.sh -a res://test/core/rng_test.gd`.
   It runs an import pass first, so a new `class_name` is visible.
 - Lint: `scripts/lint.sh` (gdlint for likely bugs only, then a formatting report that never fails; gdtoolkit 4.5.0
@@ -47,7 +53,7 @@
 - Music (pipeline/music/README.md): scores in `pipeline/music/tracks/<id>/`, takes with
   `uv run --project pipeline python pipeline/music/perform.py <id> --takes 2`, the listening page with `listen.py`,
   the pick into the game with `master.py <id>`. Models: `scripts/fetch-music-models.sh yue2|ace|sa3`. Sound effects
-  are timelines in `pipeline/audio/manifest.json` (docs/SOUND_DESIGN.md), drawn against their animations with
+  are timelines in `pipeline/audio/manifest.json`, drawn against their animations with
   `uv run --project pipeline python pipeline/audio/beats.py`.
 - Subagents (`.claude/agents/`, from agency-agents; `docs/AGENTS.md` says which to use for what): spawn the matching
   specialist for design, Godot, asset, audio, test and review work, and pass it the rules above, since it does not
@@ -73,5 +79,5 @@
 - Content is JSONC under `game/content/` (ADR-0004): data in `<id>.jsonc` named after its id, a shard's code in
   `<id>.py` and `<id>.js` beside it, prose translated in `packs/<pack>/locales/<locale>/*.jsonc` keyed by the English.
   New fields go into `ShardrunSchemas` (with a default if old files lack them) before any content uses them.
-- `# LEARN:` comments for the non-obvious, with an entry in `docs/LEARNING_LOG.md`. The next ADR number is in
-  `docs/decisions/README.md`.
+- `# LEARN:` comments for the non-obvious, with an entry in `docs/LEARNING_LOG.md`. Decisions are in
+  `docs/DECISIONS.md`, with the next ADR number.

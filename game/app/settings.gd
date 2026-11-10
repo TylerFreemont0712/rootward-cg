@@ -125,6 +125,8 @@ static func clean_loadout(saved: Variant) -> Dictionary:
 ## The shipped looks, then any local reference skins found on this machine.
 static func all_skins() -> Array[String]:
 	var skins := CHARACTER_SKINS.duplicate()
+	if not DirAccess.dir_exists_absolute(LOCAL_SKINS):  # only a machine with local reference skins has the folder
+		return skins
 	for folder in DirAccess.get_directories_at(LOCAL_SKINS):
 		if FileAccess.file_exists(LOCAL_SKINS + folder + "/skin.json"):
 			skins.append(folder)

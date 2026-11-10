@@ -227,7 +227,8 @@ static func relaunch_if_needed() -> bool:
 ## Starts the same game again with the saved device and renderer, then ends this one. False if it could not start.
 static func relaunch() -> bool:
 	var args := relaunch_args(OS.get_cmdline_args(), Settings.gpu_index, Settings.renderer)
-	if not "--path" in args:
+	# From source the engine needs to be told where the project is; an exported game finds its own .pck.
+	if not "--path" in args and not OS.has_feature("template"):
 		args = PackedStringArray(["--path", ProjectSettings.globalize_path("res://")]) + args
 	if OS.create_process(OS.get_executable_path(), args) < 0:
 		return false
