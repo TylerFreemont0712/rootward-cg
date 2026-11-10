@@ -16,8 +16,8 @@ the session's tools and permissions.
 
 | Area | Agent | Use it for in Rootward |
 |---|---|---|
-| Game design | Game Designer | Paradigms, classes (Kurogane next, `docs/SHARDRUN_DESIGN.md`), core-loop and session pacing |
-| | Economy Designer | Mana, tempo, relic and loot tables, the speed race; read alongside `docs/research/balance-probe/` |
+| Game design | Game Designer | Paradigms, classes, core-loop and session pacing |
+| | Economy Designer | Mana, tempo, relic and loot tables, the speed race |
 | | Level Designer | The layer map, room mix, ring pacing (ADR-0025) |
 | | Narrative Designer, Narratologist | Guardians' voices, flavour text, Pip's Trial, the world of the Rings |
 | Godot | Godot Gameplay Scripter | Typed GDScript, signals, scene composition in `game/scenes/` and `game/ui/` |
@@ -25,7 +25,7 @@ the session's tools and permissions.
 | | Technical Artist | Art-to-engine budgets, import settings, sprite and VRM fitting |
 | Assets | Blender Add-on Engineer | The Blender scripts in `pipeline/blender` and `pipeline/moves` (with the `rootward-characters` skill) |
 | | Image Prompt Engineer | ComfyUI prompts in `pipeline/art` and the concept briefs |
-| | Game Audio Engineer | `pipeline/audio`, `docs/SOUND_DESIGN.md`, music scores |
+| | Game Audio Engineer | `pipeline/audio`, music scores |
 | Interface | UI Designer, UX Architect | Kernel Foundry front end, the card table, the work surface |
 | | UX Researcher | Judging the first-run flow, how the daughters meet the game |
 | | Whimsy Injector | Small delight: hover lines, idle motion, end-screen jokes |
@@ -33,7 +33,7 @@ the session's tools and permissions.
 | | Accessibility Auditor | Contrast, font size, keyboard and controller reach, colour-only signals |
 | Code quality | Code Reviewer | Review of a diff before commit |
 | | Software Architect | Layering of `core/` vs `app/` vs `scenes/`, the next ADR |
-| | Minimal Change Engineer | Bug fixes from `bugfixes.md` that must not turn into refactors |
+| | Minimal Change Engineer | Bug fixes that must not turn into refactors |
 | | Codebase Archaeologist | Drift between ADRs, PLAN and code; dead code after several sessions |
 | | Git Workflow Master | Commit hygiene while `WIP.md` and large asset diffs sit in the tree |
 | | Technical Writer | ADRs, the learning log, README |

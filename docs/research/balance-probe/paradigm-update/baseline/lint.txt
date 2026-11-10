@@ -1,2 +1,0 @@
-Success: no problems found
-234 files would be left unchanged

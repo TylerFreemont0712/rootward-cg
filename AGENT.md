@@ -13,7 +13,8 @@ daughters are meant to play it too, in Japanese. The game and the codebase are b
 1. This file and `CLAUDE.md`.
 2. `WIP.md` at the root if it exists: the player's list, and the focus of the session. Never commit it.
 3. `docs/PLAN.md`: the phases, and the first unfinished one is the work.
-4. The ADRs in `docs/decisions/` for the parts being touched, and `docs/LEARNING_LOG.md`.
+4. `docs/DECISIONS.md` for the parts being touched (the full ADRs before v1.0 are at the tag `archive/pre-v1.0`),
+   and `docs/LEARNING_LOG.md`.
 5. `git log --oneline -20` and `git status`.
 
 Then say in one short message what you are picking up, ask any blocking question in the same message, and proceed.

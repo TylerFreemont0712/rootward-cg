@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs Rootward's media (pictures, sound, models) from the packs on the repository's GitHub releases (ADR-0090).
-#   scripts/fetch-media.sh            what the game shows and plays (the `game` packs, about 350 MB)
-#   scripts/fetch-media.sh dev        the making-of sources too: concepts, pipeline sources, research (`dev` packs)
+#   scripts/fetch-media.sh            what the game shows and plays (the `game` packs, about 330 MB)
+#   scripts/fetch-media.sh dev        the pipeline's sources too (the `dev` packs)
 #   scripts/fetch-media.sh all        everything; or name packs: scripts/fetch-media.sh assets-foes assets-audio
 #   scripts/fetch-media.sh --status   what is installed, missing or changed; installs nothing
 #   --force                           also replace files changed here since they were fetched
