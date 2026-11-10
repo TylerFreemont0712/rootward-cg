@@ -448,3 +448,17 @@ run, with their sandbox, content, art, audio and tests.
 - [x] The 3D models (Emberfox, Shibu, the motion dummy) removed; the skins are Vesper 1.0, 1.5 and 2.0, all drawn.
       The move library (`game/characters/moves/`, `pipeline/moves/`) and the 3D character code stay for now.
 - [x] History rewritten without the removed files so the GitHub repository fits an evaluation upload (under 1 GB).
+
+### 2026-11-10: a small clone, media in release packs (ADR-0090)
+
+The experimental copy `rootward-cg` (a private GitHub repository) clones small: code, content, docs and history in git,
+pictures, sound and models in packs on its releases.
+
+- [x] A `.gitignore` block defines media (and their `.import` sidecars); `media.lock` pins 1,498 files in 18 packs.
+- [x] `scripts/fetch-media.sh` (game by default, `dev`, `all`, or one pack) and `scripts/pack-media.sh` (status,
+      `--write`, `--publish`); local edits are kept, only stale packs download, every file checked by SHA-256.
+- [x] History rewritten without media: 178 commits pack into about 7 MB; a clone from GitHub is 38 MB and takes
+      about 5 s. The game media (14 packs, about 345 MB) fetches through `gh` in under 2 minutes.
+- [x] Release `media-1` published. A clone from GitHub, with media fetched: 770 cases, the 1 known failure (program
+      upgrades), art on screen. Without media: the game plays on its fallbacks; 66 art and sound cases fail, as
+      `scripts/test.sh` now warns.

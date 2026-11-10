@@ -4,6 +4,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/../game"
 GODOT="${GODOT_BIN:-godot}"
+# A fresh clone has no media (ADR-0090): the game runs on its fallbacks, but the suites that check or play the art
+# (art, spell animations, skins, music loops; about 66 cases) need it, so they fail until it is fetched.
+if [ -z "$(find assets -name '*.png' -print -quit 2>/dev/null)" ]; then
+	echo "warning: no media installed; the art and sound tests will fail. scripts/fetch-media.sh installs it." >&2
+fi
 "$GODOT" --headless --import --path . >/dev/null 2>&1 || true
 args=("$@")
 if [ ${#args[@]} -eq 0 ]; then args=(-a res://test); fi
